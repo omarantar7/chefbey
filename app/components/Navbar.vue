@@ -12,7 +12,7 @@ const links = [
 ];
 </script>
 <template>
-  <nav>
+  <nav class="fixed top-0 z-10 w-full text-white backdrop-blur-sm">
     <div class="mx-auto px-4 py-3 flex items-center justify-between">
       <NuxtLink to="/">
         <img :src="logo" alt="logo" class="size-[102px] object-cover" />
@@ -57,7 +57,7 @@ const links = [
       </button>
     </div>
 
-    <div v-if="isOpen" class="md:hidden px-4 pb-4 space-y-2">
+    <div v-if="isOpen" class="md:hidden px-4 pb-4 space-y-2 text-white">
       <div class="flex flex-col gap-4 items-center justify-center">
         <NuxtLink
           v-for="(link, index) in links"

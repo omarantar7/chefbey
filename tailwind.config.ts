@@ -1,4 +1,4 @@
-// tailwind.config.js
+// tailwind.config.ts
 export default {
   content: [
     "./components/**/*.{vue,js}",
@@ -18,5 +18,8 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark"],
+  },
 };
