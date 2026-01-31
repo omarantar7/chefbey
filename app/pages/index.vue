@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import Awards from "~/components/Sections/Awards.vue";
 import Hero from "~/components/Sections/Hero.vue";
+import Recipes from "~/components/Sections/Recipes.vue";
 import Services from "~/components/Sections/Services.vue";
 
 definePageMeta({
@@ -10,4 +12,6 @@ definePageMeta({
 <template>
   <Hero />
   <Services />
+  <Awards />
+  <Recipes />
 </template>

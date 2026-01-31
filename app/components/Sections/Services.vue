@@ -2,54 +2,46 @@
 import { ref } from "vue";
 import Title from "../UI/Title.vue";
 import vector from "@/assets/images/vector1.png";
+import vector2 from "@/assets/images/bottom-wave.png";
 import serviceBg from "@/assets/images/services-bg.png";
 
-// Dynamic services data
-const services = ref([
+const cards = shallowRef([
   {
-    id: 2,
-    icon: "👨‍🍳",
-    title: "Culinary Consulting",
+    id: Math.random(),
+    title: "Consulting",
     description:
-      "Expert guidance for restaurants and food businesses on menu development, kitchen operations, and culinary excellence.",
+      "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
+    image: "@/assets/images/medical-icon_restaurant.svg",
   },
   {
-    id: 3,
-    icon: "🎓",
-    title: "Cooking Classes",
+    id: Math.random(),
+    title: "Consulting",
     description:
-      "Learn authentic Turkish and Lebanese cooking techniques through hands-on masterclasses and workshops.",
+      "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
+    image: "@/assets/images/medical-icon_restaurant.svg",
   },
   {
-    id: 4,
-    icon: "🎉",
-    title: "Event Catering",
+    id: Math.random(),
+    title: "Consulting",
     description:
-      "Elevate your special occasions with award-winning cuisine and impeccable service for any event size.",
+      "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
+    image: "@/assets/images/medical-icon_restaurant.svg",
   },
   {
-    id: 5,
-    icon: "📋",
-    title: "Menu Development",
+    id: Math.random(),
+    title: "Consulting",
     description:
-      "Create innovative and profitable menus that blend traditional flavors with modern culinary trends.",
+      "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
+    image: "@/assets/images/medical-icon_restaurant.svg",
   },
 ]);
-
-const chefInfo = ref({
-  name: "Abed Alrahman Antar",
-  nickname: "Chefbey",
-  description:
-    "is a Lebanese chef and consultant celebrated for his award-winning Turkish and Lebanese cuisine. His greatest achievement is putting smiles on faces through food.",
-  image:
-    "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&fit=crop",
-});
 </script>
 
 <template>
   <section
-    class="min-h-screen bg-cover bg-top"
+    class="relative min-h-screen h-fit bg-cover bg-top"
     :style="{ backgroundImage: `url(${serviceBg})` }"
+    id="Services"
   >
     <!-- top -->
     <div
@@ -65,6 +57,45 @@ const chefInfo = ref({
       </Title>
     </div>
 
+    <div
+      class="flex flex-col md:flex-row justify-center items-center gap-3 container mx-auto py-60"
+    >
+      <div class="max-w-[600px] flex flex-wrap flex-none gap-10 justify-center">
+        <div
+          class="flex flex-wrap gap-10 border-2 border-primary rounded-xl bg-white w-52 md:w-64"
+          v-for="card in cards"
+          :key="card.id"
+        >
+          <div class="flex flex-col py-8 px-2">
+            <img
+              :src="card?.image"
+              alt=""
+              class="size-15 object-cover object-center"
+            />
+            <h1 class="text-black text-xl pt-6.5 pb-2 text-center w-full">
+              {{ card?.title }}
+            </h1>
+            <p class="text-[#545454] text-center w-full">
+              {{ card?.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <p
+        class="text-white text-4xl font-bold text-center md:text-left md:max-w-[50%]"
+      >
+        {{
+          `Abed Alrahman Antar, known as "Chefbey", is a Lebanese chef and
+        consultant celebrated for his award-winning Turkish and Lebanese
+        cuisine. His greatest achievement is putting smiles on faces through
+        food.`
+        }}
+      </p>
+    </div>
     <!-- bottom -->
+    <div
+      class="w-[101%] h-24 bg-cover bg-top absolute -left-1 bottom-0"
+      :style="{ backgroundImage: `url(${vector2})` }"
+    ></div>
   </section>
 </template>

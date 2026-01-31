@@ -1,0 +1,147 @@
+<script setup lang="ts">
+import { ref, shallowRef } from "vue";
+import Title from "../UI/Title.vue";
+import vector from "@/assets/images/vector1.png";
+import vector2 from "@/assets/images/bottom-wave.png";
+import birdBg from "@/assets/images/bird-bg.png";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+const modules = [Pagination];
+
+const awards = shallowRef([
+  {
+    id: Math.random(),
+    title: "2024 Winner",
+    description: "Award-Winning Chef",
+    image: "@/assets/images/medical-icon_restaurant.svg",
+  },
+  {
+    id: Math.random(),
+    title: "2024 Winner",
+    description: "Award-Winning Chef",
+    image: "@/assets/images/medical-icon_restaurant.svg",
+  },
+  {
+    id: Math.random(),
+    title: "2024 Winner",
+    description: "Award-Winning Chef",
+    image: "@/assets/images/medical-icon_restaurant.svg",
+  },
+  {
+    id: Math.random(),
+    title: "2024 Winner",
+    description: "Award-Winning Chef",
+    image: "@/assets/images/medical-icon_restaurant.svg",
+  },
+  {
+    id: Math.random(),
+    title: "2024 Winner",
+    description: "Award-Winning Chef",
+    image: "@/assets/images/medical-icon_restaurant.svg",
+  },
+]);
+</script>
+
+<template>
+  <section class="h-fit relative bg-white" id="Awards">
+    <!-- Background with opacity -->
+    <div
+      class="absolute inset-0 bg-cover opacity-50"
+      :style="{ backgroundImage: `url(${birdBg})` }"
+    ></div>
+
+    <!-- Content -->
+    <div class="container mx-auto py-12 md:py-60 px-4 relative z-10">
+      <div class="flex items-center justify-center text-center pb-8">
+        <Title title="Recognition" sub-title="Certifications & Awards">
+          <template #icon>
+            <span
+              class="icon-[fluent--service-bell-16-filled] text-primary"
+            ></span>
+          </template>
+        </Title>
+      </div>
+
+      <!-- Mobile Swiper (below md breakpoint) -->
+      <div class="block md:hidden">
+        <Swiper
+          :modules="modules"
+          :slides-per-view="1.5"
+          :space-between="12"
+          :pagination="{ clickable: true }"
+          :centered-slides="false"
+          class="awards-swiper"
+        >
+          <SwiperSlide v-for="slide in awards" :key="slide.id">
+            <div class="rounded-xl bg-white py-7 px-6 h-full">
+              <div class="flex flex-col items-center justify-center">
+                <img
+                  :src="slide?.image"
+                  alt=""
+                  class="size-[168px] object-contain"
+                />
+                <h1
+                  class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
+                >
+                  {{ slide?.title }}
+                </h1>
+                <p class="text-[#667583] w-full text-center">
+                  {{ slide?.description }}
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+
+      <!-- Desktop Grid (md breakpoint and above) -->
+      <div class="hidden md:flex flex-wrap justify-center items-center gap-3">
+        <div
+          v-for="slide in awards"
+          :key="slide.id"
+          class="rounded-xl bg-white py-7 px-6 w-full md:w-auto"
+        >
+          <div class="flex flex-col items-center justify-center">
+            <img
+              :src="slide?.image"
+              alt=""
+              class="size-[168px] object-contain"
+            />
+            <h1
+              class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
+            >
+              {{ slide?.title }}
+            </h1>
+            <p class="text-[#667583] w-full text-center">
+              {{ slide?.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<style scoped>
+.awards-swiper {
+  padding-bottom: 40px;
+}
+
+.awards-swiper :deep(.swiper-pagination) {
+  bottom: 0;
+}
+
+.awards-swiper :deep(.swiper-pagination-bullet) {
+  background-color: #667583;
+  opacity: 0.5;
+}
+
+.awards-swiper :deep(.swiper-pagination-bullet-active) {
+  opacity: 1;
+}
+</style>
