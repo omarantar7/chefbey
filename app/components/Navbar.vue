@@ -1,18 +1,40 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import logo from "@/assets/images/logo.png";
 import Button from "./UI/Button.vue";
 
 const isOpen = ref(false);
 const links = [
-  { label: "Home", to: "/" },
+  // { label: "Home", to: "/" },
   { label: "Services", to: "/#Services" },
   { label: "Awards", to: "/#Awards" },
   { label: "Recipes", to: "/#Recipes" },
 ];
+
+onMounted(() => {
+  const handleScroll = () => {
+    const nav = document.querySelector("nav");
+    if (!nav) return;
+    if (window.scrollY >= 100) {
+      nav.classList.add("bg-white/50");
+      nav.classList.add("text-black");
+    } else {
+      nav.classList.remove("bg-white/50");
+      nav.classList.remove("text-black");
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  onBeforeUnmount(() => {
+    window.removeEventListener("scroll", handleScroll);
+  });
+});
 </script>
 <template>
-  <nav class="fixed top-0 z-10 w-full text-white backdrop-blur-sm">
+  <nav
+    class="fixed top-0 z-50 w-full backdrop-blur-sm transition-all duration-75"
+  >
     <div class="mx-auto px-4 py-3 flex items-center justify-between">
       <NuxtLink to="/">
         <img :src="logo" alt="logo" class="size-[102px] object-cover" />
@@ -27,7 +49,7 @@ const links = [
         >
           <span>{{ link.label }}</span>
           <span
-            class="absolute left-0 bottom-0 h-[2px] bg-black w-0 transition-all duration-300 ease-out group-hover:w-full"
+            class="absolute left-0 bottom-0 h-[2px] bg-priamary/50 w-0 transition-all duration-300 ease-out group-hover:w-full"
           ></span>
         </NuxtLink>
 

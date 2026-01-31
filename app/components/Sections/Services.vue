@@ -11,28 +11,28 @@ const cards = shallowRef([
     title: "Consulting",
     description:
       "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
   },
   {
     id: Math.random(),
     title: "Consulting",
     description:
       "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
   },
   {
     id: Math.random(),
     title: "Consulting",
     description:
       "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
   },
   {
     id: Math.random(),
     title: "Consulting",
     description:
       "Explore a crafted menu of fresh, flavorful dishes designed to satisfy every taste.",
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
   },
 ]);
 </script>
@@ -62,15 +62,15 @@ const cards = shallowRef([
     >
       <div class="max-w-[600px] flex flex-wrap flex-none gap-10 justify-center">
         <div
-          class="flex flex-wrap gap-10 border-2 border-primary rounded-xl bg-white w-52 md:w-64"
+          class="flex flex-wrap gap-10 border-2 border-primary rounded-xl bg-white w-44 md:w-64"
           v-for="card in cards"
           :key="card.id"
         >
-          <div class="flex flex-col py-8 px-2">
+          <div class="flex flex-col place-items-center py-8 px-2">
             <img
               :src="card?.image"
               alt=""
-              class="size-15 object-cover object-center"
+              class="size-16 object-cover object-center rounded-sm"
             />
             <h1 class="text-black text-xl pt-6.5 pb-2 text-center w-full">
               {{ card?.title }}

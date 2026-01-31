@@ -15,7 +15,8 @@ const modules = [Pagination];
 const recipes = shallowRef([
   {
     id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
     title: "Red Hot BBQ Chicken Wings",
     description:
       "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
@@ -23,7 +24,8 @@ const recipes = shallowRef([
   },
   {
     id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image:
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
     title: "Red Hot BBQ Chicken Wings",
     description:
       "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
@@ -31,7 +33,8 @@ const recipes = shallowRef([
   },
   {
     id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image:
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
     title: "Red Hot BBQ Chicken Wings",
     description:
       "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
@@ -39,7 +42,8 @@ const recipes = shallowRef([
   },
   {
     id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image:
+      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop",
     title: "Red Hot BBQ Chicken Wings",
     description:
       "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
@@ -47,31 +51,8 @@ const recipes = shallowRef([
   },
   {
     id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image: "@/assets/images/medical-icon_restaurant.svg",
+    image:
+      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop",
     title: "Red Hot BBQ Chicken Wings",
     description:
       "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
@@ -161,17 +142,12 @@ const recipes = shallowRef([
 
 <style scoped>
 .awards-swiper {
-  padding-top: 9rem;
+  padding-top: 14rem;
   padding-bottom: 3rem;
   width: 100%;
   padding-left: 1rem;
   padding-right: 1rem;
   max-width: 81%;
-
-  @media (max-width: 576px) {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
 }
 
 .awards-swiper :deep(.swiper-pagination) {

@@ -104,14 +104,14 @@ onUnmounted(() => {
                 <h3 class="text-lg font-bold w-full text-center">
                   A day of my life
                 </h3>
-                <YoutubeVideo videoId="Kd_SNlMuaqU" />
+                <YoutubeVideo videoId="Kd_SNlMuaqU" v-once />
               </div>
               <label class="modal-backdrop" for="my_modal_7">Close</label>
             </div>
           </div>
 
           <!-- Stats -->
-          <div class="flex gap-8 pt-8">
+          <div class="flex justify-center md:justify-start gap-8 pt-8">
             <div class="relative">
               <div
                 class="absolute -left-4 top-0 w-20 h-20 bg-yellow-300 rounded-full opacity-30 blur-xl"

@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "nuxt-mail"],
+  // plugins: ["~/plugins/firebase.client.ts"],
   css: ["@/assets/css/tailwind.css"],
   app: {
     head: {
@@ -18,4 +19,20 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
+
+  runtimeConfig: {
+    mail: {
+      message: {
+        to: "omarantar520@gmail.com",
+      },
+      smtp: {
+        host: "smtp.ethereal.email",
+        port: 587,
+        auth: {
+          user: process.env.ETHEREAL_USER,
+          pass: process.env.ETHEREAL_PASS,
+        },
+      },
+    },
+  },
 });
