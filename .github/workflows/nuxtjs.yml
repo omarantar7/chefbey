@@ -1,0 +1,35 @@
+name: Deploy Nuxt v4 to GitHub Pages
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Install Bun
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      # Install dependencies with Bun
+      - run: bun install
+
+      # Build Nuxt with Bun
+      - run: bun run nuxt build
+
+      # Upload static output
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/deploy-pages@v4
