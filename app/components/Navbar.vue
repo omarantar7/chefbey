@@ -93,9 +93,12 @@ onMounted(() => {
           ></span>
         </NuxtLink>
 
-        <Button>
-          <NuxtLink to="/#contactus" class="text-white"> Contact me </NuxtLink>
-        </Button>
+        <NuxtLink
+          to="/#contactus"
+          class="flex items-center justify-center py-2.5 px-6 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 ease-out"
+        >
+          Contact me
+        </NuxtLink>
       </div>
     </div>
   </nav>

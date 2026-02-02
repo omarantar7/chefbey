@@ -59,7 +59,7 @@ onUnmounted(() => {
     class="relative min-h-screen bg-cover bg-top overflow-hidden"
     :style="{ backgroundImage: `url(${bgImage})` }"
   >
-    <div class="container mx-auto px-4 py-12 lg:py-20 lg:pt-32">
+    <div class="container mx-auto pt-40 md:pt-0 px-4 py-12 lg:py-20 lg:pt-32">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="space-y-6 lg:space-y-8">
           <div>
@@ -78,11 +78,12 @@ onUnmounted(() => {
 
           <!-- Buttons -->
           <div class="flex flex-wrap gap-4">
-            <button
-              class="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform"
+            <NuxtLink
+              to="/#contactus"
+              class="flex items-center justify-center py-2.5 px-9 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 ease-out"
             >
               {{ chefData.buttons.contact }}
-            </button>
+            </NuxtLink>
 
             <label
               for="my_modal_7"

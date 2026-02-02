@@ -2,8 +2,7 @@
 import { ref } from "vue";
 import Title from "../UI/Title.vue";
 import birdBg from "@/assets/images/bird-bg.png";
-const chefImage =
-  "https://drive.google.com/u/0/drive-viewer/AKGpihZ99QQlSH1fQzx2jIeaNf7AfTW1UCaQWtQ-X4PeQmlHhjwxmPz_avOsKek4GNmwkSy96hr5X0I4y148rhHOkaG_PzTaJgYF1dw=s1600-rw-v1?auditContext=forDisplay";
+import chefImage from "@/assets/images/5U4A0092.webp";
 
 const formData = ref({
   firstName: "",
@@ -166,12 +165,12 @@ const handleSubmit = async () => {
         <!-- Image Section -->
         <div class="w-full h-full min-h-[400px] lg:min-h-[600px]">
           <div
-            class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl"
+            class="relative w-full h-fit rounded-2xl overflow-hidden shadow-2xl"
           >
             <img
               :src="chefImage"
               alt="Chef cooking with fire"
-              class="w-full h-full object-cover"
+              class="w-full object-top object-cover max-h-[600px]"
             />
           </div>
         </div>
