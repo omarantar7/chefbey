@@ -2,9 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "nuxt-mail"],
-  // plugins: ["~/plugins/firebase.client.ts"],
   css: ["@/assets/css/tailwind.css"],
   app: {
+    baseURL: "/chefbey/",
     head: {
       link: [
         {
