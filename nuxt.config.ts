@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: "/chefbey/",
+    nitro: {
+      preset: "github_pages",
+    },
     head: {
       link: [
         {
