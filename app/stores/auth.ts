@@ -1,49 +1,73 @@
-// // stores/auth.ts
-// import { defineStore } from "pinia";
-// import { signInWithEmailAndPassword, signOut, type User } from "firebase/auth";
+export const useAuth = () => {
+  const user = useState<any>("auth-user", () => null);
+  const session = useState<any>("auth-session", () => null);
+  const loading = useState("auth-loading", () => false);
 
-// export const useAuthStore = defineStore("auth", {
-//   state: () => ({
-//     user: null as User | null,
-//     loading: true,
-//   }),
+  // Server-side initialization
+  const initFromServer = (serverData: any) => {
+    if (serverData) {
+      user.value = serverData.user;
+      session.value = serverData.session;
+    }
+  };
 
-//   getters: {
-//     isAuthenticated: (state) => !!state.user,
-//   },
+  const autoLogin = async () => {
+    // Skip if already loaded (e.g., from SSR)
+    if (user.value) {
+      return { user: user.value, session: session.value };
+    }
 
-//   actions: {
-//     async login(email: string, password: string) {
-//       try {
-//         const { $auth } = useNuxtApp();
-//         if (!$auth) {
-//           throw new Error("Firebase auth is not initialized");
-//         }
-//         const userCredential = await signInWithEmailAndPassword(
-//           $auth as any,
-//           email,
-//           password,
-//         );
-//         this.user = userCredential.user;
-//         return { success: true };
-//       } catch (error: any) {
-//         console.error("Login error:", error);
-//         return { success: false, error: error.message };
-//       }
-//     },
+    try {
+      loading.value = true;
+      const response = await $fetch("/api/auth/auto-login", {
+        method: "POST",
+      });
 
-//     async logout() {
-//       try {
-//         const { $auth } = useNuxtApp();
-//         if (!$auth) {
-//           throw new Error("Firebase auth is not initialized");
-//         }
-//         await signOut($auth as any);
-//         this.user = null;
-//         navigateTo("/admin/login");
-//       } catch (error) {
-//         console.error("Logout error:", error);
-//       }
-//     },
-//   },
-// });
+      user.value = response.user;
+      session.value = response.session;
+      
+      return response;
+    } catch (error) {
+      console.error("Auto-login failed:", error);
+      user.value = null;
+      session.value = null;
+      return null;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    const response = await $fetch("/api/auth/login", {
+      method: "POST",
+      body: { email, password },
+    });
+
+    user.value = response.user;
+    session.value = response.session;
+
+    return response;
+  };
+
+  const logout = async () => {
+    await $fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    user.value = null;
+    session.value = null;
+  };
+
+  const isAuthenticated = computed(() => !!user.value);
+
+  return {
+    user,
+    session,
+    loading,
+    isAuthenticated,
+    initFromServer,
+    autoLogin,
+    login,
+    logout,
+  };
+};

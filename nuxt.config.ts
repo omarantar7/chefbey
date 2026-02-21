@@ -1,13 +1,20 @@
+import "./lib/env";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "nuxt-mail"],
+  modules: [
+    "@pinia/nuxt",
+    "nuxt-mail",
+    "@nuxt/icon",
+    "@nuxt/ui", 
+  ],
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: "/chefbey/",
-    nitro: {
-      preset: "github_pages",
-    },
+    // nitro: {
+    //   preset: "github_pages",
+    // },
     head: {
       link: [
         {
@@ -21,7 +28,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   runtimeConfig: {
     mail: {

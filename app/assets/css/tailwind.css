@@ -1,15 +1,19 @@
-/* assets/css/tailwind.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@nuxt/ui";
+@plugin "daisyui";
+
+@theme {
+  --font-sans: "Open Sans", ui-sans-serif, system-ui;
+  --font-allura: "Allura", cursive;
+}
+
+/* Override @nuxt/ui's primary color */
+:root {
+  --color-primary: #19B0C7;
+  --ui-primary: #19B0C7;
+}
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply font-sans;
-    overflow-x: hidden;
-  }
+  html { scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
 }

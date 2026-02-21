@@ -32,7 +32,10 @@ const carouselImages = ref([
 const carouselRef = ref<HTMLElement | null>(null);
 let intervalId: number | null | any = null;
 
-onMounted(() => {
+const { data } = await useFetch("/api/hello");
+console.log({ data });
+
+onMounted(async () => {
   const carousel = carouselRef.value;
   if (!carousel) return;
 
@@ -105,7 +108,9 @@ onUnmounted(() => {
                 <h3 class="text-lg font-bold w-full text-center">
                   A day of my life
                 </h3>
-                <YoutubeVideo videoId="Kd_SNlMuaqU" v-once />
+                <ClientOnly>
+                  <YoutubeVideo videoId="Kd_SNlMuaqU" v-once />
+                </ClientOnly>
               </div>
               <label class="modal-backdrop" for="my_modal_7">Close</label>
             </div>

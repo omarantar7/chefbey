@@ -1,16 +1,22 @@
-// import { useAuthStore } from "~/stores/auth";
+export default defineNuxtRouteMiddleware(async (to) => {
+  const { isAuthenticated, loading } = useAuth();
 
-// // middleware/auth.ts
-// export default defineNuxtRouteMiddleware((to) => {
-//   const authStore = useAuthStore();
-//   if (authStore.loading) {
-//     return;
-//   }
-//   if (!authStore.isAuthenticated && to.path !== "/admin/login") {
-//     return navigateTo("/admin/login");
-//   }
+  // On server, auth is already loaded, no need to wait
+  if (process.server) {
+    if (!isAuthenticated.value) {
+      return navigateTo("/admin/Login");
+    }
+    return;
+  }
 
-//   if (authStore.isAuthenticated && to.path === "/admin/login") {
-//     return navigateTo("/admin");
-//   }
-// });
+  // On client, wait for loading to finish
+  let waitCount = 0;
+  while (loading.value && waitCount < 50) {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    waitCount++;
+  }
+
+  if (!isAuthenticated.value) {
+    return navigateTo("/admin/Login");
+  }
+});
