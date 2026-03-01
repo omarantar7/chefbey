@@ -23,4 +23,6 @@ logs
 .env.*
 !.env.example
 
+/public/uploads
+
 local.db*

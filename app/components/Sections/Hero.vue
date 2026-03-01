@@ -32,9 +32,6 @@ const carouselImages = ref([
 const carouselRef = ref<HTMLElement | null>(null);
 let intervalId: number | null | any = null;
 
-const { data } = await useFetch("/api/hello");
-console.log({ data });
-
 onMounted(async () => {
   const carousel = carouselRef.value;
   if (!carousel) return;

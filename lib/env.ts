@@ -1,4 +1,3 @@
-//env.ts
 import { z } from "zod";
 
 const envSchema = z.object({
@@ -9,6 +8,11 @@ const envSchema = z.object({
   TURSO_AUTH_TOKEN: z.string(),
   BETTER_AUTH_SECRET: z.string(),
   BETTER_AUTH_URL: z.string(),
+  BASE_URL: z.string(),
+  CONTENT_LANGUAGES: z
+    .string()
+    .default("en")
+    .transform((val) => val.split(",").map((l) => l.trim())),
 });
 
 export type envSchema = z.infer<typeof envSchema>;

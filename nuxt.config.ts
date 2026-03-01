@@ -1,17 +1,12 @@
-import "./lib/env";
+import env from "./lib/env";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: [
-    "@pinia/nuxt",
-    "nuxt-mail",
-    "@nuxt/icon",
-    "@nuxt/ui", 
-  ],
+  modules: ["@pinia/nuxt", "nuxt-mail", "@nuxt/icon", "@nuxt/ui"],
   css: ["@/assets/css/tailwind.css"],
   app: {
-    baseURL: "/chefbey/",
+    baseURL: env.BASE_URL,
     // nitro: {
     //   preset: "github_pages",
     // },
@@ -39,10 +34,14 @@ export default defineNuxtConfig({
         host: "smtp.ethereal.email",
         port: 587,
         auth: {
-          user: process.env.ETHEREAL_USER,
-          pass: process.env.ETHEREAL_PASS,
+          user: env.ETHEREAL_USER,
+          pass: env.ETHEREAL_PASS,
         },
       },
+    },
+    public: {
+      contentLanguages: env.CONTENT_LANGUAGES ?? "en",
+      baseUrl: env.BASE_URL,
     },
   },
 });

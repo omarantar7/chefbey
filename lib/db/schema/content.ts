@@ -4,7 +4,7 @@ export const content = sqliteTable("content", {
   id: int().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
   type: text().notNull(),
-  attrs: text("attrs", { mode: "json" }).$type<Record<string, any>>().notNull(),
+  attrs: text("attrs", { mode: "json" }).$type<Record<string, any> | null>(),
   createdAt: int()
     .notNull()
     .$default(() => Date.now()),
