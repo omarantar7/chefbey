@@ -11,6 +11,7 @@ import { content } from "../lib/db/schema/content";
 import { contentLocal } from "../lib/db/schema/contentLocal";
 import { eq, and } from "drizzle-orm";
 import env from "../lib/env";
+import { seo } from "../lib/db/schema/seo";
 
 const db = drizzle(env.TURSO_DATABASE_URL, { casing: "snake_case" });
 const languages = env.CONTENT_LANGUAGES;
@@ -100,164 +101,57 @@ async function seedDir(dir: string, files: string[]) {
         )
         .limit(1);
 
-      if (existingLocale) {
+      let localeRow = existingLocale;
+
+      if (localeRow) {
         console.log(
           `  ⏭ Skipping locale "${language}" for "${name}" — already exists.`,
+        );
+      } else {
+        const [insertedLocale] = await db
+          .insert(contentLocal)
+          .values({
+            contentId: contentRow.id,
+            language,
+            title: name,
+            attrs: null,
+          })
+          .returning();
+
+        localeRow = insertedLocale;
+        console.log(`  ✅ Inserted locale "${language}" for "${name}"`);
+      }
+
+      // Create seo row if doesn't exist
+      const [existingSeo] = await db
+        .select()
+        .from(seo)
+        .where(eq(seo.contentLocalId, localeRow.id))
+        .limit(1);
+
+      if (existingSeo) {
+        console.log(
+          `  ⏭ Skipping SEO for "${name}" (${language}) — already exists.`,
         );
         continue;
       }
 
-      await db.insert(contentLocal).values({
-        contentId: contentRow.id,
-        language,
+      await db.insert(seo).values({
+        contentLocalId: localeRow.id,
         title: name,
-        attrs: null,
+        description: null,
+        keywords: null,
+        ogTitle: name,
+        ogDescription: null,
+        ogImage: null,
+        twitterTitle: name,
+        twitterDescription: null,
+        twitterImage: null,
+        canonicalUrl: null,
+        robots: "index, follow",
       });
 
-      console.log(`  ✅ Inserted locale "${language}" for "${name}"`);
-    }
-  }
-}
-
-function generateRouteFiles(files: string[]) {
-  for (const file of files) {
-    const typeName = file.replace(".ts", "");
-    const dir = join(process.cwd(), `app/pages/admin/contents/${typeName}`);
-
-    if (!existsSync(dir)) {
-      mkdirSync(dir, { recursive: true });
-      console.log(`📁 Created directory ${dir}`);
-    }
-
-    // [id].vue
-    const idFilePath = join(dir, "[id].vue");
-
-    if (existsSync(idFilePath)) {
-      console.log(`⏭ Skipping [id].vue for "${typeName}" — already exists.`);
-    } else {
-      const idContent = `<script setup lang="ts">
-import contentsTypeRegistry from "~~/config/contents-type-registry";
-
-definePageMeta({ layout: "admin", props: true });
-
-type Props = { id: string };
-const { id } = defineProps<Props>();
-
-const route = useRoute();
-const typeName = route.params.type as string;
-const definition = computed(() => contentsTypeRegistry[\`contents:\${typeName}\`]?.fields);
-</script>
-
-<template>
-  <div class="p-8">
-    <pre>{{ definition }}</pre>
-    <pre>id: {{ id }}</pre>
-  </div>
-</template>
-`;
-      writeFileSync(idFilePath, idContent, "utf-8");
-      console.log(
-        `✅ Created route file pages/admin/contents/${typeName}/[id].vue`,
-      );
-    }
-
-    // index.vue
-    const indexFilePath = join(dir, "index.vue");
-
-    if (existsSync(indexFilePath)) {
-      console.log(`⏭ Skipping index.vue for "${typeName}" — already exists.`);
-    } else {
-      const indexContent = `<script setup lang="ts">
-
-definePageMeta({ layout: "admin" });
-</script>
-
-<template>
-  <div class="p-8">
-    <div class="mb-6 flex items-center justify-between">
-      <h1>${typeName}</h1>
-      <UButton
-        label="Add New"
-        color="primary"
-        icon="i-heroicons-plus"
-      />
-    </div>
-  </div>
-</template>
-`;
-      writeFileSync(indexFilePath, indexContent, "utf-8");
-      console.log(
-        `✅ Created route file pages/admin/contents/${typeName}/index.vue`,
-      );
-    }
-
-    // API files
-    const apiDir = join(process.cwd(), `server/api/contents/${typeName}`);
-
-    if (!existsSync(apiDir)) {
-      mkdirSync(apiDir, { recursive: true });
-      console.log(`📁 Created API directory ${apiDir}`);
-    }
-
-    // server/api/contents/[typeName]/index.ts
-    const apiIndexPath = join(apiDir, "index.ts");
-
-    if (existsSync(apiIndexPath)) {
-      console.log(`⏭ Skipping index.ts for "${typeName}" — already exists.`);
-    } else {
-      const apiIndexContent = `export default defineEventHandler(async (event) => {
-  if (event.method === "GET") {
-    // TODO: return all ${typeName}
-    return [];
-  }
-
-  if (event.method === "POST") {
-    const body = await readBody(event);
-    // TODO: insert new ${typeName}
-    return { success: true };
-  }
-
-  throw createError({ status: 405, message: "Method not allowed" });
-});
-`;
-      writeFileSync(apiIndexPath, apiIndexContent, "utf-8");
-      console.log(
-        `✅ Created API file server/api/contents/${typeName}/index.ts`,
-      );
-    }
-
-    // server/api/contents/[typeName]/[id].ts
-    const apiIdPath = join(apiDir, "[id].ts");
-
-    if (existsSync(apiIdPath)) {
-      console.log(`⏭ Skipping [id].ts for "${typeName}" — already exists.`);
-    } else {
-      const apiIdContent = `export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, "id");
-
-  if (event.method === "GET") {
-    // TODO: return ${typeName} by id
-    return { id };
-  }
-
-  if (event.method === "PUT") {
-    const body = await readBody(event);
-    // TODO: update ${typeName} by id
-    return { success: true };
-  }
-
-  if (event.method === "DELETE") {
-    // TODO: delete ${typeName} by id
-    return { success: true };
-  }
-
-  throw createError({ status: 405, message: "Method not allowed" });
-});
-`;
-      writeFileSync(apiIdPath, apiIdContent, "utf-8");
-      console.log(
-        `✅ Created API file server/api/contents/${typeName}/[id].ts`,
-      );
+      console.log(`  ✅ Inserted SEO for "${name}" (${language})`);
     }
   }
 }
@@ -296,9 +190,6 @@ async function seedContentTypes() {
     join(process.cwd(), "config/contents-type-registry.ts"),
     "contentsTypeRegistry",
   );
-  // Generate route files for contents
-  console.log("\n--- Generating route files ---");
-  generateRouteFiles(contentsFiles);
 
   console.log("\nDone.");
   process.exit(0);

@@ -19,7 +19,7 @@ const pageTitle = computed(() => {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-gray-50">
+  <div class="flex min-h-screen">
     <!-- Sidebar -->
     <ClientOnly>
       <AdminSideBar v-if="isAuthenticated" />

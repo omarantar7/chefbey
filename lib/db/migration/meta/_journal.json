@@ -57,6 +57,20 @@
       "when": 1771713559107,
       "tag": "0007_fair_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1772566244403,
+      "tag": "0008_youthful_outlaw_kid",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1772566278650,
+      "tag": "0009_light_cannonball",
+      "breakpoints": true
     }
   ]
 }

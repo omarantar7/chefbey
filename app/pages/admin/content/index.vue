@@ -57,8 +57,8 @@ const handleDelete = async () => {
   <ClientOnly>
     <div class="p-8">
       <div class="mb-6">
-        <h1 class="text-2xl font-semibold text-gray-800">Content Types</h1>
-        <p class="text-sm text-gray-500 mt-1">Manage your content types</p>
+        <h1 class="text-2xl font-semibold">Content Types</h1>
+        <p class="text-sm mt-1">Manage your content types</p>
       </div>
       <UCard>
         <UTable

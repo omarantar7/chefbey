@@ -110,6 +110,7 @@ const save = async () => {
       color: "success",
       icon: "i-heroicons-check-circle",
     });
+    router.back();
   } catch (e: any) {
     toast.add({
       title: "Failed to save.",

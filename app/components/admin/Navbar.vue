@@ -33,15 +33,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="bg-white shadow-sm border-b sticky top-0 z-10">
+  <nav class="shadow-sm sticky top-0 z-10">
     <div class="px-6 py-4">
       <div class="flex justify-between items-center">
         <!-- Page Title -->
         <div>
           <ClientOnly>
-            <h2 class="text-2xl font-bold text-gray-800">
+            <!-- <h2 class="text-2xl font-semibold">
               {{ title || "Dashboard" }}
-            </h2>
+            </h2> -->
           </ClientOnly>
         </div>
         <ClientOnly>
@@ -50,7 +50,7 @@ onMounted(() => {
             <div class="relative" ref="userMenuRef">
               <button
                 @click="showUserMenu = !showUserMenu"
-                class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg transition"
+                class="flex items-center space-x-3 p-2 rounded-lg transition"
               >
                 <!-- User Avatar -->
                 <div class="relative">
@@ -58,33 +58,33 @@ onMounted(() => {
                     v-if="user?.image"
                     :src="user.image"
                     :alt="user.name"
-                    class="w-10 h-10 rounded-full object-cover border-2 border-gray-200"
+                    class="w-10 h-10 rounded-full object-cover border-2"
                   />
                   <div
                     v-else
-                    class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-lg border-2 border-gray-200"
+                    class="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-semibold text-lg border-2 "
                   >
                     {{ user?.name?.charAt(0).toUpperCase() }}
                   </div>
                   <!-- Online indicator -->
                   <span
-                    class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"
+                    class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 rounded-full"
                   ></span>
                 </div>
 
                 <!-- User Info -->
                 <div class="text-left hidden md:block">
-                  <div class="text-sm font-semibold text-gray-800">
+                  <div class="text-sm font-semibold">
                     {{ user?.name }}
                   </div>
-                  <div class="text-xs text-gray-500">
+                  <div class="text-xs">
                     {{ user?.email }}
                   </div>
                 </div>
 
                 <!-- Dropdown Arrow -->
                 <svg
-                  class="w-4 h-4 text-gray-600 transition-transform"
+                  class="w-4 h-4 transition-transform"
                   :class="{ 'rotate-180': showUserMenu }"
                   fill="none"
                   stroke="currentColor"
@@ -110,14 +110,14 @@ onMounted(() => {
               >
                 <div
                   v-if="showUserMenu"
-                  class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2"
+                  class="absolute right-0 mt-2 w-56  rounded-lg shadow-lg border py-2 bg-gray-800"
                 >
                   <!-- User Info in Dropdown -->
                   <div class="px-4 py-3 border-b">
-                    <div class="text-sm font-semibold text-gray-800">
+                    <div class="text-sm font-semibold ">
                       {{ user?.name }}
                     </div>
-                    <div class="text-xs text-gray-500 truncate">
+                    <div class="text-xs  truncate">
                       {{ user?.email }}
                     </div>
                   </div>
@@ -125,7 +125,7 @@ onMounted(() => {
                   <!-- Menu Items -->
                   <NuxtLink
                     to="/admin/profile"
-                    class="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
+                    class="flex items-center space-x-3 px-4 py-2 transition"
                     @click="showUserMenu = false"
                   >
                     <svg
@@ -146,7 +146,7 @@ onMounted(() => {
 
                   <NuxtLink
                     to="/admin/settings"
-                    class="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
+                    class="flex items-center space-x-3 px-4 py-2 transition"
                     @click="showUserMenu = false"
                   >
                     <svg
@@ -171,7 +171,7 @@ onMounted(() => {
                   <button
                     @click="handleLogout"
                     :disabled="isLoggingOut"
-                    class="w-full flex items-center space-x-3 px-4 py-2 text-red-600 hover:bg-red-50 transition disabled:opacity-50"
+                    class="w-full flex items-center space-x-3 px-4 py-2 text-red-600 transition disabled:opacity-50"
                   >
                     <svg
                       class="w-5 h-5"

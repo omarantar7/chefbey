@@ -14,19 +14,17 @@ const { user, loading } = useAuth();
         <div
           class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"
         ></div>
-        <p class="text-gray-600">Loading dashboard...</p>
+        <p class="">Loading dashboard...</p>
       </div>
     </div>
 
     <div v-else>
       <ClientOnly>
         <div class="mb-8">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">
+          <h3 class="text-2xl font-bold mb-2">
             Welcome back, {{ user?.name }}! 👋
           </h3>
-          <p class="text-gray-600">
-            Here's what's happening with your admin panel today.
-          </p>
+          <p class="">Here's what's happening with your admin panel today.</p>
         </div>
       </ClientOnly>
     </div>

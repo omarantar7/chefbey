@@ -2,6 +2,7 @@ import { drizzle } from "drizzle-orm/libsql";
 import { content, contentLocal } from "~~/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import env from "~~/lib/env";
+import { seo } from "~~/lib/db/schema/seo";
 
 const db = drizzle(env.TURSO_DATABASE_URL, { casing: "snake_case" });
 const CONTENT_TYPE = "contents:recipes";
@@ -19,7 +20,8 @@ export default defineEventHandler(async (event) => {
       .where(eq(content.id, Number(id)))
       .limit(1);
 
-    if (!contentRow) throw createError({ statusCode: 404, message: "Not found" });
+    if (!contentRow)
+      throw createError({ statusCode: 404, message: "Not found" });
 
     const locales = await db
       .select()
@@ -30,7 +32,9 @@ export default defineEventHandler(async (event) => {
       id: contentRow.id,
       name: contentRow.name,
       settings: contentRow.attrs,
-      local: Object.fromEntries(locales.map((l) => [l.language, { ...l.attrs, name: l.title }])),
+      local: Object.fromEntries(
+        locales.map((l) => [l.language, { ...l.attrs, name: l.title }]),
+      ),
     };
   }
 
@@ -43,19 +47,42 @@ export default defineEventHandler(async (event) => {
       local: Record<string, Record<string, any>>;
     }>(event);
 
-    if (!body.name) throw createError({ statusCode: 400, message: "Name is required" });
+    if (!body.name)
+      throw createError({ statusCode: 400, message: "Name is required" });
 
     const [inserted] = await db
       .insert(content)
-      .values({ name: body.name, type: CONTENT_TYPE, attrs: body.settings ?? null })
+      .values({
+        name: body.name,
+        type: CONTENT_TYPE,
+        attrs: body.settings ?? null,
+      })
       .returning();
 
     for (const lang of body.languages) {
-      await db.insert(contentLocal).values({
-        contentId: inserted.id,
-        language: lang,
-        title: body.local?.[lang]?.name ?? body.name,
-        attrs: body.local?.[lang] ?? null,
+      const [insertedLocale] = await db
+        .insert(contentLocal)
+        .values({
+          contentId: inserted.id,
+          language: lang,
+          title: body.local?.[lang]?.name ?? body.name,
+          attrs: body.local?.[lang] ?? null,
+        })
+        .returning();
+
+      await db.insert(seo).values({
+        contentLocalId: insertedLocale.id,
+        title: body.name,
+        description: null,
+        keywords: null,
+        ogTitle: body.name,
+        ogDescription: null,
+        ogImage: null,
+        twitterTitle: body.name,
+        twitterDescription: null,
+        twitterImage: null,
+        canonicalUrl: null,
+        robots: "index, follow",
       });
     }
 
@@ -79,7 +106,8 @@ export default defineEventHandler(async (event) => {
       .where(eq(content.id, Number(id)))
       .limit(1);
 
-    if (!contentRow) throw createError({ statusCode: 404, message: "Not found" });
+    if (!contentRow)
+      throw createError({ statusCode: 404, message: "Not found" });
 
     if (body.type === "settings") {
       await db
@@ -103,7 +131,11 @@ export default defineEventHandler(async (event) => {
         )
         .limit(1);
 
-      if (!locale) throw createError({ statusCode: 404, message: `Locale "${body.language}" not found` });
+      if (!locale)
+        throw createError({
+          statusCode: 404,
+          message: `Locale "${body.language}" not found`,
+        });
 
       await db
         .update(contentLocal)
