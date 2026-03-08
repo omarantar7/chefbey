@@ -2,7 +2,8 @@
 import { ref } from "vue";
 import Title from "../UI/Title.vue";
 import birdBg from "@/assets/images/bird-bg.png";
-import chefImage from "@/assets/images/5U4A0092.webp";
+
+const { data = [] } = defineProps<{ data: any }>();
 
 const formData = ref({
   firstName: "",
@@ -37,7 +38,10 @@ const handleSubmit = async () => {
     ></div>
     <div class="container mx-auto py-12 md:py-20 px-4 relative z-10">
       <div class="flex items-center justify-center text-center pb-12">
-        <Title title="CONTACT US" sub-title="Book your session today">
+        <Title
+          :title="data?.contactTitle"
+          :sub-title="data?.contactDescr"
+        >
           <template #icon>
             <span
               class="icon-[fluent--service-bell-16-filled] text-primary"
@@ -168,7 +172,7 @@ const handleSubmit = async () => {
             class="relative w-full h-fit rounded-2xl overflow-hidden shadow-2xl"
           >
             <img
-              :src="chefImage"
+              :src="data?.contactImage"
               alt="Chef cooking with fire"
               class="w-full object-top object-cover max-h-[600px]"
             />

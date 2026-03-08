@@ -88,6 +88,7 @@ const save = async () => {
     });
   } finally {
     isSaving.value = false;
+    useRouter()?.back();
   }
 };
 </script>

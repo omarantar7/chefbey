@@ -3,6 +3,7 @@ import logo from "@/assets/images/logo.png";
 import contentsTypeRegistry from "~~/config/contents-type-registry";
 
 const route = useRoute();
+const colorMode = useColorMode();
 
 const menuItems = [
   {
@@ -40,8 +41,12 @@ const isActive = (path: string) => {
 
 <template>
   <aside class="w-64 shadow-lg min-h-screen h-full">
-    <div class="p-6 ">
-      <img :src="logo" alt="logo" class="size-15.5 bg-white rounded-full object-cover" />
+    <div class="p-6">
+      <img
+        :src="logo"
+        alt="logo"
+        class="size-15.5 bg-white rounded-full object-cover"
+      />
     </div>
 
     <nav class="p-4">
@@ -53,8 +58,10 @@ const isActive = (path: string) => {
               :class="[
                 'flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors',
                 isActive(item?.path)
-                  ? 'bg-primary '
-                  : 'text-gray-700 hover:bg-gray-100',
+                  ? 'bg-primary text-white'
+                  : colorMode.value === 'dark'
+                    ? 'text-white hover:bg-gray-800'
+                    : 'text-black hover:bg-gray-100',
               ]"
             >
               <UIcon v-if="item?.icon" :name="item?.icon" class="w-5 h-5" />
@@ -64,11 +71,5 @@ const isActive = (path: string) => {
         </ClientOnly>
       </ul>
     </nav>
-
-    <div class="absolute bottom-0 w-64 p-4">
-      <div class="text-xs text-center">
-        @ {{ new Date().getFullYear() }} Admin Panel
-      </div>
-    </div>
   </aside>
 </template>

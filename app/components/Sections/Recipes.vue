@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Title from "../UI/Title.vue";
 import vector from "@/assets/images/vector1.png";
-import vector2 from "@/assets/images/bottom-wave.png";
-import RecipesBg from "@/assets/images/recipes.png";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
 
@@ -10,7 +8,13 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
+const { recipesData = [] } = defineProps<{ recipesData: any }>();
+
 const modules = [Pagination];
+
+const { data } = await useFetch("/api/page/contents/recipes");
+
+console.log("recipe", data.value);
 
 const recipes = shallowRef([
   {
@@ -64,15 +68,19 @@ const recipes = shallowRef([
 <template>
   <section
     class="relative min-h-screen h-fit bg-cover bg-top"
-    :style="{ backgroundImage: `url(${RecipesBg})` }"
+    :style="{ backgroundImage: `url(${recipesData?.recipesBg})` }"
     id="Recipes"
   >
+    <div class="absolute inset-0 bg-black/40 z-0" />
     <!-- top -->
     <div
-      class="flex items-center justify-center w-full h-72 bg-cover bg-top"
+      class="relative z-10 flex items-center justify-center w-full h-72 bg-cover bg-top"
       :style="{ backgroundImage: `url(${vector})` }"
     >
-      <Title title="Recipes" sub-title="EVERY PLATE TELLS A STORY">
+      <Title
+        :title="recipesData?.recipesTitle"
+        :sub-title="recipesData?.recipesDescr"
+      >
         <template #icon>
           <span
             class="icon-[fluent--service-bell-16-filled] text-primary"
@@ -81,7 +89,7 @@ const recipes = shallowRef([
       </Title>
     </div>
 
-    <div class="block container mx-auto">
+    <div class="relative z-10 block container mx-auto">
       <Swiper
         :modules="modules"
         :slides-per-view="'auto'"
@@ -89,30 +97,26 @@ const recipes = shallowRef([
         :pagination="{ clickable: true }"
         :centered-slides="false"
         :breakpoints="{
-          0: {
-            slidesPerView: 'auto',
-          },
-          1280: {
-            slidesPerView: 5,
-          },
+          0: { slidesPerView: 'auto' },
+          1280: { slidesPerView: 5 },
         }"
         class="awards-swiper"
       >
         <SwiperSlide
           v-for="slide in recipes"
           :key="slide.id"
-          class="!w-auto max-w-[222px]"
+          class="w-auto! max-w-55.5 flex items-stretch"
         >
-          <div class="rounded-xl bg-white py-5 px-4 h-full w-[222px]">
-            <div class="flex flex-col items-center justify-center">
+          <!-- card -->
+          <div class="rounded-xl bg-white py-5 px-4 w-55.5 flex flex-col">
+            <div class="flex flex-col items-center justify-between flex-1">
               <img
                 :src="slide?.image"
                 alt=""
-                class="size-[164px] object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)]"
+                class="size-41 object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)]"
               />
               <h1
-                class="text-lg font-semibold text-black mb-1 w-full text-center"
-                style="padding-top: 1.5rem"
+                class="text-lg font-semibold text-black mb-1 w-full text-center pt-6"
               >
                 {{ slide?.title }}
               </h1>
@@ -126,7 +130,7 @@ const recipes = shallowRef([
               <button
                 class="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform mt-3"
               >
-                {{ `Ingredients` }}
+                Ingredients
               </button>
             </div>
           </div>
@@ -135,7 +139,7 @@ const recipes = shallowRef([
     </div>
     <!-- bottom -->
     <div
-      class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-white to-transparent"
+      class="absolute z-10 bottom-0 w-full h-20 bg-linear-to-t from-white to-transparent"
     ></div>
   </section>
 </template>
@@ -143,11 +147,13 @@ const recipes = shallowRef([
 <style scoped>
 .awards-swiper {
   padding-top: 14rem;
-  padding-bottom: 3rem;
+  padding-bottom: 7rem;
   width: 100%;
   padding-left: 1rem;
   padding-right: 1rem;
   max-width: 81%;
+  display: flex;
+  align-items: stretch;
 }
 
 .awards-swiper :deep(.swiper-pagination) {

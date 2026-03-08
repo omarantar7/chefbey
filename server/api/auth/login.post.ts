@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
-import db from "../../../lib/db";
-import { session } from "../../../lib/db/schema";
+import db from "~~/lib/db";
+import { session } from "~~/lib/db/schema";
 import { randomBytes } from "crypto";
 
 export default defineEventHandler(async (event) => {

@@ -1,33 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import bgImage from "@/assets/images/banner-bg.png";
 import YoutubeVideo from "./YoutubeVideo.vue";
 
-const chefData = ref({
-  name: "Chef Bey",
-  title: "The Art Of Culinary Innovation",
-  fullName: "Abed Alrahman Antar",
-  nickname: "Chefbey",
-  description:
-    "is a Lebanese chef and consultant celebrated for his award-winning Turkish and Lebanese cuisine. His greatest achievement is putting smiles on faces through food.",
-  experience: "10+",
-  experienceLabel: "Years Experience",
-  dishes: "12+",
-  dishesLabel: "Signature Dishes",
-  buttons: {
-    contact: "Contact me",
-    video: "A day in my life",
-  },
-});
+const { data = [] } = defineProps<{ data: any }>();
 
-const carouselImages = ref([
-  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop",
-]);
+console.log({ data });
+
+const carouselImages = computed(() => {
+  return data?.heroImages ?? [];
+});
 
 const carouselRef = ref<HTMLElement | null>(null);
 let intervalId: number | null | any = null;
@@ -57,22 +38,26 @@ onUnmounted(() => {
 <template>
   <div
     class="relative min-h-screen bg-cover bg-top overflow-hidden"
-    :style="{ backgroundImage: `url(${bgImage})` }"
+    :style="{ backgroundImage: `url(${data?.bgHeroImage})` }"
   >
-    <div class="container mx-auto pt-40 md:pt-0 px-4 py-12 lg:py-20 lg:pt-32">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/40 z-0" />
+
+    <div
+      class="container mx-auto pt-40 md:pt-0 px-4 py-12 lg:py-20 lg:pt-32 relative z-10"
+    >
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="space-y-6 lg:space-y-8">
           <div>
             <h1 class="text-5xl lg:text-7xl font-bold text-white mb-4">
               <span class="font-allura italic font-normal text-primary">{{
-                chefData.name
+                `Chef Bey`
               }}</span>
-              <span class="block mt-2">{{ chefData.title }}</span>
+              <span class="block mt-2">{{ data?.title }}</span>
             </h1>
 
             <p class="text-lg text-[#fafafa] leading-relaxed mt-6">
-              <span class="font-semibold">{{ chefData.fullName }}</span
-              >, known as "{{ chefData.nickname }}", {{ chefData.description }}
+              {{ data?.description }}
             </p>
           </div>
 
@@ -82,7 +67,7 @@ onUnmounted(() => {
               to="/#contactus"
               class="flex items-center justify-center py-2.5 px-9 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 ease-out"
             >
-              {{ chefData.buttons.contact }}
+              Contact me
             </NuxtLink>
 
             <label
@@ -96,17 +81,18 @@ onUnmounted(() => {
               >
                 <path d="M8 5v14l11-7z" />
               </svg>
-              {{ chefData.buttons.video }}
+              A day in my life
             </label>
 
             <input type="checkbox" id="my_modal_7" class="modal-toggle" />
             <div class="modal" role="dialog">
               <div class="modal-box">
-                <h3 class="text-lg font-bold w-full text-center">
-                  A day of my life
-                </h3>
                 <ClientOnly>
-                  <YoutubeVideo videoId="Kd_SNlMuaqU" v-once />
+                  <YoutubeVideo
+                    :videoId="data?.youtubeLink"
+                    v-if="data?.youtubeLink"
+                    v-once
+                  />
                 </ClientOnly>
               </div>
               <label class="modal-backdrop" for="my_modal_7">Close</label>
@@ -120,10 +106,10 @@ onUnmounted(() => {
                 class="absolute -left-4 top-0 w-20 h-20 bg-yellow-300 rounded-full opacity-30 blur-xl"
               ></div>
               <h3 class="text-5xl font-bold text-[#fafafa] relative z-10">
-                {{ chefData.experience }}
+                {{ data?.experienceNumber }}
               </h3>
               <p class="text-gray-300 font-medium mt-1 relative z-10">
-                {{ chefData.experienceLabel }}
+                {{ data?.experienceLabel }}
               </p>
             </div>
 
@@ -132,10 +118,10 @@ onUnmounted(() => {
                 class="absolute -left-4 top-0 w-20 h-20 bg-orange-300 rounded-full opacity-30 blur-xl"
               ></div>
               <h3 class="text-5xl font-bold text-[#fafafa] relative z-10">
-                {{ chefData.dishes }}
+                {{ data.dishesNumber }}
               </h3>
               <p class="text-gray-300 font-medium mt-1 relative z-10">
-                {{ chefData.dishesLabel }}
+                {{ data.dishesLabel }}
               </p>
             </div>
           </div>

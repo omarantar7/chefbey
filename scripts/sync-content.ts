@@ -6,14 +6,15 @@ import {
   mkdirSync,
 } from "fs";
 import { join } from "path";
-import { drizzle } from "drizzle-orm/libsql";
 import { content } from "../lib/db/schema/content";
 import { contentLocal } from "../lib/db/schema/contentLocal";
 import { eq, and } from "drizzle-orm";
 import env from "../lib/env";
 import { seo } from "../lib/db/schema/seo";
+import { drizzle } from "drizzle-orm/libsql";
 
-const db = drizzle(env.TURSO_DATABASE_URL, { casing: "snake_case" });
+const db = drizzle(env.NUXT_DB_FILE_NAME, { casing: "snake_case" });
+
 const languages = env.CONTENT_LANGUAGES;
 
 const EXCLUDED_FILES = ["index.ts", "types.ts", "field-types.ts"];

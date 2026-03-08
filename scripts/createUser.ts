@@ -1,10 +1,10 @@
-import { drizzle } from "drizzle-orm/libsql";
 import { user } from "../lib/db/schema/auth";
 import env from "../lib/env";
 import bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
+import { drizzle } from "drizzle-orm/libsql";
+const db = drizzle(env.NUXT_DB_FILE_NAME, { casing: "snake_case" });
 
-const db = drizzle(env.TURSO_DATABASE_URL);
 async function addUser(
   name: string,
   email: string,

@@ -1,12 +1,12 @@
-import { drizzle } from "drizzle-orm/libsql";
 import { content, contentLocal } from "~~/lib/db/schema";
 import { eq, and } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/libsql";
 import env from "~~/lib/env";
 
-const db = drizzle(env.TURSO_DATABASE_URL, { casing: "snake_case" });
+const db = drizzle(env.NUXT_DB_FILE_NAME, { casing: "snake_case" });
 
 export const contentService = {
-  async get(type: string,contentType: string = "content") {
+  async get(type: string, contentType: string = "content") {
     const [contentRow] = await db
       .select()
       .from(content)

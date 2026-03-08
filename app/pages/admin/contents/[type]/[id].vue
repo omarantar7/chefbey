@@ -8,7 +8,7 @@ const { type, id } = defineProps<Props>();
 const isNew = computed(() => id == "new");
 const router = useRouter();
 const dataset = useDataset();
-const languages = dataset?.contentLanguages;
+const languages:any = dataset?.contentLanguages;
 
 const allFields = computed(
   () => contentsTypeRegistry[`contents:${type}`].fields,
@@ -30,7 +30,12 @@ const localFields = computed(() =>
   ),
 );
 
-const name = ref("");
+// One name per language
+const localNames = reactive<Record<string, string>>(
+  Object.fromEntries(languages.map((lang: string) => [lang, ""])),
+);
+
+const activeNameLang = ref(languages[0]);
 
 const settingsData = reactive<Record<string, any>>(
   Object.fromEntries(Object.keys(settingsFields.value).map((k) => [k, null])),
@@ -49,13 +54,14 @@ if (!isNew.value) {
   const { data }: any = await useFetch(`/api/contents/${type}/${id}`);
   watchEffect(() => {
     if (!data.value) return;
-    name.value = data.value.name ?? "";
-    Object.assign(settingsData, data.value.settings);
+    // Load name per language from local data
     for (const lang of languages) {
+      localNames[lang] = data.value.localNames?.[lang] ?? data.value.name ?? "";
       if (data.value.local[lang]) {
         Object.assign(localData[lang], data.value.local[lang]);
       }
     }
+    Object.assign(settingsData, data.value.settings);
   });
 }
 
@@ -63,22 +69,26 @@ const toast = useToast();
 const isSaving = ref(false);
 
 const save = async () => {
-  if (!name.value.trim()) {
+  // Validate all language names are filled
+  const missingLang = languages.find((lang: string) => !localNames[lang]?.trim());
+  if (missingLang) {
     toast.add({
-      title: "Name is required.",
+      title: `Name is required for "${missingLang}".`,
       color: "error",
       icon: "i-heroicons-x-circle",
     });
+    activeNameLang.value = missingLang;
     return;
   }
 
   isSaving.value = true;
   try {
     if (isNew.value) {
-      const res: any = await $fetch(`/api/contents/${type}/${id}`, {
+      const res: any = await $fetch(`/api/contents/${type}/new`, {
         method: "POST",
         body: {
-          name: name.value,
+          name: localNames[languages[0]], // default name from first language
+          localNames,
           languages,
           settings: settingsData,
           local: localData,
@@ -89,7 +99,11 @@ const save = async () => {
       await Promise.all([
         $fetch(`/api/contents/${type}/${id}`, {
           method: "PUT",
-          body: { type: "settings", name: name.value, attrs: settingsData },
+          body: {
+            type: "settings",
+            name: localNames[languages[0]],
+            attrs: settingsData,
+          },
         }),
         ...languages.map((lang: string) =>
           $fetch(`/api/contents/${type}/${id}`, {
@@ -97,7 +111,7 @@ const save = async () => {
             body: {
               type: "local",
               language: lang,
-              name: name.value,
+              name: localNames[lang],
               attrs: localData[lang],
             },
           }),
@@ -126,11 +140,29 @@ const save = async () => {
 
 <template>
   <div class="p-8 space-y-4">
-    <!-- Name field -->
+    <!-- Name field per language -->
     <UCard>
-      <UFormField label="Name" required>
-        <UInput v-model="name" placeholder="Enter name" class="w-full" />
-      </UFormField>
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-gray-600">Name <span class="text-red-500">*</span></h2>
+          <div class="flex gap-1">
+            <UButton
+              v-for="lang in languages"
+              :key="lang"
+              :label="lang.toUpperCase()"
+              size="sm"
+              :variant="activeNameLang === lang ? 'solid' : 'outline'"
+              color="primary"
+              @click="activeNameLang = lang"
+            />
+          </div>
+        </div>
+      </template>
+      <UInput
+        v-model="localNames[activeNameLang]"
+        placeholder="Enter name"
+        class="w-full"
+      />
     </UCard>
 
     <div class="flex gap-4 items-start w-full">

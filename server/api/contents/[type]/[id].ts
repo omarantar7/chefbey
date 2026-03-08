@@ -1,10 +1,11 @@
-import { drizzle } from "drizzle-orm/libsql";
 import { content, contentLocal } from "~~/lib/db/schema";
 import { eq, and } from "drizzle-orm";
-import env from "~~/lib/env";
 import { seo } from "~~/lib/db/schema/seo";
+import { drizzle } from "drizzle-orm/libsql";
+import env from "~~/lib/env";
 
-const db = drizzle(env.TURSO_DATABASE_URL, { casing: "snake_case" });
+const db = drizzle(env.NUXT_DB_FILE_NAME, { casing: "snake_case" });
+
 const CONTENT_TYPE = "contents:recipes";
 
 export default defineEventHandler(async (event) => {
@@ -40,54 +41,50 @@ export default defineEventHandler(async (event) => {
 
   // POST (new)
   if (event.method === "POST") {
-    const body = await readBody<{
-      name: string;
-      languages: string[];
-      settings: Record<string, any>;
-      local: Record<string, Record<string, any>>;
-    }>(event);
+  const body = await readBody<{
+    name: string;
+    localNames: Record<string, string>;
+    languages: string[];
+    settings: Record<string, any>;
+    local: Record<string, Record<string, any>>;
+  }>(event);
 
-    if (!body.name)
-      throw createError({ statusCode: 400, message: "Name is required" });
+  if (!body.name) throw createError({ statusCode: 400, message: "Name is required" });
 
-    const [inserted] = await db
-      .insert(content)
+  const [inserted] = await db
+    .insert(content)
+    .values({ name: body.name, type: CONTENT_TYPE, attrs: body.settings ?? null })
+    .returning();
+
+  for (const lang of body.languages) {
+    const [insertedLocale] = await db
+      .insert(contentLocal)
       .values({
-        name: body.name,
-        type: CONTENT_TYPE,
-        attrs: body.settings ?? null,
+        contentId: inserted.id,
+        language: lang,
+        title: body.localNames?.[lang] ?? body.name,
+        attrs: body.local?.[lang] ?? null,
       })
       .returning();
 
-    for (const lang of body.languages) {
-      const [insertedLocale] = await db
-        .insert(contentLocal)
-        .values({
-          contentId: inserted.id,
-          language: lang,
-          title: body.local?.[lang]?.name ?? body.name,
-          attrs: body.local?.[lang] ?? null,
-        })
-        .returning();
-
-      await db.insert(seo).values({
-        contentLocalId: insertedLocale.id,
-        title: body.name,
-        description: null,
-        keywords: null,
-        ogTitle: body.name,
-        ogDescription: null,
-        ogImage: null,
-        twitterTitle: body.name,
-        twitterDescription: null,
-        twitterImage: null,
-        canonicalUrl: null,
-        robots: "index, follow",
-      });
-    }
-
-    return { success: true, id: inserted.id };
+    await db.insert(seo).values({
+      contentLocalId: insertedLocale.id,
+      title: body.localNames?.[lang] ?? body.name,
+      description: null,
+      keywords: null,
+      ogTitle: body.localNames?.[lang] ?? body.name,
+      ogDescription: null,
+      ogImage: null,
+      twitterTitle: body.localNames?.[lang] ?? body.name,
+      twitterDescription: null,
+      twitterImage: null,
+      canonicalUrl: null,
+      robots: "index, follow",
+    });
   }
+
+  return { success: true, id: inserted.id };
+}
 
   // PUT (update)
   if (event.method === "PUT") {

@@ -14,6 +14,10 @@ const contentsTypeRegistry: Record<string, any> = {
         "type": "text",
         "label": "Recipe Description"
       },
+      "calories": {
+        "type": "string",
+        "label": "Recipe calories"
+      },
       "image": {
         "type": "image",
         "label": "Recipe Image"

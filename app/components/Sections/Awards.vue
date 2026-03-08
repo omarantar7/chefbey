@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef } from "vue";
 import Title from "../UI/Title.vue";
-import vector from "@/assets/images/vector1.png";
-import vector2 from "@/assets/images/bottom-wave.png";
 import birdBg from "@/assets/images/bird-bg.png";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
@@ -11,40 +8,9 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const modules = [Pagination];
+const { data = {} } = defineProps<{ data: any }>();
 
-const awards = shallowRef([
-  {
-    id: Math.random(),
-    title: "2024 Winner",
-    description: "Award-Winning Chef",
-    image: "@/assets/images/medical-icon_restaurant.svg",
-  },
-  {
-    id: Math.random(),
-    title: "2024 Winner",
-    description: "Award-Winning Chef",
-    image: "@/assets/images/medical-icon_restaurant.svg",
-  },
-  {
-    id: Math.random(),
-    title: "2024 Winner",
-    description: "Award-Winning Chef",
-    image: "@/assets/images/medical-icon_restaurant.svg",
-  },
-  {
-    id: Math.random(),
-    title: "2024 Winner",
-    description: "Award-Winning Chef",
-    image: "@/assets/images/medical-icon_restaurant.svg",
-  },
-  {
-    id: Math.random(),
-    title: "2024 Winner",
-    description: "Award-Winning Chef",
-    image: "@/assets/images/medical-icon_restaurant.svg",
-  },
-]);
+const modules = [Pagination];
 </script>
 
 <template>
@@ -58,7 +24,7 @@ const awards = shallowRef([
     <!-- Content -->
     <div class="container mx-auto py-12 md:py-60 px-4 relative z-10">
       <div class="flex items-center justify-center text-center pb-8">
-        <Title title="Recognition" sub-title="Certifications & Awards">
+        <Title :title="data?.awardsTitle" :sub-title="data?.awardsDescr">
           <template #icon>
             <span
               class="icon-[fluent--service-bell-16-filled] text-primary"
@@ -77,13 +43,13 @@ const awards = shallowRef([
           :centered-slides="false"
           class="awards-swiper"
         >
-          <SwiperSlide v-for="slide in awards" :key="slide.id">
-            <div class="rounded-xl bg-white py-7 px-6 h-full">
+          <SwiperSlide v-for="(slide, index) in data?.awards" :key="index">
+            <div class="rounded-xl bg-white py-7 max-w-50 px-6 h-full">
               <div class="flex flex-col items-center justify-center">
                 <img
                   :src="slide?.image"
                   alt=""
-                  class="size-[168px] object-contain"
+                  class="size-42 object-contain"
                 />
                 <h1
                   class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
@@ -100,17 +66,17 @@ const awards = shallowRef([
       </div>
 
       <!-- Desktop Grid (md breakpoint and above) -->
-      <div class="hidden md:flex flex-wrap justify-center items-center gap-3">
+      <div class="hidden md:flex flex-wrap justify-center items-stretch gap-3">
         <div
-          v-for="slide in awards"
-          :key="slide.id"
-          class="rounded-xl bg-white py-7 px-6 w-full md:w-auto"
+          v-for="(slide, index) in data?.awards"
+          :key="index"
+          class="rounded-xl bg-white py-7 max-w-56 px-6 w-full md:w-auto shadow-md flex flex-col"
         >
-          <div class="flex flex-col items-center justify-center">
+          <div class="flex flex-col items-center justify-center flex-1">
             <img
               :src="slide?.image"
               alt=""
-              class="size-[168px] object-contain"
+              class="size-42 object-contain"
             />
             <h1
               class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"

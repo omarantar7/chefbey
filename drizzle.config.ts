@@ -5,10 +5,9 @@ import env from "./lib/env";
 export default defineConfig({
   out: "./lib/db/migration",
   schema: "./lib/db/schema/index.ts",
-  casing:"snake_case",
-  dialect: "turso",
+  casing: "snake_case",
+  dialect: "sqlite",
   dbCredentials: {
-    url: env.TURSO_DATABASE_URL,
-    authToken: env.BUN_ENV === "development" ? undefined : env.TURSO_AUTH_TOKEN,
+    url: env.NUXT_DB_FILE_NAME!,
   },
 });

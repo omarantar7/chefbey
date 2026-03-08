@@ -34,6 +34,10 @@ const contentTypeRegistry: Record<string, any> = {
         "type": "string",
         "label": "Dishes Label"
       },
+      "youtubeLink": {
+        "type": "string",
+        "label": "Youtube Video Id"
+      },
       "heroImages": {
         "type": "gallery",
         "label": "Hero Images"
@@ -71,6 +75,56 @@ const contentTypeRegistry: Record<string, any> = {
             "label": "Service Description"
           }
         }
+      },
+      "awardsTitle": {
+        "type": "string",
+        "label": "Awards Title"
+      },
+      "awardsDescr": {
+        "type": "string",
+        "label": "Awards Description"
+      },
+      "awards": {
+        "type": "repeater",
+        "label": "Awards",
+        "fields": {
+          "image": {
+            "type": "image",
+            "label": "Award Image"
+          },
+          "title": {
+            "type": "string",
+            "label": "Award Title"
+          },
+          "description": {
+            "type": "text",
+            "label": "Award Description"
+          }
+        }
+      },
+      "recipesTitle": {
+        "type": "string",
+        "label": "Recipes Title"
+      },
+      "recipesDescr": {
+        "type": "string",
+        "label": "Recipes Description"
+      },
+      "recipesBg": {
+        "type": "image",
+        "label": "Recipes Background Image"
+      },
+      "contactTitle": {
+        "type": "string",
+        "label": "Contact Title"
+      },
+      "contactDescr": {
+        "type": "string",
+        "label": "Contact Description"
+      },
+      "contactImage": {
+        "type": "image",
+        "label": "Contact Us Image"
       }
     }
   }

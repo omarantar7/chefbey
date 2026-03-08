@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
     return {
       name: filePart?.filename,
-      url: `${env.BASE_URL}uploads/${name}`,
+      url: env.BASE_URL ? `${env.BASE_URL}uploads/${name}` : `/uploads/${name}`,
     };
   } catch (e) {
     console.error("❌ Upload error on server:", e);

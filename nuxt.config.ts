@@ -43,5 +43,6 @@ export default defineNuxtConfig({
       contentLanguages: env.CONTENT_LANGUAGES ?? "en",
       baseUrl: env.BASE_URL,
     },
+    db_file_name: env.NUXT_DB_FILE_NAME,
   },
 });

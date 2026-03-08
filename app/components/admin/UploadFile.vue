@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import imageCompression from "browser-image-compression";
+
 type Props = {
   multiple?: boolean;
   modelValue: string | string[] | null;
@@ -17,6 +19,15 @@ const images = computed<string[]>(() => {
   return Array.isArray(modelValue) ? modelValue : [modelValue];
 });
 
+const compressImage = async (file: File): Promise<File> => {
+  const options = {
+    maxSizeMB: 5,
+    useWebWorker: true,
+    fileType: "image/webp",
+  };
+  return await imageCompression(file, options);
+};
+
 const handleChange = async (event: any) => {
   const fileList: FileList = event?.target?.files ?? event?.files;
   const fileArray: File[] = fileList ? Array.from(fileList) : [];
@@ -28,8 +39,12 @@ const handleChange = async (event: any) => {
     const uploaded: any[] = [];
 
     for (const file of fileArray) {
+      // Compress before uploading
+      const compressed = await compressImage(file);
+
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", compressed, compressed.name);
+
       const { url } = await $fetch<{ name: string; url: string }>(
         "/api/upload",
         {
@@ -41,13 +56,11 @@ const handleChange = async (event: any) => {
     }
 
     if (multiple) {
-      // Append to existing images
       emit("update:modelValue", [...images.value, ...uploaded]);
     } else {
       emit("update:modelValue", uploaded[0]);
     }
 
-    // Reset input
     event.target.value = "";
   } catch (e: any) {
     console.error("Upload error:", e);
@@ -61,7 +74,6 @@ const handleChange = async (event: any) => {
     isUploading.value = false;
   }
 };
-
 const removeImage = (index: number) => {
   if (multiple) {
     const updated = [...images.value];

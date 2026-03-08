@@ -1,9 +1,8 @@
-import { drizzle } from "drizzle-orm/libsql";
 import { seo } from "~~/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/libsql";
 import env from "~~/lib/env";
-
-const db = drizzle(env.TURSO_DATABASE_URL, { casing: "snake_case" });
+const db = drizzle(env.NUXT_DB_FILE_NAME, { casing: "snake_case" });
 
 export default defineEventHandler(async (event) => {
   const id = Number(getRouterParam(event, "id"));

@@ -12,6 +12,7 @@ const definition: ContentTypeDefinition = {
     experienceLabel: { type: FieldType.String, label: "Experience Label" },
     dishesNumber: { type: FieldType.String, label: "Dishes Number" },
     dishesLabel: { type: FieldType.String, label: "Dishes Label" },
+    youtubeLink: { type: FieldType.String, label: "Youtube Video Id" },
     heroImages: { type: FieldType.Gallery, label: "Hero Images" },
     servicesTitle: { type: FieldType.String, label: "Services Title" },
     servicesDescr: { type: FieldType.String, label: "Services Description" },
@@ -29,6 +30,23 @@ const definition: ContentTypeDefinition = {
         description: { type: FieldType.Text, label: "Service Description" },
       },
     },
+    awardsTitle: { type: FieldType.String, label: "Awards Title" },
+    awardsDescr: { type: FieldType.String, label: "Awards Description" },
+    awards: {
+      type: FieldType.Repeater,
+      label: "Awards",
+      fields: {
+        image: { type: FieldType.Image, label: "Award Image" },
+        title: { type: FieldType.String, label: "Award Title" },
+        description: { type: FieldType.Text, label: "Award Description" },
+      },
+    },
+    recipesTitle: { type: FieldType.String, label: "Recipes Title" },
+    recipesDescr: { type: FieldType.String, label: "Recipes Description" },
+    recipesBg: { type: FieldType.Image, label: "Recipes Background Image" },
+    contactTitle: { type: FieldType.String, label: "Contact Title" },
+    contactDescr: { type: FieldType.String, label: "Contact Description" },
+    contactImage: { type: FieldType.Image, label: "Contact Us Image" },
   },
 };
 
