@@ -21,6 +21,24 @@ const contentsTypeRegistry: Record<string, any> = {
       "image": {
         "type": "image",
         "label": "Recipe Image"
+      },
+      "prepTime": {
+        "type": "string",
+        "label": "Preperation Time"
+      },
+      "servings": {
+        "type": "string",
+        "label": "Servings"
+      },
+      "ingredients": {
+        "type": "repeater",
+        "label": "ingredients",
+        "fields": {
+          "name": {
+            "type": "string",
+            "label": "ingredient name"
+          }
+        }
       }
     }
   }

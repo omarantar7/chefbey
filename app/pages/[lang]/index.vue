@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 definePageMeta({ layout: "default" });
 
-const { data } = await useFetch("/api/page/home");
+const route = useRoute();
+
+const { data } = await useFetch("/api/page/home", {
+  params: { lang: route.params.lang },
+});
 
 const settings: any = computed(() => data.value?.settings ?? {});
 const local: any = computed(() => data.value?.local ?? {});
@@ -9,6 +13,7 @@ const seoData: any = computed(() => data.value?.seo ?? {});
 
 const banner = computed(() => {
   return {
+    heroName: local.value?.heroName,
     title: local.value?.title,
     description: local.value?.description,
     bgHeroImage: settings.value?.bgHeroImage,

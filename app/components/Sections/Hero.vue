@@ -4,8 +4,6 @@ import YoutubeVideo from "./YoutubeVideo.vue";
 
 const { data = [] } = defineProps<{ data: any }>();
 
-console.log({ data });
-
 const carouselImages = computed(() => {
   return data?.heroImages ?? [];
 });
@@ -51,7 +49,7 @@ onUnmounted(() => {
           <div>
             <h1 class="text-5xl lg:text-7xl font-bold text-white mb-4">
               <span class="font-allura italic font-normal text-primary">{{
-                `Chef Bey`
+                data?.heroName ?? `Chef Bey`
               }}</span>
               <span class="block mt-2">{{ data?.title }}</span>
             </h1>
@@ -64,7 +62,7 @@ onUnmounted(() => {
           <!-- Buttons -->
           <div class="flex flex-wrap gap-4">
             <NuxtLink
-              to="/#contactus"
+              :to="`${$route?.params?.lang}/#contactus`"
               class="flex items-center justify-center py-2.5 px-9 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 ease-out"
             >
               Contact me

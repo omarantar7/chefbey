@@ -12,57 +12,13 @@ const { recipesData = [] } = defineProps<{ recipesData: any }>();
 
 const modules = [Pagination];
 
-const { data } = await useFetch("/api/page/contents/recipes");
+const route = useRoute();
 
-console.log("recipe", data.value);
+const { data: recipes }: any = await useFetch("/api/page/contents/recipes", {
+  params: { lang: route?.params?.lang },
+});
 
-const recipes = shallowRef([
-  {
-    id: Math.random(),
-    image:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image:
-      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image:
-      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-  {
-    id: Math.random(),
-    image:
-      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop",
-    title: "Red Hot BBQ Chicken Wings",
-    description:
-      "Juicy chicken wings grilled to perfection, coated in a smoky BBQ glaze.",
-    freeText: "120 calories",
-  },
-]);
+const t = useT();
 </script>
 
 <template>
@@ -105,33 +61,37 @@ const recipes = shallowRef([
         <SwiperSlide
           v-for="slide in recipes"
           :key="slide.id"
-          class="w-auto! max-w-55.5 flex items-stretch"
+          class="w-auto! max-w-55.5 !h-auto flex items-stretch"
         >
           <!-- card -->
-          <div class="rounded-xl bg-white py-5 px-4 w-55.5 flex flex-col">
+          <div
+            class="rounded-xl bg-white py-5 px-4 w-55.5 flex flex-col h-full"
+          >
             <div class="flex flex-col items-center justify-between flex-1">
               <img
-                :src="slide?.image"
+                :src="slide?.settings?.image"
                 alt=""
                 class="size-41 object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)]"
               />
               <h1
-                class="text-lg font-semibold text-black mb-1 w-full text-center pt-6"
+                class="text-lg font-semibold text-black mb-1 w-full text-center pt-6 line-clamp-1"
               >
-                {{ slide?.title }}
+                {{ slide?.name }}
               </h1>
-              <p class="text-[#667583] w-full text-center">
-                {{ slide?.description }}
+              <p class="text-[#667583] w-full text-center line-clamp-5">
+                {{ slide?.local?.description }}
               </p>
               <hr class="h-0.5 bg-[#DCDFE2] w-full my-3" />
               <p class="text-[#667583] w-full text-center">
-                {{ slide?.freeText }}
+                {{ slide?.local?.calories }}
               </p>
-              <button
-                class="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform mt-3"
-              >
-                Ingredients
-              </button>
+              <NuxtLink :to="`/${route?.params?.lang}/recipes/${slide?.id}`">
+                <button
+                  class="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 cursor-pointer text-white rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform mt-3"
+                >
+                  {{ t("Ingredients") }}
+                </button>
+              </NuxtLink>
             </div>
           </div>
         </SwiperSlide>
@@ -158,6 +118,14 @@ const recipes = shallowRef([
 
 .awards-swiper :deep(.swiper-pagination) {
   bottom: 0;
+}
+
+.awards-swiper :deep(.swiper-wrapper) {
+  align-items: stretch;
+}
+
+.awards-swiper :deep(.swiper-slide) {
+  height: auto;
 }
 
 .awards-swiper :deep(.swiper-pagination-bullet) {

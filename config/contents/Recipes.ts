@@ -9,6 +9,15 @@ const definition: ContentsTypeDefinition = {
     description: { type: FieldType.Text, label: "Recipe Description" },
     calories: { type: FieldType.String, label: "Recipe calories" },
     image: { type: FieldType.Image, label: "Recipe Image" },
+    prepTime: { type: FieldType.String, label: "Preperation Time" },
+    servings: { type: FieldType.String, label: "Servings" },
+    ingredients: {
+      type: FieldType.Repeater,
+      label: "ingredients",
+      fields: {
+        name: { type: FieldType.String, label: "ingredient name" },
+      },
+    },
   },
 };
 

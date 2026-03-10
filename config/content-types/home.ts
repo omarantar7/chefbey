@@ -5,6 +5,7 @@ const definition: ContentTypeDefinition = {
   name: "Home",
   type: ContentType.Home,
   fields: {
+    heroName: { type: FieldType.String, label: "Hero ChefBey Name" },
     title: { type: FieldType.String, label: "Hero Title" },
     description: { type: FieldType.Text, label: "Hero Description" },
     bgHeroImage: { type: FieldType.Image, label: "Background Hero Image" },

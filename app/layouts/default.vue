@@ -17,6 +17,6 @@ useSeoMeta({
     <div class="min-h-screen">
       <slot />
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>

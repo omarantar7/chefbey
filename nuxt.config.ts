@@ -40,7 +40,9 @@ export default defineNuxtConfig({
       },
     },
     public: {
-      contentLanguages: env.CONTENT_LANGUAGES ?? "en",
+      contentLanguages: (process.env.CONTENT_LANGUAGES ?? "en")
+        .split(",")
+        .map((l) => l.trim()),
       baseUrl: env.BASE_URL,
     },
     db_file_name: env.NUXT_DB_FILE_NAME,

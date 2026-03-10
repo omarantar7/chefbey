@@ -6,6 +6,10 @@ const contentTypeRegistry: Record<string, any> = {
     "name": "Home",
     "type": "content:home",
     "fields": {
+      "heroName": {
+        "type": "string",
+        "label": "Hero ChefBey Name"
+      },
       "title": {
         "type": "string",
         "label": "Hero Title"

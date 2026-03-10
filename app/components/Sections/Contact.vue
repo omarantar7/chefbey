@@ -28,6 +28,7 @@ const handleSubmit = async () => {
            `,
   });
 };
+const t = useT();
 </script>
 
 <template>
@@ -38,10 +39,7 @@ const handleSubmit = async () => {
     ></div>
     <div class="container mx-auto py-12 md:py-20 px-4 relative z-10">
       <div class="flex items-center justify-center text-center pb-12">
-        <Title
-          :title="data?.contactTitle"
-          :sub-title="data?.contactDescr"
-        >
+        <Title :title="data?.contactTitle" :sub-title="data?.contactDescr">
           <template #icon>
             <span
               class="icon-[fluent--service-bell-16-filled] text-primary"
@@ -62,13 +60,13 @@ const handleSubmit = async () => {
                   for="firstName"
                   class="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  First name
+                  {{ t("First name") }}
                 </label>
                 <input
                   type="text"
                   id="firstName"
                   v-model="formData.firstName"
-                  placeholder="First name"
+                  :placeholder="t('First name')"
                   class="w-full px-4 py-3 border bg-white border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   required
                 />
@@ -78,13 +76,13 @@ const handleSubmit = async () => {
                   for="lastName"
                   class="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  Last name
+                  {{ t("Last name") }}
                 </label>
                 <input
                   type="text"
                   id="lastName"
                   v-model="formData.lastName"
-                  placeholder="Last name"
+                  :placeholder="t('Last name')"
                   class="w-full px-4 py-3 border text-black bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   required
                 />
@@ -97,13 +95,13 @@ const handleSubmit = async () => {
                 for="email"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email
+                {{ t("Email") }}
               </label>
               <input
                 type="email"
                 id="email"
                 v-model="formData.email"
-                placeholder="mail@example.com"
+                :placeholder="t('mail@example.com')"
                 class="w-full px-4 py-3 border text-black bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 required
               />
@@ -115,10 +113,10 @@ const handleSubmit = async () => {
                 for="phone"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                Phone number
+                {{ t("Phone number") }}
               </label>
               <div class="flex gap-2">
-                <select
+                <!-- <select
                   v-model="selectedCountry"
                   class="px-3 py-3 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white"
                 >
@@ -126,12 +124,12 @@ const handleSubmit = async () => {
                   <option value="UK">UK</option>
                   <option value="CA">CA</option>
                   <option value="LB">LB</option>
-                </select>
+                </select> -->
                 <input
                   type="tel"
                   id="phone"
                   v-model="formData.phoneNumber"
-                  placeholder="+1 (555) 000-0000"
+                  :placeholder="t('+1 (555) 000-0000')"
                   class="flex-1 px-4 py-3 border bg-white text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   required
                 />
@@ -144,12 +142,12 @@ const handleSubmit = async () => {
                 for="message"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                Message
+                {{ t("Message") }}
               </label>
               <textarea
                 id="message"
                 v-model="formData.message"
-                placeholder="Leave us a message..."
+                :placeholder="t('Leave us a message...')"
                 rows="5"
                 class="w-full px-4 py-3 border text-black bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                 required
@@ -161,7 +159,7 @@ const handleSubmit = async () => {
               type="submit"
               class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              Send your message
+              {{ t("Send your message") }}
             </button>
           </form>
         </div>
