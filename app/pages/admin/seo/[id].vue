@@ -59,13 +59,6 @@ const save = async () => {
           Update SEO metadata for this entry
         </p>
       </div>
-      <UButton
-        label="Back"
-        icon="i-heroicons-arrow-left"
-        color="neutral"
-        variant="ghost"
-        @click="router.back()"
-      />
     </div>
 
     <UCard>

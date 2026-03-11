@@ -15,18 +15,36 @@ const formData = ref({
 
 const selectedCountry = ref("US");
 
+const isLoading = shallowRef<boolean>(false);
+
 const mail = useMail();
+const toast = useToast();
 
 const handleSubmit = async () => {
-  mail.send({
-    from: formData?.value?.firstName,
-    subject: `New contact from ${formData.value.firstName} ${formData.value.lastName}`,
-    text: `Name: ${formData.value.firstName} ${formData.value.lastName}
-        Email: ${formData.value.email}
-             Phone: ${selectedCountry.value} ${formData.value.phoneNumber}
-             Message: ${formData.value.message}
-           `,
-  });
+  console.log(formData.value);
+  isLoading.value = true;
+
+  try {
+    mail.send({
+      from: formData?.value?.firstName,
+      subject: `New contact from ${formData.value.firstName} ${formData.value.lastName}`,
+      text: `Name: ${formData.value.firstName} ${formData.value.lastName}
+      Email: ${formData.value.email}
+      Phone: ${selectedCountry.value} ${formData.value.phoneNumber}
+      Message: ${formData.value.message}
+      `,
+    });
+  } catch (error: any) {
+    console.error(error);
+    toast.add({
+      title: "Failed",
+      description: error?.data?.message ?? error?.message,
+      color: "error",
+      icon: "i-heroicons-x-circle",
+    });
+  } finally {
+    isLoading.value = false;
+  }
 };
 const t = useT();
 </script>
@@ -159,7 +177,9 @@ const t = useT();
               type="submit"
               class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              {{ t("Send your message") }}
+              {{
+                isLoading ? `${t("Send your message")}` : t("Send your message")
+              }}
             </button>
           </form>
         </div>
