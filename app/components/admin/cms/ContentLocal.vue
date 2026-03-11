@@ -3,13 +3,22 @@ import type { FieldDefinition } from "~~/config/index";
 
 type Props = {
   fields: Record<string, FieldDefinition> | any;
-  modelValue: Record<string, Record<string, any>>; // { en: {}, ar: {} }
+  modelValue: Record<string, Record<string, any>>;
   languages: string[];
+  withName?: boolean;
+  localNames?: Record<string, string>;
 };
 
-const { fields, languages, modelValue } = defineProps<Props>();
+const {
+  fields,
+  languages,
+  modelValue,
+  withName = false,
+  localNames,
+} = defineProps<Props>();
 const emit = defineEmits<{
   "update:modelValue": [value: Record<string, Record<string, any>>];
+  "update:localNames": [value: Record<string, string>];
 }>();
 
 const activeLanguage = ref<any>(languages[0]);
@@ -21,6 +30,13 @@ const handleChange = (key: string, value: any) => {
       ...modelValue[activeLanguage.value],
       [key]: value,
     },
+  });
+};
+
+const handleNameChange = (value: string) => {
+  emit("update:localNames", {
+    ...localNames,
+    [activeLanguage.value]: value,
   });
 };
 </script>
@@ -39,6 +55,16 @@ const handleChange = (key: string, value: any) => {
         @click="activeLanguage = lang"
       />
     </div>
+
+    <!-- Name field (only for contents) -->
+    <UFormField v-if="withName" label="Name" required>
+      <UInput
+        :modelValue="localNames?.[activeLanguage] ?? ''"
+        placeholder="Enter name"
+        class="w-full"
+        @update:modelValue="handleNameChange"
+      />
+    </UFormField>
 
     <!-- Fields for active language -->
     <div v-for="(field, key) in fields" :key="key">

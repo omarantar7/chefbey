@@ -8,7 +8,7 @@ const { type, id } = defineProps<Props>();
 const isNew = computed(() => id == "new");
 const router = useRouter();
 const dataset = useDataset();
-const languages:any = dataset?.contentLanguages;
+const languages: any = dataset?.contentLanguages;
 
 const allFields = computed(
   () => contentsTypeRegistry[`contents:${type}`].fields,
@@ -70,7 +70,9 @@ const isSaving = ref(false);
 
 const save = async () => {
   // Validate all language names are filled
-  const missingLang = languages.find((lang: string) => !localNames[lang]?.trim());
+  const missingLang = languages.find(
+    (lang: string) => !localNames[lang]?.trim(),
+  );
   if (missingLang) {
     toast.add({
       title: `Name is required for "${missingLang}".`,
@@ -140,31 +142,6 @@ const save = async () => {
 
 <template>
   <div class="p-8 space-y-4">
-    <!-- Name field per language -->
-    <UCard>
-      <template #header>
-        <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-gray-600">Name <span class="text-red-500">*</span></h2>
-          <div class="flex gap-1">
-            <UButton
-              v-for="lang in languages"
-              :key="lang"
-              :label="lang.toUpperCase()"
-              size="sm"
-              :variant="activeNameLang === lang ? 'solid' : 'outline'"
-              color="primary"
-              @click="activeNameLang = lang"
-            />
-          </div>
-        </div>
-      </template>
-      <UInput
-        v-model="localNames[activeNameLang]"
-        placeholder="Enter name"
-        class="w-full"
-      />
-    </UCard>
-
     <div class="flex gap-4 items-start w-full">
       <UCard class="w-full">
         <template #header>
@@ -174,11 +151,14 @@ const save = async () => {
           :fields="localFields"
           :modelValue="localData"
           :languages="languages"
+          :withName="true"
+          :localNames="localNames"
           @update:modelValue="
             (val) => {
               for (const lang in val) Object.assign(localData[lang], val[lang]);
             }
           "
+          @update:localNames="(val) => Object.assign(localNames, val)"
         />
       </UCard>
 

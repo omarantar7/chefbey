@@ -1,10 +1,7 @@
 import { content, contentLocal } from "~~/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { seo } from "~~/lib/db/schema/seo";
-import { drizzle } from "drizzle-orm/libsql";
-import env from "~~/lib/env";
-
-const db = drizzle(env.NUXT_DB_FILE_NAME, { casing: "snake_case" });
+import db from "~~/lib/db";
 
 const CONTENT_TYPE = "contents:recipes";
 
@@ -13,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   // GET
   if (event.method === "GET") {
-    if (!id || id === "new") return { settings: null, local: {} };
+    if (!id || id === "new") return { settings: null, localNames: {}, local: {} };
 
     const [contentRow] = await db
       .select()
@@ -33,58 +30,58 @@ export default defineEventHandler(async (event) => {
       id: contentRow.id,
       name: contentRow.name,
       settings: contentRow.attrs,
-      local: Object.fromEntries(
-        locales.map((l) => [l.language, { ...l.attrs, name: l.title }]),
-      ),
+      localNames: Object.fromEntries(locales.map((l) => [l.language, l.title])),
+      local: Object.fromEntries(locales.map((l) => [l.language, { ...l.attrs }])),
     };
   }
 
   // POST (new)
   if (event.method === "POST") {
-  const body = await readBody<{
-    name: string;
-    localNames: Record<string, string>;
-    languages: string[];
-    settings: Record<string, any>;
-    local: Record<string, Record<string, any>>;
-  }>(event);
+    const body = await readBody<{
+      name: string;
+      localNames: Record<string, string>;
+      languages: string[];
+      settings: Record<string, any>;
+      local: Record<string, Record<string, any>>;
+    }>(event);
 
-  if (!body.name) throw createError({ statusCode: 400, message: "Name is required" });
+    if (!body.name)
+      throw createError({ statusCode: 400, message: "Name is required" });
 
-  const [inserted] = await db
-    .insert(content)
-    .values({ name: body.name, type: CONTENT_TYPE, attrs: body.settings ?? null })
-    .returning();
-
-  for (const lang of body.languages) {
-    const [insertedLocale] = await db
-      .insert(contentLocal)
-      .values({
-        contentId: inserted.id,
-        language: lang,
-        title: body.localNames?.[lang] ?? body.name,
-        attrs: body.local?.[lang] ?? null,
-      })
+    const [inserted] = await db
+      .insert(content)
+      .values({ name: body.name, type: CONTENT_TYPE, attrs: body.settings ?? null })
       .returning();
 
-    await db.insert(seo).values({
-      contentLocalId: insertedLocale.id,
-      title: body.localNames?.[lang] ?? body.name,
-      description: null,
-      keywords: null,
-      ogTitle: body.localNames?.[lang] ?? body.name,
-      ogDescription: null,
-      ogImage: null,
-      twitterTitle: body.localNames?.[lang] ?? body.name,
-      twitterDescription: null,
-      twitterImage: null,
-      canonicalUrl: null,
-      robots: "index, follow",
-    });
-  }
+    for (const lang of body.languages) {
+      const [insertedLocale] = await db
+        .insert(contentLocal)
+        .values({
+          contentId: inserted.id,
+          language: lang,
+          title: body.localNames?.[lang] ?? body.name,
+          attrs: body.local?.[lang] ?? null,
+        })
+        .returning();
 
-  return { success: true, id: inserted.id };
-}
+      await db.insert(seo).values({
+        contentLocalId: insertedLocale.id,
+        title: body.localNames?.[lang] ?? body.name,
+        description: null,
+        keywords: null,
+        ogTitle: body.localNames?.[lang] ?? body.name,
+        ogDescription: null,
+        ogImage: null,
+        twitterTitle: body.localNames?.[lang] ?? body.name,
+        twitterDescription: null,
+        twitterImage: null,
+        canonicalUrl: null,
+        robots: "index, follow",
+      });
+    }
+
+    return { success: true, id: inserted.id };
+  }
 
   // PUT (update)
   if (event.method === "PUT") {
