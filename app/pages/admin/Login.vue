@@ -57,7 +57,7 @@ const handleLogin = async () => {
               required
               placeholder="Enter your email"
               autocomplete="email"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-black outline-none transition"
             />
           </div>
 
@@ -75,7 +75,7 @@ const handleLogin = async () => {
               required
               placeholder="Enter your password"
               autocomplete="current-password"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-black outline-none transition"
             />
           </div>
 

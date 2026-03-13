@@ -22,47 +22,47 @@ const { data = [] } = defineProps<{ data: any }>();
     >
       <Title :title="data?.servicesTitle" :sub-title="data?.servicesDescr">
         <template #icon>
-          <span
-            class="icon-[fluent--service-bell-16-filled] text-primary"
-          ></span>
+          <span class="icon-[fluent--service-bell-16-filled] text-primary"></span>
         </template>
       </Title>
     </div>
 
-    <div
-      class="relative z-10 flex flex-col md:flex-row justify-center items-center gap-3 container mx-auto py-60"
-    >
-      <div class="max-w-[600px] flex flex-wrap flex-none gap-10 justify-center">
+    <div class="relative z-10 flex flex-col md:flex-row justify-center items-center gap-8 container mx-auto py-20 md:py-60 px-4">
+      
+      <!-- Cards grid -->
+      <div class="w-full md:max-w-[600px] grid grid-cols-2 md:flex md:flex-wrap gap-4 md:gap-10 justify-center">
         <div
-          class="flex flex-wrap gap-10 border-2 border-primary rounded-xl bg-white w-44 md:w-64"
+          class="flex flex-wrap gap-10 border-2 border-primary rounded-xl bg-white w-full md:w-64"
           v-for="(card, index) in data?.services"
           :key="index"
         >
-          <div class="flex flex-col place-items-center py-8 px-2">
+          <div class="flex flex-col place-items-center py-6 px-3 w-full">
             <img
               :src="card?.image"
               alt=""
-              class="size-16 object-cover object-center rounded-sm"
+              class="size-12 md:size-16 object-cover object-center rounded-sm"
             />
-            <h1 class="text-black text-xl pt-6.5 pb-2 text-center w-full">
+            <h1 class="text-black text-base md:text-xl pt-4 pb-1 text-center w-full font-semibold">
               {{ card?.title }}
             </h1>
-            <p class="text-[#545454] text-center w-full">
+            <p class="text-[#545454] text-center w-full text-sm md:text-base">
               {{ card?.description }}
             </p>
           </div>
         </div>
       </div>
-      <p
-        class="text-white text-4xl font-bold text-center md:text-left md:max-w-[50%]"
-      >
+
+      <!-- Sub description -->
+      <p class="text-white text-2xl md:text-4xl font-bold text-center md:text-left md:max-w-[50%] px-4">
         {{ data?.servicesSubDescr }}
       </p>
     </div>
+
     <!-- bottom -->
     <div
-      class="relative z-10 w-[101%] h-24 bg-cover bg-top absolute -left-1 bottom-0"
-      :style="{ backgroundImage: `url(${vector2})` }" 
+      class="relative z-10 w-[101%] h-24 bg-cover bg-top absolute bottom-0"
+      :class="$route?.params?.lang === 'ar' ? '-right-1' : '-left-1'"
+      :style="{ backgroundImage: `url(${vector2})` }"
     ></div>
   </section>
 </template>

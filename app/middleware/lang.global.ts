@@ -2,6 +2,7 @@ export default defineNuxtRouteMiddleware((to) => {
   if (to.path.startsWith("/admin")) {
     return;
   }
+  if (to.path.startsWith("/uploads")) return; // add this
 
   const config = useRuntimeConfig();
   const languages = config.public.contentLanguages as string[];

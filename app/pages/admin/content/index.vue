@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: "admin" });
+definePageMeta({ layout: "admin", middleware: "auth" });
 const { data, refresh } = await useFetch("/api/content");
 
 const columns: any = [

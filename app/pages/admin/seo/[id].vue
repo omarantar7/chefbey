@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: "admin", props: true });
+definePageMeta({ layout: "admin", props: true, middleware: "auth" });
 
 const { id } = defineProps<{ id: string }>();
 const toast = useToast();
@@ -55,9 +55,7 @@ const save = async () => {
     <div class="flex items-center justify-between mb-6">
       <div>
         <h1 class="text-2xl font-semibold">Edit SEO</h1>
-        <p class="text-sm mt-1">
-          Update SEO metadata for this entry
-        </p>
+        <p class="text-sm mt-1">Update SEO metadata for this entry</p>
       </div>
     </div>
 

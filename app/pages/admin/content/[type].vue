@@ -2,7 +2,7 @@
 import contentTypeRegistry from "~~/config/content-type-registry";
 import { useDataset } from "~~/lib/dataset";
 
-definePageMeta({ layout: "admin", props: true });
+definePageMeta({ layout: "admin", middleware: "auth", props: true });
 
 type Props = { type: string };
 const { type } = defineProps<Props>();

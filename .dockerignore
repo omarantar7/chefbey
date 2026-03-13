@@ -1,8 +1,9 @@
 node_modules
 .nuxt
 .output
+.git
+*.log
 local.db
 local.db-shm
 local.db-wal
 .env
-*.log

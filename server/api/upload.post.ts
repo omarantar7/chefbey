@@ -1,6 +1,5 @@
 import { writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, extname } from "path";
-import env from "~~/lib/env";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -15,7 +14,16 @@ export default defineEventHandler(async (event) => {
     const ext = extname(filePart.filename) || ".jpg";
     const name = `${Date.now()}${ext}`;
 
-    const uploadDir = join(process.cwd(), "public/uploads");
+    // Check if .output/public exists (production/docker)
+    // otherwise fall back to public/ (local dev)
+    const outputPublic = join(process.cwd(), ".output/public/uploads");
+    const devPublic = join(process.cwd(), "public/uploads");
+    const uploadDir = existsSync(join(process.cwd(), ".output/public"))
+      ? outputPublic
+      : devPublic;
+
+    console.log("saving to:", uploadDir);
+
     if (!existsSync(uploadDir)) mkdirSync(uploadDir, { recursive: true });
 
     writeFileSync(join(uploadDir, name), filePart.data);
@@ -23,8 +31,8 @@ export default defineEventHandler(async (event) => {
     console.log("✅ File saved:", name);
 
     return {
-      name: filePart?.filename,
-      url: env.BASE_URL ? `${env.BASE_URL}uploads/${name}` : `/uploads/${name}`,
+      name: filePart.filename,
+      url: `/uploads/${name}`,
     };
   } catch (e) {
     console.error("❌ Upload error on server:", e);

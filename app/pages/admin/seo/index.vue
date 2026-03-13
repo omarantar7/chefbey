@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: "admin" });
+definePageMeta({ layout: "admin", middleware: "auth" });
 
 const router = useRouter();
 const toast = useToast();

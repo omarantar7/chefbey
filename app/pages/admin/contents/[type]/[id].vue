@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import contentsTypeRegistry from "~~/config/contents-type-registry";
 import { useDataset } from "~~/lib/dataset";
-definePageMeta({ layout: "admin", props: true });
+definePageMeta({ layout: "admin", middleware: "auth", props: true });
 
 type Props = { type: string; id: string };
 const { type, id } = defineProps<Props>();

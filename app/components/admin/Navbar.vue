@@ -62,7 +62,7 @@ onMounted(() => {
                   />
                   <div
                     v-else
-                    class="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-semibold text-lg border-2 "
+                    class="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-semibold text-lg border-2"
                   >
                     {{ user?.name?.charAt(0).toUpperCase() }}
                   </div>
@@ -110,20 +110,20 @@ onMounted(() => {
               >
                 <div
                   v-if="showUserMenu"
-                  class="absolute right-0 mt-2 w-56  rounded-lg shadow-lg border py-2 bg-gray-800"
+                  class="absolute right-0 mt-2 w-56 rounded-lg shadow-lg border py-2 bg-gray-800"
                 >
                   <!-- User Info in Dropdown -->
                   <div class="px-4 py-3 border-b">
-                    <div class="text-sm font-semibold ">
+                    <div class="text-sm font-semibold">
                       {{ user?.name }}
                     </div>
-                    <div class="text-xs  truncate">
+                    <div class="text-xs truncate">
                       {{ user?.email }}
                     </div>
                   </div>
 
                   <!-- Menu Items -->
-                  <NuxtLink
+                  <!-- <NuxtLink
                     to="/admin/profile"
                     class="flex items-center space-x-3 px-4 py-2 transition"
                     @click="showUserMenu = false"
@@ -163,7 +163,7 @@ onMounted(() => {
                       />
                     </svg>
                     <span class="text-sm">Settings</span>
-                  </NuxtLink>
+                  </NuxtLink> -->
 
                   <div class="border-t my-2"></div>
 

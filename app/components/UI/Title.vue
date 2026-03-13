@@ -13,6 +13,6 @@ const { title, subTitle } = defineProps<Props>();
       <slot name="icon"></slot>
       <h1 class="text-lg text-primary font-normal">{{ title }}</h1>
     </div>
-    <p class="text-3xl text-black">{{ subTitle }}</p>
+    <p class="text-3xl text-black text-center">{{ subTitle }}</p>
   </div>
 </template>

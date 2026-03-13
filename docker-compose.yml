@@ -2,20 +2,28 @@ version: "3.8"
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        BUN_ENV: ${BUN_ENV}
+        ETHEREAL_USER: ${ETHEREAL_USER}
+        ETHEREAL_PASS: ${ETHEREAL_PASS}
+        BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+        BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+        CONTENT_LANGUAGES: ${CONTENT_LANGUAGES}
+        BASE_URL: ${BASE_URL}
+        NUXT_DB_FILE_NAME: ${NUXT_DB_FILE_NAME}
     image: chefbey:latest
+    container_name: chefbey
     ports:
       - "3000:3000"
-    environment:
-      - BUN_ENV=production
-      - NUXT_DB_FILE_NAME=${NUXT_DB_FILE_NAME}
-      - ETHEREAL_USER=${ETHEREAL_USER}
-      - ETHEREAL_PASS=${ETHEREAL_PASS}
-      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
-      - BETTER_AUTH_URL=${BETTER_AUTH_URL}
-      - CONTENT_LANGUAGES=${CONTENT_LANGUAGES}
-      - BASE_URL=${BASE_URL}
+    env_file:
+      - .env
     volumes:
-      - ./local.db:/app/local.db
-      - ./public/uploads:/app/.output/public/uploads
+      - chefbey_db:/app/data
+      - chefbey_uploads:/app/.output/public/uploads
     restart: unless-stopped
+
+volumes:
+  chefbey_db:
+  chefbey_uploads:

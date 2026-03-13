@@ -37,14 +37,18 @@ const modules = [Pagination];
       <div class="block md:hidden">
         <Swiper
           :modules="modules"
-          :slides-per-view="1.5"
+          :slides-per-view="1.25"
           :space-between="12"
           :pagination="{ clickable: true }"
           :centered-slides="false"
           class="awards-swiper"
         >
-          <SwiperSlide v-for="(slide, index) in data?.awards" :key="index">
-            <div class="rounded-xl bg-white py-7 max-w-50 px-6 h-full">
+          <SwiperSlide
+            v-for="(slide, index) in data?.awards"
+            :key="index"
+            class="h-auto!"
+          >
+            <div class="rounded-xl bg-white py-7 px-6 h-full">
               <div class="flex flex-col items-center justify-center">
                 <img
                   :src="slide?.image"
@@ -73,11 +77,7 @@ const modules = [Pagination];
           class="rounded-xl bg-white py-7 max-w-56 px-6 w-full md:w-auto shadow-md flex flex-col"
         >
           <div class="flex flex-col items-center justify-center flex-1">
-            <img
-              :src="slide?.image"
-              alt=""
-              class="size-42 object-contain"
-            />
+            <img :src="slide?.image" alt="" class="size-42 object-contain" />
             <h1
               class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
             >
@@ -101,7 +101,13 @@ const modules = [Pagination];
 .awards-swiper :deep(.swiper-pagination) {
   bottom: 0;
 }
+.awards-swiper :deep(.swiper-wrapper) {
+  align-items: stretch;
+}
 
+.awards-swiper :deep(.swiper-slide) {
+  height: auto;
+}
 .awards-swiper :deep(.swiper-pagination-bullet) {
   background-color: #667583;
   opacity: 0.5;

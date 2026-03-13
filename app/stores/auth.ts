@@ -25,7 +25,7 @@ export const useAuth = () => {
 
       user.value = response.user;
       session.value = response.session;
-      
+
       return response;
     } catch (error) {
       console.error("Auto-login failed:", error);
@@ -53,9 +53,7 @@ export const useAuth = () => {
     await $fetch("/api/auth/logout", {
       method: "POST",
     });
-
-    user.value = null;
-    session.value = null;
+    window.location.href = "/admin/login";
   };
 
   const isAuthenticated = computed(() => !!user.value);
