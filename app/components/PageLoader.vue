@@ -1,15 +1,39 @@
 <script setup lang="ts">
-const loading = ref(false);
-const router = useRouter();
+const loading = ref(true);
+const nuxtApp = useNuxtApp();
 
-router.beforeEach(() => {
+nuxtApp.hook("page:start", () => {
   loading.value = true;
 });
 
-router.afterEach(() => {
-  loading.value = false;
+nuxtApp.hook("page:finish", () => {
+  nextTick(() => {
+    const images = document.querySelectorAll("img");
+    if (images.length === 0) {
+      loading.value = false;
+      return;
+    }
+
+    let loaded = 0;
+    const total = images.length;
+
+    const checkDone = () => {
+      loaded++;
+      if (loaded >= total) loading.value = false;
+    };
+
+    images.forEach((img) => {
+      if (img.complete) {
+        checkDone();
+      } else {
+        img.addEventListener("load", checkDone, { once: true });
+        img.addEventListener("error", checkDone, { once: true });
+      }
+    });
+  });
 });
 </script>
+
 <template>
   <Transition
     enter-active-class="transition-opacity duration-200"
@@ -21,7 +45,7 @@ router.afterEach(() => {
   >
     <div
       v-if="loading"
-      class="fixed inset-0 z-9999 bg-white flex items-center justify-center"
+      class="fixed inset-0 z-9999 bg-gray-300 flex items-center justify-center"
     >
       <div class="flex flex-col items-center gap-4">
         <img
