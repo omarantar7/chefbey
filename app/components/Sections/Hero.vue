@@ -31,6 +31,7 @@ onUnmounted(() => {
     clearInterval(intervalId);
   }
 });
+const t = useT();
 </script>
 
 <template>
@@ -65,7 +66,7 @@ onUnmounted(() => {
               :to="`${$route?.params?.lang}/#contactus`"
               class="flex items-center justify-center py-2.5 px-9 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 ease-out"
             >
-              Contact me
+              {{ t("Contact me") }}
             </NuxtLink>
 
             <label
@@ -79,7 +80,7 @@ onUnmounted(() => {
               >
                 <path d="M8 5v14l11-7z" />
               </svg>
-              A day in my life
+              {{ t("A day in my life") }}
             </label>
 
             <input type="checkbox" id="my_modal_7" class="modal-toggle" />

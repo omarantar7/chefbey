@@ -26,4 +26,5 @@ export default {
   Servings: "الحصص",
   kcal: "سعرة حرارية",
   servingsUnit: "حصص",
+  "A day in my life": "يوم في حياتي",
 };

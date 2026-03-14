@@ -26,4 +26,5 @@ export default {
   Servings: "Porsiyon",
   kcal: "kcal",
   servingsUnit: "porsiyon",
+  "A day in my life": "Hayatımdaki Bir Gün",
 };

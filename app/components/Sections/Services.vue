@@ -40,7 +40,7 @@ const { data = [] } = defineProps<{ data: any }>();
             <img
               :src="card?.image"
               alt=""
-              class="size-12 md:size-16 object-cover object-center rounded-sm"
+              class="size-12 md:size-16 object-cover object-center rounded-full"
             />
             <h1 class="text-black text-base md:text-xl pt-4 pb-1 text-center w-full font-semibold">
               {{ card?.title }}
