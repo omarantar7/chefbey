@@ -80,6 +80,18 @@ watch(search, () => {
           :data="paginatedRows"
           :columns="columns"
         >
+          <template #title-cell="{ row }">
+            <span>{{ row.original?.title }}</span>
+            <br />
+            <br />
+            <span
+              v-if="row.original?.contentName"
+              class="bg-primary rounded-sm text-white p-1 "
+            >
+              {{ row.original?.contentName }}
+            </span>
+          </template>
+
           <template #actions-cell="{ row }">
             <div class="flex items-center gap-2">
               <UButton

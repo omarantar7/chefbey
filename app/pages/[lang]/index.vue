@@ -68,11 +68,11 @@ useSeoMeta({
 
   ogTitle: () => seoData.value?.ogTitle,
   ogDescription: () => seoData.value?.ogDescription,
-  ogImage: () => seoData.value?.ogImage,
+  ogImage: () => seoData.value?.ogImage ?? '/logo.png',
 
   twitterTitle: () => seoData.value?.twitterTitle,
   twitterDescription: () => seoData.value?.twitterDescription,
-  twitterImage: () => seoData.value?.twitterImage,
+  twitterImage: () => seoData.value?.twitterImage ?? '/logo.png',
   twitterCard: "summary_large_image",
 });
 useHead({

@@ -7,9 +7,6 @@ export default defineNuxtConfig({
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: env.BASE_URL,
-    // nitro: {
-    //   preset: "github_pages",
-    // },
     head: {
       link: [
         {
@@ -20,6 +17,20 @@ export default defineNuxtConfig({
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Allura&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap",
         },
+        {
+          rel: "icon",
+          type: "image/png",
+          href: "/favIcon/favicon-96x96.png",
+          sizes: "96x96",
+        },
+        { rel: "icon", type: "image/svg+xml", href: "/favIcon/favicon.svg" },
+        { rel: "shortcut icon", href: "/favIcon/favicon.ico" },
+        {
+          rel: "apple-touch-icon",
+          sizes: "180x180",
+          href: "/favIcon/apple-touch-icon.png",
+        },
+        { rel: "manifest", href: "/favIcon/site.webmanifest" },
       ],
     },
   },
@@ -28,14 +39,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     mail: {
       message: {
-        to: "omarantar520@gmail.com",
+        to: env.RECIEVED_Email,
       },
       smtp: {
-        host: "smtp.gmail.com",
+        host: "smtp.resend.com",
         port: 587,
         auth: {
-          user: env.GMAIL_USER, // your Gmail address
-          pass: env.GMAIL_APP_PASS, // Gmail App Password (not your login password)
+          user: "resend",
+          pass: env.RESEND_API_KEY,
         },
       },
     },

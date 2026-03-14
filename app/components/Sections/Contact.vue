@@ -74,7 +74,8 @@ const handleSubmit = async () => {
   try {
     await mail.send({
       to: config.public.recieverEmail,
-      from: formData.value.email,
+      from: "contact@chefbey.org", // ← your verified domain sender
+      replyTo: formData.value.email, // ← so you can reply directly to the person
       subject: `New contact from ${formData.value.firstName} ${formData.value.lastName}`,
       text: `Name: ${formData.value.firstName} ${formData.value.lastName}
 Email: ${formData.value.email}
@@ -110,7 +111,6 @@ Message: ${formData.value.message}`,
     isLoading.value = false;
   }
 };
-
 const t = useT();
 </script>
 

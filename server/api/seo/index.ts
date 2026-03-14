@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
         robots: seo.robots,
         createdAt: seo.createdAt,
         contentLocalId: seo.contentLocalId,
+        contentName: contentLocal.title,
       })
       .from(seo)
       .leftJoin(contentLocal, eq(seo.contentLocalId, contentLocal.id));
