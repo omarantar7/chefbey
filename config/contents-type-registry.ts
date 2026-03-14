@@ -6,10 +6,6 @@ const contentsTypeRegistry: Record<string, any> = {
     "name": "Recipes",
     "type": "contents:recipes",
     "fields": {
-      "title": {
-        "type": "string",
-        "label": "Recipe Title"
-      },
       "description": {
         "type": "text",
         "label": "Recipe Description"
