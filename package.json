@@ -25,7 +25,7 @@
     "firebase": "^12.8.0",
     "nodemailer": "^7.0.13",
     "nuxt": "^4.2.2",
-    "nuxt-mail": "^8.0.2",
+    "resend": "^6.9.3",
     "swiper": "^12.1.0",
     "tailwindcss": "^4.2.0",
     "vue": "^3.5.27",

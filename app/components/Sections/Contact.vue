@@ -56,8 +56,6 @@ const isFormValid = computed(
 
 const selectedCountry = ref("US");
 const isLoading = shallowRef<boolean>(false);
-
-const mail = useMail();
 const toast = useToast();
 
 const touchAll = () => {
@@ -72,15 +70,15 @@ const handleSubmit = async () => {
 
   isLoading.value = true;
   try {
-    await mail.send({
-      to: config.public.recieverEmail,
-      from: "contact@chefbey.org", // ← your verified domain sender
-      replyTo: formData.value.email, // ← so you can reply directly to the person
-      subject: `New contact from ${formData.value.firstName} ${formData.value.lastName}`,
-      text: `Name: ${formData.value.firstName} ${formData.value.lastName}
-Email: ${formData.value.email}
-Phone: ${formData.value.phoneNumber}
-Message: ${formData.value.message}`,
+    await $fetch("/api/contact", {
+      method: "POST",
+      body: {
+        firstName: formData.value.firstName,
+        lastName: formData.value.lastName,
+        email: formData.value.email,
+        phoneNumber: formData.value.phoneNumber,
+        message: formData.value.message,
+      },
     });
 
     toast.add({
