@@ -9,7 +9,8 @@ export default defineEventHandler(async (event) => {
   if (
     method === "GET" ||
     !path.startsWith("/api") ||
-    path.startsWith("/api/auth")
+    path.startsWith("/api/auth") ||
+    path.startsWith("/api/contact")
   )
     return;
 
