@@ -13,6 +13,9 @@ services:
         CONTENT_LANGUAGES: ${CONTENT_LANGUAGES}
         BASE_URL: ${BASE_URL}
         NUXT_DB_FILE_NAME: ${NUXT_DB_FILE_NAME}
+        GMAIL_USER: ${GMAIL_USER}
+        GMAIL_APP_PASS: ${GMAIL_APP_PASS}
+        RECIEVED_Email: ${RECIEVED_Email}
     image: chefbey:latest
     container_name: chefbey
     ports:

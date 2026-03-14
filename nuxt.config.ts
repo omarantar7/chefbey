@@ -31,11 +31,11 @@ export default defineNuxtConfig({
         to: "omarantar520@gmail.com",
       },
       smtp: {
-        host: "smtp.ethereal.email",
+        host: "smtp.gmail.com",
         port: 587,
         auth: {
-          user: env.ETHEREAL_USER,
-          pass: env.ETHEREAL_PASS,
+          user: env.GMAIL_USER, // your Gmail address
+          pass: env.GMAIL_APP_PASS, // Gmail App Password (not your login password)
         },
       },
     },
@@ -44,6 +44,7 @@ export default defineNuxtConfig({
         .split(",")
         .map((l) => l.trim()),
       baseUrl: env.BASE_URL,
+      recieverEmail: env.RECIEVED_Email,
     },
     db_file_name: env.NUXT_DB_FILE_NAME,
   },

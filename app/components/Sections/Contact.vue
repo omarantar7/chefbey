@@ -4,6 +4,7 @@ import Title from "../UI/Title.vue";
 import birdBg from "@/assets/images/bird-bg.png";
 
 const { data = [] } = defineProps<{ data: any }>();
+const config = useRuntimeConfig();
 
 const formData = ref({
   firstName: "",
@@ -13,29 +14,92 @@ const formData = ref({
   message: "",
 });
 
-const selectedCountry = ref("US");
+const touched = ref({
+  firstName: false,
+  lastName: false,
+  email: false,
+  phoneNumber: false,
+});
 
+const errors = computed(() => ({
+  firstName:
+    touched.value.firstName && !formData.value.firstName.trim()
+      ? t("First name is required")
+      : "",
+  lastName:
+    touched.value.lastName && !formData.value.lastName.trim()
+      ? t("Last name is required")
+      : "",
+  email:
+    touched.value.email && !formData.value.email.trim()
+      ? t("Email is required")
+      : touched.value.email &&
+          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email)
+        ? t("Enter a valid email")
+        : "",
+  phoneNumber:
+    touched.value.phoneNumber && !formData.value.phoneNumber.trim()
+      ? t("Phone number is required")
+      : touched.value.phoneNumber &&
+          !/^\+?[\d\s\-().]{7,}$/.test(formData.value.phoneNumber)
+        ? t("Enter a valid phone number")
+        : "",
+}));
+
+const isFormValid = computed(
+  () =>
+    formData.value.firstName.trim() &&
+    formData.value.lastName.trim() &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email) &&
+    /^\+?[\d\s\-().]{7,}$/.test(formData.value.phoneNumber),
+);
+
+const selectedCountry = ref("US");
 const isLoading = shallowRef<boolean>(false);
 
 const mail = useMail();
 const toast = useToast();
 
-const handleSubmit = async () => {
-  console.log(formData.value);
-  isLoading.value = true;
+const touchAll = () => {
+  Object.keys(touched.value).forEach((key) => {
+    touched.value[key as keyof typeof touched.value] = true;
+  });
+};
 
+const handleSubmit = async () => {
+  touchAll();
+  if (!isFormValid.value) return;
+
+  isLoading.value = true;
   try {
-    mail.send({
-      from: formData?.value?.firstName,
+    await mail.send({
+      to: config.public.recieverEmail,
+      from: formData.value.email,
       subject: `New contact from ${formData.value.firstName} ${formData.value.lastName}`,
       text: `Name: ${formData.value.firstName} ${formData.value.lastName}
-      Email: ${formData.value.email}
-      Phone: ${selectedCountry.value} ${formData.value.phoneNumber}
-      Message: ${formData.value.message}
-      `,
+Email: ${formData.value.email}
+Phone: ${formData.value.phoneNumber}
+Message: ${formData.value.message}`,
+    });
+
+    toast.add({
+      title: "Message sent!",
+      description: "We'll get back to you soon.",
+      color: "success",
+      icon: "i-heroicons-check-circle",
+    });
+
+    formData.value = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      message: "",
+    };
+    Object.keys(touched.value).forEach((key) => {
+      touched.value[key as keyof typeof touched.value] = false;
     });
   } catch (error: any) {
-    console.error(error);
     toast.add({
       title: "Failed",
       description: error?.data?.message ?? error?.message,
@@ -46,6 +110,7 @@ const handleSubmit = async () => {
     isLoading.value = false;
   }
 };
+
 const t = useT();
 </script>
 
@@ -66,7 +131,6 @@ const t = useT();
         </Title>
       </div>
 
-      <!-- Form and Image Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         <!-- Form Section -->
         <div class="w-full">
@@ -78,32 +142,57 @@ const t = useT();
                   for="firstName"
                   class="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  {{ t("First name") }}
+                  {{ t("First name") + " *" }}
                 </label>
                 <input
                   type="text"
                   id="firstName"
                   v-model="formData.firstName"
                   :placeholder="t('First name')"
-                  class="w-full px-4 py-3 border bg-white border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  required
+                  @blur="touched.firstName = true"
+                  :class="[
+                    'w-full px-4 py-3 border bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all',
+                    errors.firstName
+                      ? 'border-red-500 focus:ring-red-400'
+                      : 'border-gray-300 focus:ring-primary',
+                  ]"
                 />
+                <p
+                  v-if="errors.firstName"
+                  class="mt-1 text-sm text-red-500 flex items-center gap-1"
+                >
+                  <UIcon name="i-heroicons-exclamation-circle" class="size-4" />
+                  {{ errors.firstName }}
+                </p>
               </div>
+
               <div>
                 <label
                   for="lastName"
                   class="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  {{ t("Last name") }}
+                  {{ t("Last name") + " *" }}
                 </label>
                 <input
                   type="text"
                   id="lastName"
                   v-model="formData.lastName"
                   :placeholder="t('Last name')"
-                  class="w-full px-4 py-3 border text-black bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  required
+                  @blur="touched.lastName = true"
+                  :class="[
+                    'w-full px-4 py-3 border text-black bg-white rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all',
+                    errors.lastName
+                      ? 'border-red-500 focus:ring-red-400'
+                      : 'border-gray-300 focus:ring-primary',
+                  ]"
                 />
+                <p
+                  v-if="errors.lastName"
+                  class="mt-1 text-sm text-red-500 flex items-center gap-1"
+                >
+                  <UIcon name="i-heroicons-exclamation-circle" class="size-4" />
+                  {{ errors.lastName }}
+                </p>
               </div>
             </div>
 
@@ -113,16 +202,28 @@ const t = useT();
                 for="email"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                {{ t("Email") }}
+                {{ t("Email") + " *" }}
               </label>
               <input
                 type="email"
                 id="email"
                 v-model="formData.email"
                 :placeholder="t('mail@example.com')"
-                class="w-full px-4 py-3 border text-black bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                required
+                @blur="touched.email = true"
+                :class="[
+                  'w-full px-4 py-3 border text-black bg-white rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all',
+                  errors.email
+                    ? 'border-red-500 focus:ring-red-400'
+                    : 'border-gray-300 focus:ring-primary',
+                ]"
               />
+              <p
+                v-if="errors.email"
+                class="mt-1 text-sm text-red-500 flex items-center gap-1"
+              >
+                <UIcon name="i-heroicons-exclamation-circle" class="size-4" />
+                {{ errors.email }}
+              </p>
             </div>
 
             <!-- Phone Number -->
@@ -131,30 +232,31 @@ const t = useT();
                 for="phone"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                {{ t("Phone number") }}
+                {{ t("Phone number") + " *" }}
               </label>
-              <div class="flex gap-2">
-                <!-- <select
-                  v-model="selectedCountry"
-                  class="px-3 py-3 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white"
-                >
-                  <option value="US">US</option>
-                  <option value="UK">UK</option>
-                  <option value="CA">CA</option>
-                  <option value="LB">LB</option>
-                </select> -->
-                <input
-                  type="tel"
-                  id="phone"
-                  v-model="formData.phoneNumber"
-                  :placeholder="t('+1 (555) 000-0000')"
-                  class="flex-1 px-4 py-3 border bg-white text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                  required
-                />
-              </div>
+              <input
+                type="tel"
+                id="phone"
+                v-model="formData.phoneNumber"
+                :placeholder="t('+1 (555) 000-0000')"
+                @blur="touched.phoneNumber = true"
+                :class="[
+                  'flex-1 w-full px-4 py-3 border bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all',
+                  errors.phoneNumber
+                    ? 'border-red-500 focus:ring-red-400'
+                    : 'border-gray-300 focus:ring-primary',
+                ]"
+              />
+              <p
+                v-if="errors.phoneNumber"
+                class="mt-1 text-sm text-red-500 flex items-center gap-1"
+              >
+                <UIcon name="i-heroicons-exclamation-circle" class="size-4" />
+                {{ errors.phoneNumber }}
+              </p>
             </div>
 
-            <!-- Message -->
+            <!-- Message (no validation) -->
             <div>
               <label
                 for="message"
@@ -168,19 +270,18 @@ const t = useT();
                 :placeholder="t('Leave us a message...')"
                 rows="5"
                 class="w-full px-4 py-3 border text-black bg-white border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-                required
               ></textarea>
             </div>
 
             <!-- Submit Button -->
-            <button
-              type="submit"
-              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
-            >
-              {{
-                isLoading ? `${t("Send your message")}` : t("Send your message")
-              }}
-            </button>
+            <UButton
+              :label="t('Send your message')"
+              color="primary"
+              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              :disabled="isLoading"
+              :loading="isLoading"
+              @click="handleSubmit"
+            />
           </form>
         </div>
 
@@ -200,5 +301,3 @@ const t = useT();
     </div>
   </section>
 </template>
-
-<style scoped></style>
