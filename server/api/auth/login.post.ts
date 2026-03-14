@@ -58,7 +58,8 @@ export default defineEventHandler(async (event) => {
     // Set cookie
     setCookie(event, "session_token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      // secure: process.env.NODE_ENV === "production",
+      secure: false,
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",
@@ -79,11 +80,11 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error: any) {
     console.error("Login error:", error);
-    
+
     if (error.statusCode) {
       throw error;
     }
-    
+
     throw createError({
       statusCode: 500,
       message: "Login failed. Please try again.",
