@@ -13,6 +13,7 @@ services:
         NUXT_DB_FILE_NAME: ${NUXT_DB_FILE_NAME}
         RECIEVED_Email: ${RECIEVED_Email}
         RESEND_API_KEY: ${RESEND_API_KEY}
+        NUXT_PUBLIC_GA_ID: ${NUXT_PUBLIC_GA_ID}
     image: chefbey:latest
     container_name: chefbey
     ports:

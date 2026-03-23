@@ -10,6 +10,7 @@ const envSchema = z.object({
   // GMAIL_USER  : z.string(),
   // GMAIL_APP_PASS: z.string(),
   RESEND_API_KEY: z.string(),
+  NUXT_PUBLIC_GA_ID: z.string(),
   RECIEVED_Email: z.string(),
   NUXT_DB_FILE_NAME: z.string().default("local.db"),
   CONTENT_LANGUAGES: z

@@ -284,14 +284,14 @@ const t = useT();
         </div>
 
         <!-- Image Section -->
-        <div class="w-full h-full min-h-[400px] lg:min-h-[600px]">
+        <div class="w-full h-full">
           <div
-            class="relative w-full h-fit rounded-2xl overflow-hidden shadow-2xl"
+            class="relative w-full rounded-2xl overflow-hidden shadow-2xl h-full"
           >
             <img
               :src="data?.contactImage"
-              alt="Chef cooking with fire"
-              class="w-full object-top object-cover max-h-[600px]"
+              :alt="`${data?.contactDescr} Image`"
+              class="w-full object-top object-cover h-full"
             />
           </div>
         </div>

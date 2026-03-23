@@ -57,6 +57,7 @@ export default defineNuxtConfig({
         .map((l) => l.trim()),
       baseUrl: env.BASE_URL,
       recieverEmail: env.RECIEVED_Email,
+      gaId: env.NUXT_PUBLIC_GA_ID ?? "",
     },
     db_file_name: env.NUXT_DB_FILE_NAME,
   },
