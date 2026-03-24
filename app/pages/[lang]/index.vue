@@ -68,11 +68,11 @@ useSeoMeta({
 
   ogTitle: () => seoData.value?.ogTitle,
   ogDescription: () => seoData.value?.ogDescription,
-  ogImage: () => seoData.value?.ogImage ?? '/logo.png',
+  ogImage: () => seoData.value?.ogImage ?? "/logo.png",
 
   twitterTitle: () => seoData.value?.twitterTitle,
   twitterDescription: () => seoData.value?.twitterDescription,
-  twitterImage: () => seoData.value?.twitterImage ?? '/logo.png',
+  twitterImage: () => seoData.value?.twitterImage ?? "/logo.png",
   twitterCard: "summary_large_image",
 });
 useHead({
@@ -81,9 +81,62 @@ useHead({
 </script>
 
 <template>
-  <SectionsHero :data="banner" />
-  <SectionsServices :data="services" />
-  <SectionsAwards :data="awards" />
-  <SectionsRecipes :recipesData="recipes" />
-  <SectionsContact :data="contact" />
+  <div v-gsap.from="{ opacity: 0, y: 60, duration: 1, ease: 'power3.out' }">
+    <SectionsHero :data="banner" />
+  </div>
+
+<!--  <div
+    v-gsap.fromTo="[
+      { opacity: 0, y: 80 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: '.section-services', start: 'top 85%' },
+      },
+    ]"
+    class="section-services"
+  >
+</div>-->
+<SectionsServices :data="services" />
+
+  <div
+    v-gsap.from="{
+      opacity: 0,
+      y: 80,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { start: 'top 85%' },
+    }"
+    class="section-awards"
+  >
+    <SectionsAwards :data="awards" />
+  </div>
+
+  <div
+    v-gsap.from="{
+      opacity: 0,
+      y: 80,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { start: 'top 85%' },
+    }"
+    class="section-recipes"
+  >
+    <SectionsRecipes :recipesData="recipes" />
+  </div>
+
+  <div
+    v-gsap.from="{
+      opacity: 0,
+      y: 80,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { start: 'top 85%' },
+    }"
+    class="section-contact"
+  >
+    <SectionsContact :data="contact" />
+  </div>
 </template>

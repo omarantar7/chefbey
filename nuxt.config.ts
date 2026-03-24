@@ -4,7 +4,7 @@ import env from "./lib/env";
 // "nuxt-mail"
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: ["@pinia/nuxt", "@nuxt/icon", "@nuxt/ui"],
+  modules: ["@pinia/nuxt", "@nuxt/icon", "@nuxt/ui", "v-gsap-nuxt"],
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: env.BASE_URL,
