@@ -85,7 +85,7 @@ useHead({
     <SectionsHero :data="banner" />
   </div>
 
-  <div
+<!--  <div
     v-gsap.fromTo="[
       { opacity: 0, y: 80 },
       {
@@ -98,8 +98,8 @@ useHead({
     ]"
     class="section-services"
   >
-    <SectionsServices :data="services" />
-  </div>
+</div>-->
+<SectionsServices :data="services" />
 
   <div
     v-gsap.from="{
