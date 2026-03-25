@@ -10,29 +10,43 @@ const contentsTypeRegistry: Record<string, any> = {
         "type": "text",
         "label": "Recipe Description"
       },
-      "calories": {
-        "type": "string",
-        "label": "Recipe calories"
-      },
       "image": {
         "type": "image",
         "label": "Recipe Image"
       },
       "prepTime": {
         "type": "string",
-        "label": "Preperation Time"
+        "label": "Preparation Time"
       },
       "servings": {
         "type": "string",
         "label": "Servings"
       },
+      "calories": {
+        "type": "string",
+        "label": "Calories"
+      },
       "ingredients": {
         "type": "repeater",
-        "label": "ingredients",
+        "label": "Ingredients",
         "fields": {
           "name": {
             "type": "string",
-            "label": "ingredient name"
+            "label": "Ingredient name"
+          }
+        }
+      },
+      "instructions": {
+        "type": "repeater",
+        "label": "Cooking Instructions",
+        "fields": {
+          "title": {
+            "type": "string",
+            "label": "Step title"
+          },
+          "description": {
+            "type": "text",
+            "label": "Step description"
           }
         }
       }

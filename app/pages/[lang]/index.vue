@@ -85,20 +85,6 @@ useHead({
     <SectionsHero :data="banner" />
   </div>
 
-<!--  <div
-    v-gsap.fromTo="[
-      { opacity: 0, y: 80 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: '.section-services', start: 'top 85%' },
-      },
-    ]"
-    class="section-services"
-  >
-</div>-->
 <SectionsServices :data="services" />
 
   <div

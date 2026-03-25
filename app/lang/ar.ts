@@ -25,6 +25,7 @@ export default {
   "Prep Time": "وقت التحضير",
   Servings: "الحصص",
   kcal: "سعرة حرارية",
-  servingsUnit: "حصص",
+  servingsUnit: "أشخاص",
   "A day in my life": "يوم في حياتي",
+  "Cooking Instructions": "طريقة التحضير",
 };

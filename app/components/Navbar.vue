@@ -3,8 +3,6 @@ import logo from "@/assets/images/logo.png";
 import Button from "./UI/Button.vue";
 
 const route = useRoute();
-const router = useRouter();
-const config = useRuntimeConfig();
 
 const isOpen = ref(false);
 
@@ -42,6 +40,14 @@ const links = computed(() => [
 
 const isScrolled = ref(false);
 
+const specificCase = computed(() => {
+  if (route.path.includes("recipes")) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
 onMounted(() => {
   const handleScroll = () => {
     isScrolled.value = window.scrollY >= 100;
@@ -55,16 +61,12 @@ onMounted(() => {
   <nav
     :class="[
       'fixed top-0 z-50 w-full backdrop-blur-sm transition-all duration-75',
-      isScrolled ? 'bg-white/50 text-black' : '',
+      isScrolled || specificCase ? 'bg-white/50 text-black' : '',
     ]"
   >
     <div class="mx-auto px-4 py-2 flex items-center justify-between">
       <NuxtLink :to="`/${route.params?.lang}`">
-        <img
-          :src="logo"
-          alt="logo"
-          class="size-16 md:size-[102px] object-cover"
-        />
+        <img :src="logo" alt="logo" class="size-16 md:size-25.5 object-cover" />
       </NuxtLink>
 
       <!-- Desktop -->
@@ -77,7 +79,7 @@ onMounted(() => {
         >
           <span>{{ link.label }}</span>
           <span
-            class="absolute left-0 bottom-0 h-[2px] bg-primary/50 w-0 transition-all duration-300 ease-out group-hover:w-full"
+            class="absolute left-0 bottom-0 h-0.5 bg-primary/50 w-0 transition-all duration-300 ease-out group-hover:w-full"
           />
         </NuxtLink>
 
@@ -97,7 +99,7 @@ onMounted(() => {
             trailing-icon="i-heroicons-chevron-down"
             :class="[
               'transition-colors duration-200 cursor-pointer',
-              isScrolled
+              isScrolled || specificCase
                 ? 'text-black hover:text-primary hover:bg-black/5'
                 : 'text-white hover:text-primary hover:bg-white/10',
             ]"
@@ -149,21 +151,18 @@ onMounted(() => {
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-2"
     >
-      <div
-        v-if="isOpen"
-        class="md:hidden px-4 py-4 backdrop-blur-sm"
-      >
+      <div v-if="isOpen" class="md:hidden px-4 py-4 backdrop-blur-sm">
         <div class="flex flex-col gap-3 items-center">
           <NuxtLink
             v-for="(link, index) in links"
             :key="`${link.to}-${index}`"
             :to="link.to"
-            class="relative inline-block px-2 py-1 text-white group"
+            class="relative inline-block px-2 py-1 text-black group"
             @click="isOpen = false"
           >
             <span>{{ link.label }}</span>
             <span
-              class="absolute left-0 bottom-0 h-[2px] bg-primary w-0 transition-all duration-300 ease-out group-hover:w-full"
+              class="absolute left-0 bottom-0 h-0.5 bg-primary w-0 transition-all duration-300 ease-out group-hover:w-full"
             />
           </NuxtLink>
 
@@ -176,7 +175,7 @@ onMounted(() => {
                 'px-3 py-1 text-sm rounded-full transition-colors border',
                 currentLang.code === lang.code
                   ? 'bg-primary text-white border-primary'
-                  : 'bg-white/10 text-white border-white/30 hover:bg-white/20',
+                  : 'bg-white/10 text-black border-white/30 hover:bg-white/20',
               ]"
               @click="switchLang(lang.code)"
             >

@@ -25,6 +25,7 @@ export default {
   "Prep Time": "Hazırlık Süresi",
   Servings: "Porsiyon",
   kcal: "kcal",
-  servingsUnit: "porsiyon",
   "A day in my life": "Hayatımdaki Bir Gün",
+  "Cooking Instructions": "Pişirme Talimatları",
+  servingsUnit: "kişi",
 };
