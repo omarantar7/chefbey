@@ -69,9 +69,9 @@ const t = useT();
           >
             <div class="flex flex-col items-center justify-between flex-1">
               <img
-                :src="slide?.settings?.image"
+                :src="slide?.settings?.cardImage ?? slide?.settings?.image"
                 alt=""
-                class="size-41 object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)]"
+                class="size-41 object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)] backdrop-blur-[330px]"
               />
               <h1
                 class="text-lg font-semibold text-black mb-1 w-full text-center pt-6 line-clamp-1"
