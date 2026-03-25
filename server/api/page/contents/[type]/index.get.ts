@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 
       return {
         id: row.id,
-        name: row.name,
+        name: localRow?.title ?? row.name,
         settings: row.attrs ?? {},
         local: localRow?.attrs ?? {},
       };
