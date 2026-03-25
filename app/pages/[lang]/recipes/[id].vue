@@ -70,7 +70,7 @@ useHead({
         v-if="recipe.image"
         :src="recipe.image"
         :alt="recipe.title"
-        class="w-full max-h-[70vh] object-cover rounded-2xl shadow-lg"
+        class="w-full max-h-[70vh] object-cover rounded-2xl shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]"
       />
     </div>
 
@@ -109,7 +109,8 @@ useHead({
           </div>
           <div>
             <p
-              class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold"
+              class="text-[10px] uppercase text-gray-400 font-semibold"
+              :class="{ 'tracking-widest': lang !== 'ar' }"
             >
               {{ t("Prep Time") }}
             </p>
@@ -124,7 +125,7 @@ useHead({
           <div
             class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
           >
-            <svg
+            <!-- <svg
               class="w-5 h-5 text-primary"
               fill="none"
               stroke="currentColor"
@@ -136,11 +137,27 @@ useHead({
                 stroke-width="2"
                 d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"
               />
+            </svg> -->
+            <svg
+              width="14"
+              height="20"
+              viewBox="0 0 14 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.75 18.75V16.75C0.75 15.6891 1.17143 14.6717 1.92157 13.9216C2.67172 13.1714 3.68913 12.75 4.75 12.75H8.75C9.81087 12.75 10.8283 13.1714 11.5784 13.9216C12.3286 14.6717 12.75 15.6891 12.75 16.75V18.75M2.75 4.75C2.75 5.81087 3.17143 6.82828 3.92157 7.57843C4.67172 8.32857 5.68913 8.75 6.75 8.75C7.81087 8.75 8.82828 8.32857 9.57843 7.57843C10.3286 6.82828 10.75 5.81087 10.75 4.75C10.75 3.68913 10.3286 2.67172 9.57843 1.92157C8.82828 1.17143 7.81087 0.75 6.75 0.75C5.68913 0.75 4.67172 1.17143 3.92157 1.92157C3.17143 2.67172 2.75 3.68913 2.75 4.75Z"
+                stroke="#19B0C7"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </div>
           <div>
             <p
-              class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold"
+              class="text-[10px] uppercase text-gray-400 font-semibold"
+              :class="{ 'tracking-widest': lang !== 'ar' }"
             >
               {{ t("Servings") }}
             </p>
@@ -155,7 +172,7 @@ useHead({
           <div
             class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
           >
-            <svg
+            <!-- <svg
               class="w-5 h-5 text-primary"
               fill="currentColor"
               viewBox="0 0 24 24"
@@ -163,11 +180,27 @@ useHead({
               <path
                 d="M11 21H5a2 2 0 01-2-2V5a2 2 0 012-2h6v18zm2 0V3h6a2 2 0 012 2v14a2 2 0 01-2 2h-6z"
               />
+            </svg> -->
+            <svg
+              width="16"
+              height="21"
+              viewBox="0 0 16 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.75 9.691C10.083 6.383 7.917 1.868 6.75 0.75C6.75 4.145 4.515 6.049 3.083 7.456C1.653 8.864 0.75 11.077 0.75 13.044C0.75 16.748 3.884 19.75 7.75 19.75C11.616 19.75 14.75 16.748 14.75 13.044C14.75 11.332 13.518 8.641 12.417 7.456C10.333 10.809 9.16 10.809 7.75 9.691Z"
+                stroke="#19B0C7"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </div>
           <div>
             <p
-              class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold"
+              class="text-[10px] uppercase text-gray-400 font-semibold"
+              :class="{ 'tracking-widest': lang !== 'ar' }"
             >
               {{ t("Calories") }}
             </p>
