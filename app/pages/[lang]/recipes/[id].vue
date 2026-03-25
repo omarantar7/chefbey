@@ -22,9 +22,6 @@ const recipe = computed(() => ({
 
 const t = useT();
 
-console.log({route});
-
-
 useSeoMeta({
   title: () => data.value?.seo?.title,
   description: () => data.value?.seo?.description,
@@ -47,7 +44,10 @@ useHead({
 <template>
   <div class="min-h-screen bg-white text-gray-900 pt-16">
     <!-- Title + Description -->
-    <div class="max-w-3xl mx-auto text-center pt-16 pb-8 px-4">
+    <div
+      v-gsap.from="{ opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' }"
+      class="max-w-3xl mx-auto text-center pt-16 pb-8 px-4"
+    >
       <h1
         class="text-5xl md:text-7xl font-bold font-allura italic text-primary mb-4"
       >
@@ -62,7 +62,10 @@ useHead({
     </div>
 
     <!-- Hero Image -->
-    <div class="max-w-6xl mx-auto px-4 mb-10">
+    <div
+      v-gsap.from="{ opacity: 0, scale: 0.97, duration: 1, ease: 'power2.out' }"
+      class="max-w-6xl mx-auto px-4 mb-10"
+    >
       <img
         v-if="recipe.image"
         :src="recipe.image"
@@ -72,7 +75,16 @@ useHead({
     </div>
 
     <!-- Stats Row -->
-    <div class="max-w-6xl mx-auto px-4 mb-12">
+    <div
+      v-gsap.from="{
+        opacity: 0,
+        y: 30,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: { start: 'top 90%' },
+      }"
+      class="max-w-6xl mx-auto px-4 mb-12"
+    >
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div
           v-if="recipe.prepTime"
@@ -168,8 +180,17 @@ useHead({
     <!-- Ingredients + Instructions -->
     <div class="max-w-6xl mx-auto px-4 pb-24">
       <div class="grid md:grid-cols-2 gap-12">
-        <!-- Ingredients -->
-        <div v-if="recipe.ingredients?.length">
+        <!-- Ingredients — slide in from left -->
+        <div
+          v-if="recipe.ingredients?.length"
+          v-gsap.from="{
+            opacity: 0,
+            x: -60,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: { start: 'top 85%' },
+          }"
+        >
           <h2 class="text-xl font-bold text-gray-800 mb-6">
             {{ t("Ingredients") }}
           </h2>
@@ -177,6 +198,14 @@ useHead({
             <li
               v-for="(ingredient, i) in recipe.ingredients"
               :key="i"
+              v-gsap.from="{
+                opacity: 0,
+                x: -20,
+                duration: 0.4,
+                delay: Number(i) * 0.07,
+                ease: 'power1.out',
+                scrollTrigger: { start: 'top 90%' },
+              }"
               class="flex items-center gap-3"
             >
               <span
@@ -196,8 +225,18 @@ useHead({
           </ul>
         </div>
 
-        <!-- Cooking Instructions -->
-        <div v-if="recipe.instructions?.length" class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+        <!-- Cooking Instructions — slide in from right -->
+        <div
+          v-if="recipe.instructions?.length"
+          v-gsap.from="{
+            opacity: 0,
+            x: 60,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: { start: 'top 85%' },
+          }"
+          class="bg-gray-50 rounded-xl p-4 border border-gray-100"
+        >
           <h2 class="text-xl font-bold text-gray-800 mb-6">
             {{ t("Cooking Instructions") }}
           </h2>
@@ -205,6 +244,14 @@ useHead({
             <li
               v-for="(step, i) in recipe.instructions"
               :key="i"
+              v-gsap.from="{
+                opacity: 0,
+                x: 20,
+                duration: 0.4,
+                delay: Number(i) * 0.07,
+                ease: 'power1.out',
+                scrollTrigger: { start: 'top 90%' },
+              }"
               class="flex gap-4"
             >
               <span

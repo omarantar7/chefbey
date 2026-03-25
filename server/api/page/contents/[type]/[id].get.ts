@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     id: contentRow.id,
-    name: contentRow.name,
+    name: localRow.title ?? contentRow?.name,
     settings: contentRow.attrs ?? {},
     local: localRow?.attrs ?? {},
     seo: seoRow ?? {},
