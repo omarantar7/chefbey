@@ -83,20 +83,21 @@ const t = useT();
               </svg>
               {{ t("A day in my life") }}
             </label>
-
-            <input type="checkbox" id="my_modal_7" class="modal-toggle" />
-            <div class="modal" role="dialog">
-              <div class="modal-box">
-                <ClientOnly>
-                  <YoutubeVideo
-                    :videoId="data?.youtubeLink"
-                    v-if="data?.youtubeLink"
-                    v-once
-                  />
-                </ClientOnly>
+            <Teleport to="body">
+              <input type="checkbox" id="my_modal_7" class="modal-toggle" />
+              <div class="modal" role="dialog">
+                <div class="modal-box">
+                  <ClientOnly>
+                    <YoutubeVideo
+                      :videoId="data?.youtubeLink"
+                      v-if="data?.youtubeLink"
+                      v-once
+                    />
+                  </ClientOnly>
+                </div>
+                <label class="modal-backdrop" for="my_modal_7">Close</label>
               </div>
-              <label class="modal-backdrop" for="my_modal_7">Close</label>
-            </div>
+            </Teleport>
           </div>
 
           <!-- Stats -->
