@@ -14,6 +14,10 @@ const contentsTypeRegistry: Record<string, any> = {
         "type": "image",
         "label": "Recipe Image"
       },
+      "cardImage": {
+        "type": "image",
+        "label": "Recipe Card Image"
+      },
       "prepTime": {
         "type": "string",
         "label": "Preparation Time"
