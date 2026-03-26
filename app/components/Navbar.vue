@@ -185,7 +185,7 @@ onMounted(() => {
 
           <NuxtLink
             :to="`/${route.params?.lang}/#contactus`"
-            class="mt-1 flex items-center justify-center py-2 px-6 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 text-white text-sm"
+            class="bg-gradient-primary mt-1 flex items-center justify-center py-2 px-6 rounded-full bg-primary transition-all duration-300 text-sm"
             @click="isOpen = false"
           >
             {{ t("Contact me") }}

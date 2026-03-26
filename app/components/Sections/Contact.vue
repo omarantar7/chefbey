@@ -275,7 +275,7 @@ const t = useT();
             <UButton
               :label="t('Send your message')"
               color="primary"
-              class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              class="bg-gradient-primary w-full hover:bg-primary/90 font-medium py-4 rounded-lg transition-all duration-300 transform flex items-center justify-center gap-2"
               :disabled="isLoading"
               :loading="isLoading"
               @click="handleSubmit"

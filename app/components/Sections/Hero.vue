@@ -65,7 +65,7 @@ const t = useT();
           <div class="flex flex-wrap gap-4">
             <NuxtLink
               :to="`/${route.params?.lang}/#contactus`"
-              class="flex items-center justify-center py-2.5 px-9 rounded-full bg-primary hover:bg-[#128597] transition-all duration-300 ease-out"
+              class="bg-gradient-primary flex items-center justify-center py-2.5 px-9 rounded-full hover:bg-[#128597] transition-all duration-300 ease-out"
             >
               {{ t("Contact me") }}
             </NuxtLink>

@@ -5,15 +5,30 @@
 @theme {
   --font-sans: "Open Sans", ui-sans-serif, system-ui;
   --font-allura: "Allura", cursive;
+  --gradient-primary: linear-gradient(to bottom right, #1fb6c9, #0ea5b7);
 }
 
-/* Override @nuxt/ui's primary color */
 :root {
-  --color-primary: #19B0C7;
-  --ui-primary: #19B0C7;
+  --color-primary: #19b0c7;
+  --ui-primary: #19b0c7;
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { overflow-x: hidden; }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+    color: white;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 8px 18px rgba(14, 165, 183, 0.35);
+    }
+  }
 }

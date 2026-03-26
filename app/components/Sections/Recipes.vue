@@ -86,7 +86,7 @@ const t = useT();
               </p>
               <NuxtLink :to="`/${route?.params?.lang}/recipes/${slide?.id}`">
                 <button
-                   class="bg-linear-to-br from-[#1fb6c9] to-[#0ea5b7] text-white border-none px-5.5 py-3 rounded-full font-semibold tracking-[0.3px] shadow-[0_6px_14px_rgba(14,165,183,0.25)] transition-all duration-200 ease-in-out cursor-pointer hover:shadow-[0_8px_18px_rgba(14,165,183,0.35)] mt-3"
+                   class="bg-gradient-primary border-none px-5.5 py-3 rounded-full font-semibold tracking-[0.3px] shadow-[0_6px_14px_rgba(14,165,183,0.25)] transition-all duration-200 ease-in-out cursor-pointer mt-3"
                 >
                   {{ t("Ingredients") }}
                 </button>
