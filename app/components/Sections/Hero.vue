@@ -72,7 +72,7 @@ const t = useT();
 
             <label
               for="my_modal_7"
-              class="cursor-pointer px-8 py-4 bg-white hover:bg-gray-50 text-gray-800 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform flex items-center gap-3 border border-gray-200"
+              class="bg-transparent backdrop-blur-sm text-white cursor-pointer px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform flex items-center gap-3 border border-white/30 hover:bg-white/10 hover:text-cyan-100"
             >
               <svg
                 class="w-5 h-5 fill-current"
