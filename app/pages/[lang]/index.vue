@@ -77,6 +77,18 @@ useSeoMeta({
 });
 useHead({
   link: [{ rel: "canonical", href: () => seoData.value?.canonicalUrl ?? "" }],
+  script: [
+    {
+      type: "application/ld+json",
+      innerHTML: () =>
+        JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: seoData.value?.title,
+          image: "https://chefbey.org/uploads/1773489208052.jpg",
+        }),
+    },
+  ],
 });
 </script>
 
@@ -85,7 +97,7 @@ useHead({
     <SectionsHero :data="banner" />
   </div>
 
-<SectionsServices :data="services" />
+  <SectionsServices :data="services" />
 
   <div
     v-gsap.from="{

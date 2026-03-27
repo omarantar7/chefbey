@@ -60,7 +60,7 @@ const t = useT();
         <SwiperSlide
           v-for="slide in recipes"
           :key="slide.id"
-          class="w-auto! max-w-55.5 !h-auto flex items-stretch"
+          class="w-auto! max-w-55.5 h-auto! flex items-stretch"
         >
           <!-- card -->
           <div
