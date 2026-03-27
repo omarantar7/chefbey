@@ -43,8 +43,9 @@ export default defineNuxtConfig({
       ],
     },
   },
-  devtools: { enabled: true },
-
+  devtools: {
+    enabled: env?.BUN_ENV === "development",
+  },
   runtimeConfig: {
     public: {
       contentLanguages: (process.env.CONTENT_LANGUAGES ?? "en")
