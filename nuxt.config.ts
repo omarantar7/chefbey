@@ -1,10 +1,18 @@
 import env from "./lib/env";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// "nuxt-mail"
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: ["@pinia/nuxt", "@nuxt/icon", "@nuxt/ui", "v-gsap-nuxt"],
+  modules: [
+    "@pinia/nuxt",
+    "@nuxt/icon",
+    "@nuxt/ui",
+    "v-gsap-nuxt",
+    "@nuxtjs/sitemap",
+  ],
+  sitemap: {
+    exclude: ["/admin/**"],
+  },
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: env.BASE_URL,
@@ -38,19 +46,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
-    // mail: {
-    //   message: {
-    //     to: env.RECIEVED_Email,
-    //   },
-    //   smtp: {
-    //     host: "smtp.resend.com",
-    //     port: 587,
-    //     auth: {
-    //       user: "resend",
-    //       pass: env.RESEND_API_KEY,
-    //     },
-    //   },
-    // },
     public: {
       contentLanguages: (process.env.CONTENT_LANGUAGES ?? "en")
         .split(",")
