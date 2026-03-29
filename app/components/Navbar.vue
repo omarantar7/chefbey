@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import logo from "@/assets/images/logo.png";
+import whiteLogo from "@/assets/images/logo2.png";
 import Button from "./UI/Button.vue";
 
 const route = useRoute();
@@ -48,6 +49,9 @@ const specificCase = computed(() => {
   }
 });
 
+// true when we should show the dark/colored logo
+const showColoredLogo = computed(() => isScrolled.value || specificCase.value);
+
 onMounted(() => {
   const handleScroll = () => {
     isScrolled.value = window.scrollY >= 100;
@@ -60,13 +64,19 @@ onMounted(() => {
 <template>
   <nav
     :class="[
-      'fixed top-0 z-50 w-full backdrop-blur-sm transition-all duration-75',
-      isScrolled || specificCase ? 'bg-white/50 text-black' : '',
+      'fixed top-0 z-50 w-full transition-all duration-75',
+      showColoredLogo
+        ? 'bg-white/50 text-black backdrop-blur-sm'
+        : 'backdrop-blur-[2px]',
     ]"
   >
     <div class="mx-auto px-4 py-2 flex items-center justify-between">
       <NuxtLink :to="`/${route.params?.lang}`">
-        <img :src="logo" alt="logo" class="size-16 md:size-25.5 object-cover" />
+        <img
+          :src="showColoredLogo ? logo : whiteLogo"
+          alt="logo"
+          class="size-16 md:size-25.5 object-cover transition-opacity duration-300"
+        />
       </NuxtLink>
 
       <!-- Desktop -->
@@ -99,7 +109,7 @@ onMounted(() => {
             trailing-icon="i-heroicons-chevron-down"
             :class="[
               'transition-colors duration-200 cursor-pointer',
-              isScrolled || specificCase
+              showColoredLogo
                 ? 'text-black hover:text-primary hover:bg-black/5'
                 : 'text-white hover:text-primary hover:bg-white/10',
             ]"
