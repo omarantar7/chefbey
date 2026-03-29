@@ -8,11 +8,10 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/ui",
     "v-gsap-nuxt",
-    "@nuxtjs/sitemap",
   ],
-  sitemap: {
-    exclude: ["/admin/**"],
-  },
+  // sitemap: {
+  //   exclude: ["/admin/**"],
+  // },
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: env.BASE_URL,
