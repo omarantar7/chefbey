@@ -4,6 +4,7 @@ definePageMeta({ layout: "default" });
 onMounted(()=>{
     useRouter().replace('/en');
 })
+
 </script>
 
 <template>recipes</template>
