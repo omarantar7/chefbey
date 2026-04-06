@@ -8,10 +8,35 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/ui",
     "v-gsap-nuxt",
+    "@nuxtjs/sitemap",
   ],
   // sitemap: {
   //   exclude: ["/admin/**"],
   // },
+  sitemap: {
+    exclude: ["/admin/**"],
+    urls: async () => {
+      if (env.BUN_ENV !== "production") return [];
+      try {
+        const response = await fetch(
+          `${env.BETTER_AUTH_URL}/api/page/contents/recipes`,
+        );
+        if (!response.ok) return [];
+        const recipes = (await response.json()) as any[];
+        const languages = (process.env.CONTENT_LANGUAGES ?? "en")
+          .split(",")
+          .map((l) => l.trim());
+        return recipes.flatMap((recipe: any) =>
+          languages.map((lang) => ({
+            loc: `/${lang}/recipes/${recipe.id}`,
+            lastmod: new Date().toISOString(),
+          })),
+        );
+      } catch {
+        return [];
+      }
+    },
+  },
   css: ["@/assets/css/tailwind.css"],
   app: {
     baseURL: env.BASE_URL,
