@@ -4,8 +4,6 @@ import PageLoader from "./components/PageLoader.vue";
 
 <template>
   <div>
-    <!-- <NuxtRouteAnnouncer />
-    <NuxtWelcome /> -->
     <UApp>
       <NuxtLayout>
         <PageLoader />

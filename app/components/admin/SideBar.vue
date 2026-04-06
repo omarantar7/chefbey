@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import logo from "@/assets/images/logo.png";
+import logo from "@/assets/images/logo2.png";
 import contentsTypeRegistry from "~~/config/contents-type-registry";
 
 const route = useRoute();
@@ -42,11 +42,7 @@ const isActive = (path: string) => {
 <template>
   <aside class="w-64 shadow-lg min-h-screen h-full">
     <div class="p-6">
-      <img
-        :src="logo"
-        alt="logo"
-        class="size-15.5 bg-white rounded-full object-cover"
-      />
+      <img :src="logo" alt="logo" class="size-15.5 rounded-full object-cover" />
     </div>
 
     <nav class="p-4">
