@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Title from "../UI/Title.vue";
 import birdBg from "@/assets/images/bird-bg.png";
+import birdBg2 from "@/assets/images/bird-bg2.png";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
 
@@ -8,21 +9,28 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const { data = {} } = defineProps<{ data: any }>();
+const { data = {}, isServices = false } = defineProps<{
+  data: any;
+  isServices?: boolean;
+}>();
 
 const modules = [Pagination];
 </script>
 
 <template>
-  <section class="h-fit relative bg-white" id="Awards">
+  <section
+    class="h-fit relative bg-white"
+    :id="isServices ? 'Services' : 'Awards'"
+  >
     <!-- Background with opacity -->
     <div
-      class="absolute inset-0 bg-cover opacity-50"
-      :style="{ backgroundImage: `url(${birdBg})` }"
+      class="absolute inset-0 bg-cover"
+      :class="isServices ? 'opacity-25' : 'opacity-50'"
+      :style="{ backgroundImage: `url(${isServices ? birdBg2 : birdBg})` }"
     ></div>
 
     <!-- Content -->
-    <div class="container mx-auto py-12 md:py-60 px-4 relative z-10">
+    <div class="container mx-auto py-12 md:py-30 px-4 relative z-10">
       <div class="flex items-center justify-center text-center pb-8">
         <Title :title="data?.awardsTitle" :sub-title="data?.awardsDescr">
           <template #icon>
@@ -54,6 +62,7 @@ const modules = [Pagination];
                   :src="slide?.image"
                   alt=""
                   class="size-42 object-contain"
+                  :class="isServices && 'rounded-full'"
                 />
                 <h1
                   class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
@@ -70,14 +79,23 @@ const modules = [Pagination];
       </div>
 
       <!-- Desktop Grid (md breakpoint and above) -->
-      <div class="hidden md:flex flex-wrap justify-center items-stretch gap-3">
+      <div
+        class="hidden md:flex flex-wrap justify-center items-stretch"
+        :class="isServices ? 'gap-6' : 'gap-3'"
+      >
         <div
           v-for="(slide, index) in data?.awards"
           :key="index"
-          class="rounded-xl bg-white py-7 max-w-56 px-6 w-full md:w-auto shadow-md flex flex-col"
+          class="rounded-xl bg-white py-7 px-6 w-full md:w-auto shadow-md flex flex-col"
+          :class="isServices ? 'max-w-65' : 'max-w-56'"
         >
           <div class="flex flex-col items-center justify-center flex-1">
-            <img :src="slide?.image" alt="" class="size-42 object-contain" />
+            <img
+              :src="slide?.image"
+              alt=""
+              class="object-contain"
+              :class="isServices ? 'size-25 rounded-full' : 'size-42'"
+            />
             <h1
               class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
             >

@@ -35,6 +35,14 @@ const services = computed(() => {
     services: local.value?.services,
   };
 });
+
+const servicesInfo = computed(() => {
+  return {
+    image: settings.value?.servicesBg,
+    description: local.value?.servicesSubDescr,
+  };
+});
+
 const awards = computed(() => {
   return {
     awardsTitle: local.value?.awardsTitle,
@@ -90,6 +98,10 @@ useHead({
   //   },
   // ],
 });
+
+onMounted(() => {
+  document.querySelector("html")?.classList.add("bg-white");
+});
 </script>
 
 <template>
@@ -98,6 +110,32 @@ useHead({
   </div>
 
   <SectionsServices :data="services" />
+
+  <!-- <div
+    v-gsap.from="{
+      opacity: 0,
+      y: 80,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { start: 'top 85%' },
+    }"
+    class="section-awards"
+  >
+    <SectionsAwards :data="services" isServices />
+  </div> -->
+
+  <!-- <div
+    v-gsap.from="{
+      opacity: 0,
+      y: 80,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: { start: 'top 85%' },
+    }"
+    class="section-awards"
+  >
+    <SectionsServicesInfo :data="servicesInfo" />
+  </div> -->
 
   <div
     v-gsap.from="{
