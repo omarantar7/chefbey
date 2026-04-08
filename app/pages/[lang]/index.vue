@@ -99,9 +99,9 @@ useHead({
   // ],
 });
 
-onMounted(() => {
-  document.querySelector("html")?.classList.add("bg-white");
-});
+// onMounted(() => {
+//   document.querySelector("html")?.classList.add("bg-white");
+// });
 </script>
 
 <template>
