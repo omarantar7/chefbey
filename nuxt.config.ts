@@ -10,9 +10,6 @@ export default defineNuxtConfig({
     "v-gsap-nuxt",
     "@nuxtjs/sitemap",
   ],
-  // sitemap: {
-  //   exclude: ["/admin/**"],
-  // },
   sitemap: {
     exclude: ["/admin/**"],
     urls: async () => {
