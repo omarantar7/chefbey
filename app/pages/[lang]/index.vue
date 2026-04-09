@@ -28,11 +28,11 @@ const banner = computed(() => {
 
 const services = computed(() => {
   return {
-    servicesTitle: local.value?.servicesTitle,
-    servicesDescr: local.value?.servicesDescr,
+    awardsTitle: local.value?.servicesTitle,
+    awardsDescr: local.value?.servicesDescr,
     servicesSubDescr: local.value?.servicesSubDescr,
     servicesBg: settings.value?.servicesBg,
-    services: local.value?.services,
+    awards: local.value?.services,
   };
 });
 
@@ -109,9 +109,9 @@ useHead({
     <SectionsHero :data="banner" />
   </div>
 
-  <SectionsServices :data="services" />
+  <!--<SectionsServices :data="services" />-->
 
-  <!-- <div
+  <div
     v-gsap.from="{
       opacity: 0,
       y: 80,
@@ -122,9 +122,9 @@ useHead({
     class="section-awards"
   >
     <SectionsAwards :data="services" isServices />
-  </div> -->
+  </div>
 
-  <!-- <div
+  <div
     v-gsap.from="{
       opacity: 0,
       y: 80,
@@ -135,7 +135,7 @@ useHead({
     class="section-awards"
   >
     <SectionsServicesInfo :data="servicesInfo" />
-  </div> -->
+  </div>
 
   <div
     v-gsap.from="{
