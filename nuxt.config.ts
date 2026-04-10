@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   sitemap: {
     exclude: ["/admin/**"],
     urls: async () => {
+      const BASE = env.INTERNAL_API_URL ?? env.BETTER_AUTH_URL;
       if (env.BUN_ENV !== "production") return [];
 
       const languages = (process.env.CONTENT_LANGUAGES ?? "en")
@@ -30,7 +31,7 @@ export default defineNuxtConfig({
           await Promise.all(
             languages.map(async (lang) => {
               const response = await fetch(
-                `${env.BETTER_AUTH_URL}/api/page/contents/recipes?lang=${lang}`,
+                `${BASE}/api/page/contents/recipes?lang=${lang}`,
               );
               console.log({ response: response.json() });
 
