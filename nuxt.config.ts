@@ -10,27 +10,41 @@ export default defineNuxtConfig({
     "v-gsap-nuxt",
     "@nuxtjs/sitemap",
   ],
+  site: {
+    url: env.BETTER_AUTH_URL,
+    name: "Chefbey",
+  },
   sitemap: {
     exclude: ["/admin/**"],
     urls: async () => {
       if (env.BUN_ENV !== "production") return [];
+
+      const languages = (process.env.CONTENT_LANGUAGES ?? "en")
+        .split(",")
+        .map((l) => l.trim());
+
+      const staticUrls = languages.flatMap((lang) => [
+        { loc: `/${lang}` },
+        { loc: `/${lang}/recipes` },
+      ]);
+
       try {
         const response = await fetch(
           `${env.BETTER_AUTH_URL}/api/page/contents/recipes`,
         );
-        if (!response.ok) return [];
+        if (!response.ok) return staticUrls;
         const recipes = (await response.json()) as any[];
-        const languages = (process.env.CONTENT_LANGUAGES ?? "en")
-          .split(",")
-          .map((l) => l.trim());
-        return recipes.flatMap((recipe: any) =>
+
+        const recipeUrls = recipes.flatMap((recipe: any) =>
           languages.map((lang) => ({
             loc: `/${lang}/recipes/${recipe.id}`,
             lastmod: new Date().toISOString(),
           })),
         );
+
+        return [...staticUrls, ...recipeUrls];
       } catch {
-        return [];
+        return staticUrls;
       }
     },
   },
