@@ -6,7 +6,6 @@ const envSchema = z.object({
   ETHEREAL_PASS: z.string(),
   BETTER_AUTH_SECRET: z.string(),
   BETTER_AUTH_URL: z.string(),
-  INTERNAL_API_URL: z.string(),
   BASE_URL: z.string(),
   // GMAIL_USER  : z.string(),
   // GMAIL_APP_PASS: z.string(),

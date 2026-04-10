@@ -1,7 +1,4 @@
 import env from "./lib/env";
-import db from "./lib/db";
-import { content } from "./lib/db/schema";
-import { eq } from "drizzle-orm";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -19,32 +16,7 @@ export default defineNuxtConfig({
   },
   sitemap: {
     exclude: ["/admin/**"],
-    urls: async () => {
-      const languages = (process.env.CONTENT_LANGUAGES ?? "en")
-        .split(",")
-        .map((l) => l.trim());
-
-      const staticUrls = languages.flatMap((lang) => [{ loc: `/${lang}` }]);
-
-      try {
-        const rows = await db
-          .select()
-          .from(content)
-          .where(eq(content.type, "contents:recipes"));
-
-        const recipeUrls = languages.flatMap((lang) =>
-          rows.map((row) => ({
-            loc: `/${lang}/recipes/${row.id}`,
-            lastmod: new Date().toISOString(),
-          })),
-        );
-
-        return [...staticUrls, ...recipeUrls];
-      } catch (e) {
-        console.error("Sitemap DB error:", e);
-        return staticUrls;
-      }
-    },
+    sources: ["/api/__sitemap__/urls"],
   },
   css: ["@/assets/css/tailwind.css"],
   app: {
