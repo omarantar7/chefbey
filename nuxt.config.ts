@@ -32,6 +32,8 @@ export default defineNuxtConfig({
               const response = await fetch(
                 `${env.BETTER_AUTH_URL}/api/page/contents/recipes?lang=${lang}`,
               );
+              console.log({ response: response.json() });
+
               if (!response.ok) return [];
               const recipes = (await response.json()) as any[];
               return recipes.map((recipe: any) => ({
