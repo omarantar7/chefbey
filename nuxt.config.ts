@@ -1,4 +1,7 @@
 import env from "./lib/env";
+import db from "./lib/db";
+import { content } from "./lib/db/schema";
+import { eq } from "drizzle-orm";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -17,9 +20,6 @@ export default defineNuxtConfig({
   sitemap: {
     exclude: ["/admin/**"],
     urls: async () => {
-      const BASE = env.INTERNAL_API_URL ?? env.BETTER_AUTH_URL;
-      if (env.BUN_ENV !== "production") return [];
-
       const languages = (process.env.CONTENT_LANGUAGES ?? "en")
         .split(",")
         .map((l) => l.trim());
@@ -27,26 +27,21 @@ export default defineNuxtConfig({
       const staticUrls = languages.flatMap((lang) => [{ loc: `/${lang}` }]);
 
       try {
-        const recipeUrls = (
-          await Promise.all(
-            languages.map(async (lang) => {
-              const response = await fetch(
-                `${BASE}/api/page/contents/recipes?lang=${lang}`,
-              );
-              console.log({ response: response.json() });
+        const rows = await db
+          .select()
+          .from(content)
+          .where(eq(content.type, "contents:recipes"));
 
-              if (!response.ok) return [];
-              const recipes = (await response.json()) as any[];
-              return recipes.map((recipe: any) => ({
-                loc: `/${lang}/recipes/${recipe.id}`,
-                lastmod: new Date().toISOString(),
-              }));
-            }),
-          )
-        ).flat();
+        const recipeUrls = languages.flatMap((lang) =>
+          rows.map((row) => ({
+            loc: `/${lang}/recipes/${row.id}`,
+            lastmod: new Date().toISOString(),
+          })),
+        );
 
         return [...staticUrls, ...recipeUrls];
-      } catch {
+      } catch (e) {
+        console.error("Sitemap DB error:", e);
         return staticUrls;
       }
     },
