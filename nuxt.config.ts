@@ -23,24 +23,24 @@ export default defineNuxtConfig({
         .split(",")
         .map((l) => l.trim());
 
-      const staticUrls = languages.flatMap((lang) => [
-        { loc: `/${lang}` },
-        { loc: `/${lang}/recipes` },
-      ]);
+      const staticUrls = languages.flatMap((lang) => [{ loc: `/${lang}` }]);
 
       try {
-        const response = await fetch(
-          `${env.BETTER_AUTH_URL}/api/page/contents/recipes`,
-        );
-        if (!response.ok) return staticUrls;
-        const recipes = (await response.json()) as any[];
-
-        const recipeUrls = recipes.flatMap((recipe: any) =>
-          languages.map((lang) => ({
-            loc: `/${lang}/recipes/${recipe.id}`,
-            lastmod: new Date().toISOString(),
-          })),
-        );
+        const recipeUrls = (
+          await Promise.all(
+            languages.map(async (lang) => {
+              const response = await fetch(
+                `${env.BETTER_AUTH_URL}/api/page/contents/recipes?lang=${lang}`,
+              );
+              if (!response.ok) return [];
+              const recipes = (await response.json()) as any[];
+              return recipes.map((recipe: any) => ({
+                loc: `/${lang}/recipes/${recipe.id}`,
+                lastmod: new Date().toISOString(),
+              }));
+            }),
+          )
+        ).flat();
 
         return [...staticUrls, ...recipeUrls];
       } catch {
