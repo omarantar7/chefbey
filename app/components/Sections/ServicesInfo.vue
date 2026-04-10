@@ -37,7 +37,7 @@ const { data = { image: "", description: "" } } = defineProps<Props>();
             alt="quotation"
           />
 
-          <p class="text-white text-[18px] md:text-[26px] leading-relaxed">
+          <p class="text-white text-[18px] md:text-[24px] leading-relaxed">
             {{ data?.description }}
           </p>
 

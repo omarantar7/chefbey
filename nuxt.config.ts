@@ -46,6 +46,12 @@ export default defineNuxtConfig({
         },
         { rel: "manifest", href: "/favIcon/site.webmanifest" },
       ],
+      meta: [
+        {
+          name: "google-site-verification",
+          content: "2PowxA27hQLIBZloWBSKodIPtu6zIN96y_frf6AxZ-k",
+        },
+      ],
     },
   },
   devtools: {
