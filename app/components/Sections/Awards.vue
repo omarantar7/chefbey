@@ -61,8 +61,10 @@ const modules = [Pagination];
                 <img
                   :src="slide?.image"
                   alt=""
-                  class="size-42 object-contain"
-                  :class="isServices && 'rounded-full'"
+                  class="size-42"
+                  :class="
+                    isServices ? 'rounded-full object-cover' : 'object-contain'
+                  "
                 />
                 <h1
                   class="text-lg font-semibold text-black mb-1 mt-6 w-full text-center"
