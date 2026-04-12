@@ -64,7 +64,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.PATH }}
+            git pull origin master
             echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u omarantar7 --password-stdin
             docker compose pull app
-            docker compose up -d --no-build app
+            docker compose up -d --no-build
             docker image prune -f
