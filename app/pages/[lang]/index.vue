@@ -124,7 +124,7 @@ useHead({
     <SectionsAwards :data="services" isServices />
   </div>
 
-  <div
+  <!-- <div
     v-gsap.from="{
       opacity: 0,
       y: 80,
@@ -135,7 +135,7 @@ useHead({
     class="section-awards"
   >
     <SectionsServicesInfo :data="servicesInfo" />
-  </div>
+  </div> -->
 
   <div
     v-gsap.from="{
