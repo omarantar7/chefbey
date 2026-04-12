@@ -1,20 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      args:
-        BUN_ENV: ${BUN_ENV}
-        ETHEREAL_USER: ${ETHEREAL_USER}
-        ETHEREAL_PASS: ${ETHEREAL_PASS}
-        BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
-        BETTER_AUTH_URL: ${BETTER_AUTH_URL}
-        CONTENT_LANGUAGES: ${CONTENT_LANGUAGES}
-        BASE_URL: ${BASE_URL}
-        NUXT_DB_FILE_NAME: ${NUXT_DB_FILE_NAME}
-        RECIEVED_Email: ${RECIEVED_Email}
-        RESEND_API_KEY: ${RESEND_API_KEY}
-        NUXT_PUBLIC_GA_ID: ${NUXT_PUBLIC_GA_ID}
-    image: chefbey:latest
+    image: ghcr.io/omarantar7/chefbey:latest
     container_name: chefbey
     ports:
       - "3000:3000"
