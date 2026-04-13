@@ -28,4 +28,10 @@ export default {
   "A day in my life": "Hayatımdaki Bir Gün",
   "Cooking Instructions": "Pişirme Talimatları",
   servingsUnit: "kişi",
+  "Page Not": "Sayfa Bulunamadı",
+  "found.": "bulundu.",
+  "This page wandered off into the dark. We couldn't find it.":
+    "Bu sayfa karanlığa kayboldu. Bulamadık.",
+  "Back to the Home": "Ana Sayfaya Dön",
+  "Go back": "Geri dön",
 };

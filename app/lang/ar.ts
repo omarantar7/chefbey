@@ -28,4 +28,10 @@ export default {
   servingsUnit: "أشخاص",
   "A day in my life": "يوم في حياتي",
   "Cooking Instructions": "طريقة التحضير",
+  "Page Not": "الصفحة غير",
+  "found.": "موجودة.",
+  "This page wandered off into the dark. We couldn't find it.":
+    "هذه الصفحة تاهت في الظلام. لم نتمكن من العثور عليها.",
+  "Back to the Home": "العودة إلى الصفحة الرئيسية",
+  "Go back": "ارجع",
 };
