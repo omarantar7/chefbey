@@ -70,7 +70,7 @@ onMounted(() => {
         : 'backdrop-blur-[2px]',
     ]"
   >
-    <div class="mx-auto px-4 py-2 flex items-center justify-between">
+    <div class="container mx-auto px-4 py-2 flex items-center justify-between">
       <NuxtLink :to="`/${route.params?.lang}`">
         <img
           :src="showColoredLogo ? logo : whiteLogo"
@@ -161,13 +161,14 @@ onMounted(() => {
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-2"
     >
-      <div v-if="isOpen" class="md:hidden px-4 py-4 backdrop-blur-sm">
+      <div v-if="isOpen" class="md:hidden px-4 py-4">
         <div class="flex flex-col gap-3 items-center">
           <NuxtLink
             v-for="(link, index) in links"
             :key="`${link.to}-${index}`"
             :to="link.to"
-            class="relative inline-block px-2 py-1 text-black group"
+            class="relative inline-block px-2 py-1 group"
+            :class="showColoredLogo ? 'text-black' : 'text-white'"
             @click="isOpen = false"
           >
             <span>{{ link.label }}</span>
@@ -185,7 +186,9 @@ onMounted(() => {
                 'px-3 py-1 text-sm rounded-full transition-colors border',
                 currentLang.code === lang.code
                   ? 'bg-primary text-white border-primary'
-                  : 'bg-white/10 text-black border-white/30 hover:bg-white/20',
+                  : showColoredLogo
+                    ? 'bg-white/10 text-black border-white/30 hover:bg-white/20'
+                    : 'text-white bg-[#0000003b]',
               ]"
               @click="switchLang(lang.code)"
             >

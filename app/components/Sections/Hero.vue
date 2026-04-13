@@ -37,7 +37,7 @@ const t = useT();
 
 <template>
   <div
-    class="relative min-h-screen bg-cover bg-top overflow-hidden"
+    class="relative bg-cover bg-top py-8 md:py-12 overflow-hidden"
     :style="{ backgroundImage: `url(${data?.bgHeroImage})` }"
   >
     <!-- Overlay -->

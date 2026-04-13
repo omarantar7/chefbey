@@ -9,14 +9,18 @@ useSeoMeta({
   ogImage: "/chefbey/uploads/1772131596296.svg",
   twitterCard: "summary_large_image",
 });
+
+onMounted(() => {
+  document.querySelector("body")?.classList.add("bg-white");
+});
 </script>
 
 <template>
-  <div class="w-[98%] md:w-full mx-auto">
+  <div class="max-w-900 w-[98%] md:w-full mx-auto bg-white">
     <Navbar />
     <div class="min-h-screen">
       <slot />
     </div>
-    <!-- <Footer /> -->
+    <Footer />
   </div>
 </template>

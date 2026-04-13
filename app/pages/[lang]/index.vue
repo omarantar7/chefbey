@@ -99,80 +99,77 @@ useHead({
   // ],
 });
 
-// onMounted(() => {
-//   document.querySelector("html")?.classList.add("bg-white");
-// });
 </script>
 
 <template>
-  <div v-gsap.from="{ opacity: 0, y: 60, duration: 1, ease: 'power3.out' }">
-    <SectionsHero :data="banner" />
-  </div>
+    <div v-gsap.from="{ opacity: 0, y: 60, duration: 1, ease: 'power3.out' }">
+      <SectionsHero :data="banner" />
+    </div>
 
-  <!--<SectionsServices :data="services" />-->
+    <!--<SectionsServices :data="services" />-->
 
-  <div
-    v-gsap.from="{
-      opacity: 0,
-      y: 80,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: { start: 'top 85%' },
-    }"
-    class="section-awards"
-  >
-    <SectionsAwards :data="services" isServices />
-  </div>
+    <div
+      v-gsap.from="{
+        opacity: 0,
+        y: 80,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { start: 'top 85%' },
+      }"
+      class="section-awards"
+    >
+      <SectionsAwards :data="services" isServices />
+    </div>
 
-  <div
-    v-gsap.from="{
-      opacity: 0,
-      y: 80,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: { start: 'top 85%' },
-    }"
-    class="section-awards"
-  >
-    <SectionsServicesInfo :data="servicesInfo" />
-  </div>
+    <div
+      v-gsap.from="{
+        opacity: 0,
+        y: 80,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { start: 'top 85%' },
+      }"
+      class="section-awards"
+    >
+      <SectionsServicesInfo :data="servicesInfo" />
+    </div>
 
-  <div
-    v-gsap.from="{
-      opacity: 0,
-      y: 80,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: { start: 'top 85%' },
-    }"
-    class="section-awards"
-  >
-    <SectionsAwards :data="awards" />
-  </div>
+    <div
+      v-gsap.from="{
+        opacity: 0,
+        y: 80,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { start: 'top 85%' },
+      }"
+      class="section-awards"
+    >
+      <SectionsAwards :data="awards" />
+    </div>
 
-  <div
-    v-gsap.from="{
-      opacity: 0,
-      y: 80,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: { start: 'top 85%' },
-    }"
-    class="section-recipes"
-  >
-    <SectionsRecipes :recipesData="recipes" />
-  </div>
+    <div
+      v-gsap.from="{
+        opacity: 0,
+        y: 80,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { start: 'top 85%' },
+      }"
+      class="section-recipes"
+    >
+      <SectionsRecipes :recipesData="recipes" />
+    </div>
 
-  <div
-    v-gsap.from="{
-      opacity: 0,
-      y: 80,
-      duration: 0.9,
-      ease: 'power2.out',
-      scrollTrigger: { start: 'top 85%' },
-    }"
-    class="section-contact"
-  >
-    <SectionsContact :data="contact" />
-  </div>
+    <div
+      v-gsap.from="{
+        opacity: 0,
+        y: 80,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { start: 'top 85%' },
+      }"
+      class="section-contact"
+    >
+      <SectionsContact :data="contact" />
+    </div>
 </template>

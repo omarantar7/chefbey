@@ -22,14 +22,14 @@ const t = useT();
 
 <template>
   <section
-    class="relative min-h-screen h-fit bg-cover bg-top"
+    class="relative h-fit bg-cover bg-top"
     :style="{ backgroundImage: `url(${recipesData?.recipesBg})` }"
     id="Recipes"
   >
     <div class="absolute inset-0 bg-black/40 z-0" />
     <!-- top -->
     <div
-      class="relative z-10 flex items-center justify-center w-full h-72 bg-cover bg-top"
+      class="relative z-10 flex items-center justify-center w-full h-72 md:py-12 bg-cover bg-top"
       :style="{ backgroundImage: `url(${vector})` }"
     >
       <Title

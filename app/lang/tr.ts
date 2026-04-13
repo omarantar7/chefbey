@@ -34,4 +34,8 @@ export default {
     "Bu sayfa karanlığa kayboldu. Bulamadık.",
   "Back to the Home": "Ana Sayfaya Dön",
   "Go back": "Geri dön",
+  Home: "Ana Sayfa",
+  "Follow Me": "Beni Takip Edin",
+  "© All Rights Reserved": "Tüm Hakları Saklıdır ©",
+  "Powered by": "Tarafından Desteklenmektedir",
 };

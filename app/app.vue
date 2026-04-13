@@ -3,12 +3,11 @@ import PageLoader from "./components/PageLoader.vue";
 </script>
 
 <template>
-  <div>
-    <UApp>
-      <NuxtLayout>
-        <PageLoader />
-        <NuxtPage />
-      </NuxtLayout>
-    </UApp>
-  </div>
+  <UApp>
+    <NuxtLoadingIndicator />
+    <NuxtLayout>
+      <PageLoader />
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
 </template>
