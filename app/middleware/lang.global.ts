@@ -1,17 +1,13 @@
 export default defineNuxtRouteMiddleware((to) => {
-  if (to.path.startsWith("/admin")) return;
-  if (to.path.startsWith("/uploads")) return;
+  if (to.path.startsWith("/admin")) {
+    return;
+  }
+  if (to.path.startsWith("/uploads")) return; // add this
 
   const config = useRuntimeConfig();
-  const raw = config.public.contentLanguages as string | string[];
-  const languages = Array.isArray(raw) ? raw : raw.split(",").map(l => l.trim());
+  const languages = config.public.contentLanguages as string[];
 
   const firstSegment = to.path.split("/")[1];
-
-  console.log("middleware - path:", to.path);
-  console.log("middleware - firstSegment:", firstSegment);
-  console.log("middleware - languages:", languages);
-  console.log("middleware - includes:", languages.includes(firstSegment as any));
 
   if (!firstSegment || !languages.includes(firstSegment)) {
     const defaultLang = languages[0];
