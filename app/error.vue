@@ -46,7 +46,7 @@ const t = useT();
       style="color: #f5f0e8"
     >
       {{ t("Page Not") }}
-      <span style="color: #19b0c7">{{ t("found.") }}</span>
+      <span style="color: #19b0c7">{{ t("Found.") }}</span>
     </h1>
 
     <p
@@ -71,7 +71,7 @@ const t = useT();
     <!-- Actions -->
     <div class="relative z-10 w-full max-w-[300px] flex flex-col gap-2.5">
       <button
-        class="flex items-center justify-center gap-2 w-full py-3.5 px-5 text-white text-sm font-semibold rounded-[14px] border-none cursor-pointer transition-[transform,box-shadow] duration-150 ease-out hover:-translate-y-0.5 active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#19b0c7]"
+        class="flex items-center justify-center gap-2 w-full py-3.5 px-5 text-white text-sm font-semibold rounded-[14px] border-none cursor-pointer transition-[transform,box-shadow] duration-150 ease-out active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#19b0c7]"
         style="
           background: #19b0c7;
           box-shadow: 0 4px 20px rgba(25, 176, 199, 0.35);
