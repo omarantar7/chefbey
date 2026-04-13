@@ -37,12 +37,13 @@ jobs:
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
           build-args: |
-            BUN_ENV=${{ secrets.BUN_ENV }}
+            CONTENT_LANGUAGES=${{ vars.CONTENT_LANGUAGES }}
+            BUN_ENV=${{ vars.BUN_ENV }}
             ETHEREAL_USER=${{ secrets.ETHEREAL_USER }}
             ETHEREAL_PASS=${{ secrets.ETHEREAL_PASS }}
             BETTER_AUTH_SECRET=${{ secrets.BETTER_AUTH_SECRET }}
-            BETTER_AUTH_URL=${{ secrets.BETTER_AUTH_URL }}
-            BASE_URL=${{ secrets.BASE_URL }}
+            BETTER_AUTH_URL=${{ vars.BETTER_AUTH_URL }}
+            BASE_URL=${{ vars.BASE_URL }}
             RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             RECIEVED_Email=${{ secrets.RECIEVED_Email }}
             NUXT_PUBLIC_GA_ID=${{ secrets.NUXT_PUBLIC_GA_ID }}
