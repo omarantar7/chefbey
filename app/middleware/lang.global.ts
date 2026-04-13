@@ -1,8 +1,6 @@
 export default defineNuxtRouteMiddleware((to) => {
-  if (to.path.startsWith("/admin")) {
-    return;
-  }
-  if (to.path.startsWith("/uploads")) return; // add this
+  if (to.path.startsWith("/admin")) return;
+  if (to.path.startsWith("/uploads")) return;
 
   const config = useRuntimeConfig();
   const languages = config.public.contentLanguages as string[];
@@ -11,7 +9,14 @@ export default defineNuxtRouteMiddleware((to) => {
 
   if (!firstSegment || !languages.includes(firstSegment)) {
     const defaultLang = languages[0];
-    const newPath = `/${defaultLang}${to.path === "/" ? "" : to.path}`;
+
+    const pathWithoutLang = languages.some((lang) =>
+      to.path.startsWith(`/${lang}`),
+    )
+      ? to.path.replace(/^\/[^/]+/, "")
+      : to.path;
+
+    const newPath = `/${defaultLang}${pathWithoutLang === "/" ? "" : pathWithoutLang || ""}`;
     return navigateTo(newPath, { redirectCode: 301 });
   }
 });

@@ -20,6 +20,9 @@ const currentLang: any = computed(() => {
 
 const switchLang = (code: string) => {
   const pathWithoutLang = route.path.replace(/^\/[a-z]{2}/, "");
+  console.log("current path:", route.path);
+  console.log("pathWithoutLang:", pathWithoutLang);
+  console.log("new path:", `/${code}${pathWithoutLang}`);
   window.location.href = `/${code}${pathWithoutLang}`;
   isOpen.value = false;
 };
