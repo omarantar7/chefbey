@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "v-gsap-nuxt",
     "@nuxtjs/sitemap",
-    "@nuxt/image",
   ],
   site: {
     url: env.BETTER_AUTH_URL,
@@ -18,10 +17,6 @@ export default defineNuxtConfig({
   sitemap: {
     exclude: ["/admin/**"],
     sources: ["/api/__sitemap__/urls"],
-  },
-  image: {
-    quality: 100,
-    format: ['webp']
   },
   css: ["@/assets/css/tailwind.css"],
   app: {

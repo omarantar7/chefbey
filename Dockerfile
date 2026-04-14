@@ -46,8 +46,6 @@ COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/config ./config
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/node_modules/@libsql /app/.output/server/node_modules/@libsql
-COPY --from=builder /app/node_modules/sharp /app/.output/server/node_modules/sharp  # ← add this
-
 
 RUN mkdir -p .output/public/uploads
 
