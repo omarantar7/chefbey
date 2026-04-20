@@ -65,14 +65,14 @@ const t = useT();
           <div class="flex flex-wrap gap-4">
             <NuxtLink
               :to="`/${route.params?.lang}/#contactus`"
-              class="bg-gradient-primary flex items-center justify-center py-2.5 px-9 rounded-full hover:bg-[#128597] transition-all duration-300 ease-out"
+              class="bg-gradient-primary flex items-center justify-center py-4.5 md:py-2.5 px-9 rounded-full hover:bg-[#128597] transition-all duration-300 ease-out"
             >
               {{ t("Contact me") }}
             </NuxtLink>
 
             <label
               for="my_modal_7"
-              class="bg-transparent backdrop-blur-sm text-white cursor-pointer px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform flex items-center gap-3 border border-white/30 hover:bg-white/10 hover:text-cyan-100"
+              class="bg-transparent backdrop-blur-sm text-white cursor-pointer p-4.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform flex items-center gap-3 border border-white/30 hover:bg-white/10 hover:text-cyan-100"
             >
               <svg
                 class="w-5 h-5 fill-current"

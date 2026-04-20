@@ -26,7 +26,7 @@ const t = useT();
     :style="{ backgroundImage: `url(${recipesData?.recipesBg})` }"
     id="Recipes"
   >
-    <div class="absolute inset-0 bg-black/40 z-0" />
+    <div class="absolute inset-0 bg-black/40 z-0 backdrop-blur-[3px]" />
     <!-- top -->
     <div
       class="relative z-10 flex items-center justify-center w-full h-72 md:py-12 bg-cover bg-top"
@@ -77,16 +77,16 @@ const t = useT();
               >
                 {{ slide?.name }}
               </h1>
-              <p class="text-[#667583] w-full text-center line-clamp-5">
+              <p class="text-[#7E848A] w-full text-center line-clamp-5">
                 {{ slide?.local?.description }}
               </p>
               <hr class="h-0.5 bg-[#DCDFE2] w-full my-3" />
-              <p class="text-[#667583] w-full text-center">
+              <p class="text-[#576471] font-semibold w-full text-center">
                 {{ slide?.local?.calories }}
               </p>
               <NuxtLink :to="`/${route?.params?.lang}/recipes/${slide?.id}`">
                 <button
-                   class="bg-gradient-primary border-none px-5.5 py-3 rounded-full font-semibold tracking-[0.3px] shadow-[0_6px_14px_rgba(14,165,183,0.25)] transition-all duration-200 ease-in-out cursor-pointer mt-3"
+                  class="bg-gradient-primary border-none px-5.5 py-3 rounded-full font-semibold tracking-[0.3px] shadow-[0_6px_14px_rgba(14,165,183,0.25)] transition-all duration-200 ease-in-out cursor-pointer mt-3"
                 >
                   {{ t("Ingredients") }}
                 </button>

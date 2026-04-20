@@ -56,7 +56,9 @@ const modules = [Pagination];
             :key="index"
             class="h-auto!"
           >
-            <div class="rounded-xl bg-white py-7 px-6 h-full">
+            <div
+              class="rounded-xl border border-[#8080804d] bg-white py-7 px-6 h-full"
+            >
               <div class="flex flex-col items-center justify-center">
                 <img
                   :src="slide?.image"

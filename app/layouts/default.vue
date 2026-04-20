@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-900 w-[98%] md:w-full mx-auto bg-white">
+  <div class="max-w-900 w-full mx-auto bg-white">
     <Navbar />
     <div class="min-h-screen">
       <slot />
