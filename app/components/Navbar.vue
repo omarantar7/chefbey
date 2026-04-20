@@ -65,7 +65,7 @@ onMounted(() => {
   <nav
     :class="[
       'fixed top-0 z-50 w-full transition-all duration-75',
-      showColoredLogo
+      showColoredLogo || isOpen
         ? 'bg-white/50 text-black backdrop-blur-sm'
         : 'backdrop-blur-[2px]',
     ]"
@@ -73,7 +73,7 @@ onMounted(() => {
     <div class="container mx-auto px-4 py-2 flex items-center justify-between">
       <NuxtLink :to="`/${route.params?.lang}`">
         <img
-          :src="showColoredLogo ? logo : whiteLogo"
+          :src="(showColoredLogo || isOpen) ? logo : whiteLogo"
           alt="logo"
           class="size-16 md:size-25.5 object-cover transition-opacity duration-300"
         />
@@ -168,7 +168,7 @@ onMounted(() => {
             :key="`${link.to}-${index}`"
             :to="link.to"
             class="relative inline-block px-2 py-1 group"
-            :class="showColoredLogo ? 'text-black' : 'text-white'"
+            :class="(showColoredLogo || isOpen) ? 'text-black' : 'text-white'"
             @click="isOpen = false"
           >
             <span>{{ link.label }}</span>
@@ -186,7 +186,7 @@ onMounted(() => {
                 'px-3 py-1 text-sm rounded-full transition-colors border',
                 currentLang.code === lang.code
                   ? 'bg-primary text-white border-primary'
-                  : showColoredLogo
+                  : (showColoredLogo || isOpen)
                     ? 'bg-white/10 text-black border-white/30 hover:bg-white/20'
                     : 'text-white bg-[#0000003b]',
               ]"
