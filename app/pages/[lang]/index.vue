@@ -103,7 +103,7 @@ useHead({
 
 <template>
     <div v-gsap.from="{ opacity: 0, y: 60, duration: 1, ease: 'power3.out' }">
-      <SectionsHero :data="banner" />
+      <LazySectionsHero :data="banner" />
     </div>
 
     <!--<SectionsServices :data="services" />-->
@@ -118,7 +118,7 @@ useHead({
       }"
       class="section-awards"
     >
-      <SectionsAwards :data="services" isServices />
+      <LazySectionsAwards :data="services" isServices />
     </div>
 
     <div
@@ -131,7 +131,7 @@ useHead({
       }"
       class="section-awards"
     >
-      <SectionsServicesInfo :data="servicesInfo" />
+      <LazySectionsServicesInfo :data="servicesInfo" />
     </div>
 
     <div
@@ -144,7 +144,7 @@ useHead({
       }"
       class="section-awards"
     >
-      <SectionsAwards :data="awards" />
+      <LazySectionsAwards :data="awards" />
     </div>
 
     <div
@@ -157,7 +157,7 @@ useHead({
       }"
       class="section-recipes"
     >
-      <SectionsRecipes :recipesData="recipes" />
+      <LazySectionsRecipes :recipesData="recipes" />
     </div>
 
     <div
@@ -170,6 +170,6 @@ useHead({
       }"
       class="section-contact"
     >
-      <SectionsContact :data="contact" />
+      <LazySectionsContact :data="contact" />
     </div>
 </template>

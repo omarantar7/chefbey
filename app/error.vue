@@ -71,7 +71,7 @@ const t = useT();
     <!-- Actions -->
     <div class="relative z-10 w-full max-w-[300px] flex flex-col gap-2.5">
       <button
-        class="flex items-center justify-center gap-2 w-full py-3.5 px-5 text-white text-sm font-semibold rounded-[14px] border-none cursor-pointer transition-[transform,box-shadow] duration-150 ease-out active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#19b0c7]"
+        class="flex items-center justify-center gap-2 w-full py-3.5 px-5 text-white text-sm font-semibold rounded-[14px] border-none cursor-pointer transition-[transform,box-shadow] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#19b0c7]"
         style="
           background: #19b0c7;
           box-shadow: 0 4px 20px rgba(25, 176, 199, 0.35);
@@ -101,10 +101,10 @@ const t = useT();
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           <polyline points="9 22 9 12 15 12 15 22" />
         </svg>
-        {{ t("Back to the Home") }}
+        {{ t("Chefbey Home") }}
       </button>
 
-      <button
+      <!-- <button
         class="flex items-center justify-center gap-1.5 w-full py-3 px-5 bg-transparent text-sm font-medium rounded-[14px] cursor-pointer border border-[#1e3547] transition-[background,border-color,color] duration-150 hover:border-[#19b0c7] active:scale-[.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#19b0c7]"
         style="color: #8aa4b8; font-family: inherit"
         @click="handleGoBack"
@@ -137,7 +137,7 @@ const t = useT();
           <polyline points="15 18 9 12 15 6" />
         </svg>
         {{ t("Go back") }}
-      </button>
+      </button> -->
     </div>
   </div>
 </template>
