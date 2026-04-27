@@ -24,7 +24,7 @@ export const contactMailTemplate = ({
     <!-- Header -->
     <div style="background-color: #0e7490; padding: 32px; text-align: center;">
       <img 
-        src="https://chefbey.org/logo2.png" 
+        src="https://chefbey.org/logo2.webp" 
         alt="ChefBey Logo" 
         style="height: 80px; object-fit: contain;"
       />

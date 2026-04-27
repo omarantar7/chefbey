@@ -86,29 +86,13 @@ const t = useT();
 
             <UModal v-model:open="isModalOpen">
               <template #content>
-                <UCard>
-                  <template #header>
-                    <div class="flex items-center justify-between">
-                      <h3 class="text-base font-semibold">
-                        {{ t("A day in my life") }}
-                      </h3>
-                      <UButton
-                        color="neutral"
-                        variant="ghost"
-                        icon="i-lucide-x"
-                        @click="isModalOpen = false"
-                      />
-                    </div>
-                  </template>
-
-                  <ClientOnly>
-                    <YoutubeVideo
-                      :videoId="data?.youtubeLink"
-                      v-if="data?.youtubeLink"
-                      v-once
-                    />
-                  </ClientOnly>
-                </UCard>
+                <ClientOnly>
+                  <YoutubeVideo
+                    :videoId="data?.youtubeLink"
+                    v-if="data?.youtubeLink"
+                    v-once
+                  />
+                </ClientOnly>
               </template>
             </UModal>
           </div>

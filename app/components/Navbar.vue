@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import logo from "@/assets/images/logo.png";
-import whiteLogo from "@/assets/images/logo2.png";
+import whiteLogo from "@/assets/images/logo2.webp";
 import Button from "./UI/Button.vue";
 
 const route = useRoute();
