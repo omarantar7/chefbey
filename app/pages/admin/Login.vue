@@ -1,10 +1,10 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "admin",
-  middleware: "guest", // Add guest middleware
+  middleware: "guest",
 });
 
-const { login, isAuthenticated } = useAuth(); // Use the composable
+const { login, isAuthenticated } = useAuth();
 const router = useRouter();
 
 const email = ref("");
@@ -12,18 +12,38 @@ const password = ref("");
 const error = ref("");
 const isLoading = ref(false);
 
+const errors = reactive({
+  email: "",
+  password: "",
+});
+
+const validateEmail = (val: string) => {
+  if (!val) return "Email is required.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return "Enter a valid email.";
+  return "";
+};
+
+const validatePassword = (val: string) => {
+  if (!val) return "Password is required.";
+  if (val.length < 6) return "Password must be at least 6 characters.";
+  return "";
+};
+
+const validateAll = () => {
+  errors.email = validateEmail(email.value);
+  errors.password = validatePassword(password.value);
+  return !errors.email && !errors.password;
+};
+
 const handleLogin = async () => {
   error.value = "";
+  if (!validateAll()) return;
+
   isLoading.value = true;
-
   try {
-    // Use the login method from useAuth composable
     await login(email.value, password.value);
-
-    // Login success → navigate to admin dashboard
     await router.push("/admin");
   } catch (err: any) {
-    // Handle errors
     error.value =
       err?.data?.message || err.message || "Invalid email or password.";
   } finally {
@@ -54,11 +74,19 @@ const handleLogin = async () => {
               id="email"
               v-model="email"
               type="email"
-              required
               placeholder="Enter your email"
               autocomplete="email"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-black outline-none transition"
+              @blur="errors.email = validateEmail(email)"
+              :class="[
+                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-black outline-none transition',
+                errors.email
+                  ? 'border-red-400 focus:ring-red-200'
+                  : 'border-gray-300 focus:ring-primary',
+              ]"
             />
+            <p v-if="errors.email" class="text-red-500 text-xs mt-1">
+              {{ errors.email }}
+            </p>
           </div>
 
           <div>
@@ -72,11 +100,19 @@ const handleLogin = async () => {
               id="password"
               v-model="password"
               type="password"
-              required
               placeholder="Enter your password"
               autocomplete="current-password"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-black outline-none transition"
+              @blur="errors.password = validatePassword(password)"
+              :class="[
+                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-black outline-none transition',
+                errors.password
+                  ? 'border-red-400 focus:ring-red-200'
+                  : 'border-gray-300 focus:ring-primary',
+              ]"
             />
+            <p v-if="errors.password" class="text-red-500 text-xs mt-1">
+              {{ errors.password }}
+            </p>
           </div>
 
           <div
