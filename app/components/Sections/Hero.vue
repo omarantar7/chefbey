@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import YoutubeVideo from "./YoutubeVideo.vue";
 
 const { data = [] } = defineProps<{ data: any }>();
@@ -9,6 +9,7 @@ const carouselImages = computed(() => {
 });
 
 const carouselRef = ref<HTMLElement | null>(null);
+const isModalOpen = ref(false);
 let intervalId: number | null | any = null;
 
 onMounted(async () => {
@@ -31,6 +32,7 @@ onUnmounted(() => {
     clearInterval(intervalId);
   }
 });
+
 const route = useRoute();
 const t = useT();
 </script>
@@ -40,8 +42,7 @@ const t = useT();
     class="relative bg-cover bg-top py-8 md:py-12 overflow-hidden"
     :style="{ backgroundImage: `url(${data?.bgHeroImage})` }"
   >
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black/40 z-0" />
+    <div class="absolute inset-0 bg-black/30 z-0" />
 
     <div
       class="container mx-auto pt-40 md:pt-0 px-4 py-12 lg:py-20 lg:pt-32 relative z-10"
@@ -61,7 +62,6 @@ const t = useT();
             </p>
           </div>
 
-          <!-- Buttons -->
           <div class="flex flex-wrap gap-4">
             <NuxtLink
               :to="`/${route.params?.lang}/#contactus`"
@@ -70,8 +70,8 @@ const t = useT();
               {{ t("Contact me") }}
             </NuxtLink>
 
-            <label
-              for="my_modal_7"
+            <button
+              @click="isModalOpen = true"
               class="bg-transparent backdrop-blur-sm text-white cursor-pointer p-4.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform flex items-center gap-3 border border-white/30 hover:bg-white/10 hover:text-cyan-100"
             >
               <svg
@@ -82,11 +82,25 @@ const t = useT();
                 <path d="M8 5v14l11-7z" />
               </svg>
               {{ t("A day in my life") }}
-            </label>
-            <Teleport to="body">
-              <input type="checkbox" id="my_modal_7" class="modal-toggle" />
-              <div class="modal" role="dialog">
-                <div class="modal-box">
+            </button>
+
+            <UModal v-model:open="isModalOpen">
+              <template #content>
+                <UCard>
+                  <template #header>
+                    <div class="flex items-center justify-between">
+                      <h3 class="text-base font-semibold">
+                        {{ t("A day in my life") }}
+                      </h3>
+                      <UButton
+                        color="neutral"
+                        variant="ghost"
+                        icon="i-lucide-x"
+                        @click="isModalOpen = false"
+                      />
+                    </div>
+                  </template>
+
                   <ClientOnly>
                     <YoutubeVideo
                       :videoId="data?.youtubeLink"
@@ -94,13 +108,11 @@ const t = useT();
                       v-once
                     />
                   </ClientOnly>
-                </div>
-                <label class="modal-backdrop" for="my_modal_7">Close</label>
-              </div>
-            </Teleport>
+                </UCard>
+              </template>
+            </UModal>
           </div>
 
-          <!-- Stats -->
           <div class="flex justify-center md:justify-start gap-8 pt-8">
             <div class="relative">
               <div
@@ -128,15 +140,13 @@ const t = useT();
           </div>
         </div>
 
-        <!-- Right Side - Vertical Carousel -->
         <div class="relative flex justify-center lg:justify-end">
           <div
             ref="carouselRef"
-            class="w-80 h-[600px] overflow-hidden rounded-3xl shadow-2xl relative"
+            class="w-80 h-150 overflow-hidden rounded-3xl shadow-2xl relative"
             style="scroll-behavior: auto"
           >
             <div class="space-y-4">
-              <!-- Duplicate images for infinite scroll effect -->
               <div
                 v-for="(img, index) in [...carouselImages, ...carouselImages]"
                 :key="index"
@@ -151,18 +161,17 @@ const t = useT();
             </div>
           </div>
 
-          <!-- Decorative elements around carousel -->
           <div
-            class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-20 blur-2xl"
+            class="absolute -top-6 -right-6 w-24 h-24 linear-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-20 blur-2xl"
           ></div>
           <div
-            class="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-orange-400 to-pink-500 rounded-full opacity-20 blur-2xl"
+            class="absolute -bottom-6 -left-6 w-32 h-32 linear-gradient-to-br from-orange-400 to-pink-500 rounded-full opacity-20 blur-2xl"
           ></div>
         </div>
       </div>
     </div>
     <div
-      class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-white to-transparent"
+      class="absolute bottom-0 w-full h-20 linear-gradient-to-t from-white to-transparent"
     ></div>
   </div>
 </template>
