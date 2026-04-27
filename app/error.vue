@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import whiteLogo from "@/assets/images/logo2.png";
+import whiteLogo from "@/assets/images/logo2.webp";
 
 const { error } = defineProps<{
   error: {
