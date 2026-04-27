@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import logo from "@/assets/images/logo2.png";
+import logo from "@/assets/images/logo2.webp";
 import contentsTypeRegistry from "~~/config/contents-type-registry";
 
 const route = useRoute();
