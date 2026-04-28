@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Title from "../UI/Title.vue";
-import birdBg from "@/assets/images/bird-bg.png";
+import birdBg from "@/assets/images/bird-bg.webp";
 
 const { data = [] } = defineProps<{ data: any }>();
 const config = useRuntimeConfig();
