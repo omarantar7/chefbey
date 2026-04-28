@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
-@plugin "daisyui";
 
 @theme {
   --font-sans: "Open Sans", ui-sans-serif, system-ui;

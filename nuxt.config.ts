@@ -1,6 +1,5 @@
 import env from "./lib/env";
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   modules: [
@@ -19,14 +18,23 @@ export default defineNuxtConfig({
     sources: ["/api/__sitemap__/urls"],
   },
   css: ["@/assets/css/tailwind.css"],
+  icon: {
+    serverBundle: {
+      collections: ["heroicons", "fluent"],
+    },
+  },
+  vite: {
+    css: {
+      devSourcemap: false,
+    },
+  },
   app: {
     baseURL: env.BASE_URL,
     head: {
       link: [
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap",
-        },
+        // Removed duplicate font, kept only the combined one
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
         {
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Allura&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap",
