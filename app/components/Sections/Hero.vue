@@ -155,7 +155,7 @@ const t = useT();
       </div>
     </div>
     <div
-      class="absolute bottom-0 w-full h-20 linear-gradient-to-t from-white to-transparent"
+      class="absolute z-10 bottom-0 w-full h-20 bg-linear-to-t from-white to-transparent"
     ></div>
   </div>
 </template>
