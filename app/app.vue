@@ -4,7 +4,7 @@ import PageLoader from "./components/PageLoader.vue";
 
 <template>
   <UApp>
-    <NuxtLoadingIndicator />
+    <NuxtLoadingIndicator color="#19b0c7"/>
     <NuxtLayout>
       <PageLoader />
       <NuxtPage />

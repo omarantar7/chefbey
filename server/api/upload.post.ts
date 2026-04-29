@@ -12,8 +12,8 @@ export default defineEventHandler(async (event) => {
     }
 
     const ext = extname(filePart.filename) || ".jpg";
-    const name = `${Date.now()}${ext}`;
-
+    const name = `${Date.now()}.webp`;
+    
     // Check if .output/public exists (production/docker)
     // otherwise fall back to public/ (local dev)
     const outputPublic = join(process.cwd(), ".output/public/uploads");

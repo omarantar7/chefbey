@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Title from "../UI/Title.vue";
 import birdBg from "@/assets/images/bird-bg.webp";
-import birdBg2 from "@/assets/images/bird-bg2.png";
+import birdBg2 from "@/assets/images/bird-bg2.webp";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
 

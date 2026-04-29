@@ -31,9 +31,11 @@ const stencilProps = computed(() => (aspectRatio ? { aspectRatio } : {}));
 
 const compressAndUpload = async (file: File) => {
   const compressed = await imageCompression(file, {
-    maxSizeMB: 5,
+    maxSizeMB: 1, 
+    maxWidthOrHeight: 1920,
     useWebWorker: true,
     fileType: "image/webp",
+    initialQuality: 0.8,
   });
 
   const formData = new FormData();
@@ -75,7 +77,7 @@ const confirmCrop = async () => {
 
     // Upload cropped image
     const croppedBlob: Blob = await new Promise((resolve) =>
-      canvas.toBlob((blob: Blob) => resolve(blob), "image/webp", 0.9),
+      canvas.toBlob((blob: Blob) => resolve(blob), "image/webp", 0.8),
     );
     const croppedFile = new File(
       [croppedBlob],
@@ -200,10 +202,7 @@ const removeImage = (index: number) => {
     </div>
 
     <!-- Cropper Modal -->
-    <UModal
-      v-model:open="isCropperOpen"
-      title="Crop Image"
-    >
+    <UModal v-model:open="isCropperOpen" title="Crop Image">
       <template #content>
         <UCard>
           <template #header>
