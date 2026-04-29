@@ -16,13 +16,8 @@ const { data = { image: "", description: "" } } = defineProps<Props>();
     <section class="relative md:min-h-150">
       <!-- Background Image -->
       <div
-        class="absolute inset-0"
-        :style="{
-          backgroundImage: `url(${data?.image})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }"
+        class="absolute inset-0 bg-cover bg-no-repeat bg-left md:bg-center"
+        :style="{ backgroundImage: `url(${data?.image})` }"
       ></div>
 
       <!-- Content -->
