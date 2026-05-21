@@ -32,7 +32,10 @@ const links = computed(() => [
         class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-10 pb-10"
       >
         <!-- Logo -->
-        <div class="flex justify-center sm:justify-start sm:flex-1">
+        <div
+          class="flex justify-center cursor-pointer sm:justify-start sm:flex-1"
+          @click="$router?.push(`/${currentLang.code}`)"
+        >
           <img
             :src="logo"
             alt="Chef Bey logo"
