@@ -72,11 +72,13 @@ const t = useT();
                 alt=""
                 class="size-41 object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)] backdrop-blur-[330px]"
               />
-              <h1
+              <!-- Use h2 inside slides/loops, add tooltip for truncated text -->
+              <h2
                 class="text-lg font-semibold text-black mb-1 w-full text-center pt-6 line-clamp-1"
+                :title="slide?.name"
               >
                 {{ slide?.name }}
-              </h1>
+              </h2>
               <p class="text-[#7E848A] w-full text-center line-clamp-5">
                 {{ slide?.local?.description }}
               </p>

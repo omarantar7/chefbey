@@ -65,19 +65,24 @@ const t = useT();
           <div class="flex flex-wrap gap-4">
             <NuxtLink
               :to="`/${route.params?.lang}/#contactus`"
-              class="bg-gradient-primary flex items-center justify-center py-4.5 md:py-2.5 px-9 rounded-full hover:bg-[#128597] transition-all duration-300 ease-out"
+              :aria-label="t('Contact me - go to contact section')"
+              class="bg-gradient-primary flex items-center justify-center py-4.5 md:py-2.5 px-9 rounded-full text-white hover:bg-[#128597] transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
             >
               {{ t("Contact me") }}
             </NuxtLink>
 
             <button
+              type="button"
+              :aria-label="t('Watch a day in my life video')"
               @click="isModalOpen = true"
-              class="bg-transparent backdrop-blur-sm text-white cursor-pointer p-4.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform flex items-center gap-3 border border-white/30 hover:bg-white/10 hover:text-cyan-100"
+              class="bg-transparent backdrop-blur-sm text-white cursor-pointer p-4.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3 border border-white/30 hover:bg-white/10 hover:text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
             >
               <svg
-                class="w-5 h-5 fill-current"
+                class="w-5 h-5"
                 viewBox="0 0 24 24"
                 fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
               >
                 <path d="M8 5v14l11-7z" />
               </svg>
@@ -102,11 +107,17 @@ const t = useT();
               <div
                 class="absolute -left-4 top-0 w-20 h-20 bg-yellow-300 rounded-full opacity-30 blur-xl"
               ></div>
-              <h3 class="text-5xl font-bold text-[#fafafa] relative z-10">
-                {{ data?.experienceNumber }}
-              </h3>
+              <!-- Wrap number + label together so context is clear -->
+              <div
+                role="img"
+                :aria-label="`${data?.experienceNumber} ${t('years of experience')}`"
+              >
+                <h3 class="text-5xl font-bold text-[#fafafa] relative z-10">
+                  {{ data?.experienceNumber ?? "—" }}+
+                </h3>
+              </div>
               <p class="text-gray-300 font-medium mt-1 relative z-10">
-                {{ data?.experienceLabel }}
+                {{ data?.experienceLabel ?? "—" }}
               </p>
             </div>
 
@@ -115,7 +126,7 @@ const t = useT();
                 class="absolute -left-4 top-0 w-20 h-20 bg-orange-300 rounded-full opacity-30 blur-xl"
               ></div>
               <h3 class="text-5xl font-bold text-[#fafafa] relative z-10">
-                {{ data.dishesNumber }}
+                {{ data?.dishesNumber ?? "—" }}+
               </h3>
               <p class="text-gray-300 font-medium mt-1 relative z-10">
                 {{ data.dishesLabel }}

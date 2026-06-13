@@ -4,6 +4,7 @@ import whiteLogo from "@/assets/images/logo2.webp";
 import Button from "./UI/Button.vue";
 
 const route = useRoute();
+const router = useRouter();
 
 const isOpen = ref(false);
 
@@ -48,9 +49,13 @@ const specificCase = computed(() => {
     return false;
   }
 });
-
-// true when we should show the dark/colored logo
 const showColoredLogo = computed(() => isScrolled.value || specificCase.value);
+
+const goToContact = () => {
+  console.log("clicked");
+
+  router.push({ path: `/${route.params.lang}`, hash: "#contactus" });
+};
 
 onMounted(() => {
   const handleScroll = () => {
@@ -73,7 +78,7 @@ onMounted(() => {
     <div class="container mx-auto px-4 py-2 flex items-center justify-between">
       <NuxtLink :to="`/${route.params?.lang}`">
         <img
-          :src="(showColoredLogo || isOpen) ? logo : whiteLogo"
+          :src="showColoredLogo || isOpen ? logo : whiteLogo"
           alt="logo"
           class="size-16 md:size-25.5 object-cover transition-opacity duration-300"
         />
@@ -116,14 +121,13 @@ onMounted(() => {
           />
         </UDropdownMenu>
 
-        <Button>
-          <NuxtLink
-            :to="`/${route.params?.lang}/#contactus`"
-            class="text-white"
-          >
-            {{ t("Contact me") }}
-          </NuxtLink>
-        </Button>
+        <NuxtLink
+          class="bg-gradient-primary text-white flex items-center justify-center py-2.5 px-6 rounded-full transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+          :aria-label="t('Go to contact section')"
+          :to="`/${route.params?.lang}/#contactus`"
+        >
+          {{ t("Contact me") }}
+        </NuxtLink>
       </div>
 
       <!-- Mobile burger -->
@@ -168,7 +172,7 @@ onMounted(() => {
             :key="`${link.to}-${index}`"
             :to="link.to"
             class="relative inline-block px-2 py-1 group"
-            :class="(showColoredLogo || isOpen) ? 'text-black' : 'text-white'"
+            :class="showColoredLogo || isOpen ? 'text-black' : 'text-white'"
             @click="isOpen = false"
           >
             <span>{{ link.label }}</span>
@@ -186,7 +190,7 @@ onMounted(() => {
                 'px-3 py-1 text-sm rounded-full transition-colors border',
                 currentLang.code === lang.code
                   ? 'bg-primary text-white border-primary'
-                  : (showColoredLogo || isOpen)
+                  : showColoredLogo || isOpen
                     ? 'bg-white/10 text-black border-white/30 hover:bg-white/20'
                     : 'text-white bg-[#0000003b]',
               ]"
@@ -198,7 +202,8 @@ onMounted(() => {
 
           <NuxtLink
             :to="`/${route.params?.lang}/#contactus`"
-            class="bg-gradient-primary mt-1 flex items-center justify-center py-2 px-6 rounded-full bg-primary transition-all duration-300 text-sm"
+            :aria-label="t('Contact me - go to contact section')"
+            class="bg-gradient-primary mt-1 flex items-center justify-center py-2 px-6 rounded-full transition-all duration-300 text-sm text-white hover:opacity-90 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
             @click="isOpen = false"
           >
             {{ t("Contact me") }}

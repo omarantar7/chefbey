@@ -70,3 +70,4 @@ jobs:
             docker compose pull app
             docker compose up -d --no-build
             docker image prune -f
+            docker exec chefbey_nginx nginx -s reload

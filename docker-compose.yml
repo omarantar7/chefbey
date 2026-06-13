@@ -31,7 +31,12 @@ services:
     volumes:
       - certbot_www:/var/www/certbot
       - certbot_certs:/etc/letsencrypt
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: >
+      /bin/sh -c 'trap exit TERM; while :; do
+        certbot renew
+          --deploy-hook "docker exec chefbey_nginx nginx -s reload";
+        sleep 12h & wait $${!};
+      done;'
 
 volumes:
   chefbey_db:

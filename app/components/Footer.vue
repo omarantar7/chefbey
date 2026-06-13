@@ -27,7 +27,6 @@ const links = computed(() => [
 <template>
   <footer class="bg-white border-t border-gray-200 font-sans">
     <div class="container mx-auto px-4 sm:px-10 pt-10 pb-0">
-      <!-- Top section -->
       <div
         class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-10 pb-10"
       >
@@ -72,7 +71,9 @@ const links = computed(() => [
             <a
               href="https://www.instagram.com/chefbeyofficial?igsh=M3R2bHZtODVzaTU4"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors"
+              rel="noopener noreferrer"
+              :aria-label="t('Visit our Instagram page (opens in new tab)')"
+              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
             >
               <svg
                 width="16"
@@ -81,6 +82,8 @@ const links = computed(() => [
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
+                aria-hidden="true"
+                focusable="false"
               >
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                 <circle cx="12" cy="12" r="4" />
@@ -93,17 +96,22 @@ const links = computed(() => [
                 />
               </svg>
             </a>
+
             <!-- Facebook -->
             <a
               href="https://www.facebook.com/share/1BLYnrafR5/?mibextid=wwXIfr"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors"
+              rel="noopener noreferrer"
+              :aria-label="t('Visit our Facebook page (opens in new tab)')"
+              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
             >
               <svg
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
                 fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
               >
                 <path
                   d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
@@ -115,13 +123,17 @@ const links = computed(() => [
             <a
               href="https://www.linkedin.com/in/chef-bey-544a1626a"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors"
+              rel="noopener noreferrer"
+              :aria-label="t('Visit our LinkedIn page (opens in new tab)')"
+              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
             >
               <svg
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
                 fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
               >
                 <path
                   d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
@@ -130,28 +142,6 @@ const links = computed(() => [
                 <circle cx="4" cy="4" r="2" />
               </svg>
             </a>
-
-            <!-- YouTube -->
-            <!-- <a
-              href="#"
-              target="_blank"
-              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-900 hover:bg-gray-200 transition-colors"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"
-                />
-                <polygon
-                  points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"
-                  fill="white"
-                />
-              </svg>
-            </a> -->
           </div>
         </div>
       </div>
