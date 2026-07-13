@@ -8,10 +8,9 @@ export default defineEventHandler(async (event) => {
   const type = getRouterParam(event, "type");
   const CONTENT_TYPE = "contents:" + type;
 
-  // GET
   if (event.method === "GET") {
     if (!id || id === "new")
-      return { settings: null, localNames: {}, local: {} };
+      return { settings: null, localNames: {}, local: {}, position: 0 };
 
     const [contentRow] = await db
       .select()
@@ -31,6 +30,7 @@ export default defineEventHandler(async (event) => {
       id: contentRow.id,
       name: contentRow.name,
       settings: contentRow.attrs,
+      position: contentRow.position, 
       localNames: Object.fromEntries(locales.map((l) => [l.language, l.title])),
       local: Object.fromEntries(
         locales.map((l) => [l.language, { ...l.attrs }]),
@@ -38,7 +38,6 @@ export default defineEventHandler(async (event) => {
     };
   }
 
-  // POST (new)
   if (event.method === "POST") {
     const body = await readBody<{
       name: string;
@@ -46,6 +45,7 @@ export default defineEventHandler(async (event) => {
       languages: string[];
       settings: Record<string, any>;
       local: Record<string, Record<string, any>>;
+      position?: number; 
     }>(event);
 
     if (!body.name)
@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
         name: body.name,
         type: CONTENT_TYPE,
         attrs: body.settings ?? null,
+        position: body.position ?? 0, 
       })
       .returning();
 
@@ -90,7 +91,6 @@ export default defineEventHandler(async (event) => {
     return { success: true, id: inserted.id };
   }
 
-  // PUT (update)
   if (event.method === "PUT") {
     if (!id) throw createError({ statusCode: 400, message: "ID is required" });
 
@@ -99,6 +99,7 @@ export default defineEventHandler(async (event) => {
       language?: string;
       name?: string;
       attrs: Record<string, any>;
+      position?: number; // NEW
     }>(event);
 
     const [contentRow] = await db
@@ -116,6 +117,7 @@ export default defineEventHandler(async (event) => {
         .set({
           attrs: body.attrs,
           ...(body.name ? { name: body.name } : {}),
+          ...(body.position !== undefined ? { position: body.position } : {}), // NEW
         })
         .where(eq(content.id, contentRow.id));
     }
@@ -150,7 +152,6 @@ export default defineEventHandler(async (event) => {
     return { success: true };
   }
 
-  // DELETE
   if (event.method === "DELETE") {
     if (!id) throw createError({ statusCode: 400, message: "ID is required" });
 

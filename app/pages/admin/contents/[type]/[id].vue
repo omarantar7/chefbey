@@ -14,13 +14,12 @@ const allFields = computed(
   () => contentsTypeRegistry[`contents:${type}`].fields,
 );
 
-console.log({type});
-
+console.log({ type });
 
 const settingsFields = computed(() =>
   Object.fromEntries(
     Object.entries(allFields.value).filter(([, f]: any) =>
-      ["image", "gallery","statstring","boolean","date"].includes(f.type),
+      ["image", "gallery", "statstring", "boolean", "date"].includes(f.type),
     ),
   ),
 );
@@ -28,7 +27,8 @@ const settingsFields = computed(() =>
 const localFields = computed(() =>
   Object.fromEntries(
     Object.entries(allFields.value).filter(
-      ([, f]: any) => !["image", "gallery","statstring","boolean","date"].includes(f.type),
+      ([, f]: any) =>
+        !["image", "gallery", "statstring", "boolean", "date"].includes(f.type),
     ),
   ),
 );
@@ -42,6 +42,8 @@ const activeNameLang = ref(languages[0]);
 const settingsData = reactive<Record<string, any>>(
   Object.fromEntries(Object.keys(settingsFields.value).map((k) => [k, null])),
 );
+
+const position = ref<number>(0);
 
 const localData: any = reactive<Record<string, Record<string, any>>>(
   Object.fromEntries(
@@ -63,6 +65,7 @@ if (!isNew.value) {
       }
     }
     Object.assign(settingsData, data.value.settings);
+    position.value = data.value.position ?? 0;
   });
 }
 
@@ -94,6 +97,7 @@ const save = async () => {
           languages,
           settings: settingsData,
           local: localData,
+          position: position.value,
         },
       });
       router.replace(`/admin/contents/${type}/${res.id}`);
@@ -105,6 +109,7 @@ const save = async () => {
             type: "settings",
             name: localNames[languages[0]],
             attrs: settingsData,
+            position: position.value,
           },
         }),
         ...languages.map((lang: string) =>
@@ -171,6 +176,9 @@ const save = async () => {
           :modelValue="settingsData"
           @update:modelValue="Object.assign(settingsData, $event)"
         />
+        <UFormField label="Position" class="mb-4">
+          <UInput v-model.number="position" type="number" />
+        </UFormField>
       </UCard>
     </div>
 
