@@ -14,10 +14,13 @@ const allFields = computed(
   () => contentsTypeRegistry[`contents:${type}`].fields,
 );
 
+console.log({type});
+
+
 const settingsFields = computed(() =>
   Object.fromEntries(
     Object.entries(allFields.value).filter(([, f]: any) =>
-      ["image", "gallery"].includes(f.type),
+      ["image", "gallery","statstring","boolean","date"].includes(f.type),
     ),
   ),
 );
@@ -25,12 +28,11 @@ const settingsFields = computed(() =>
 const localFields = computed(() =>
   Object.fromEntries(
     Object.entries(allFields.value).filter(
-      ([, f]: any) => !["image", "gallery"].includes(f.type),
+      ([, f]: any) => !["image", "gallery","statstring","boolean","date"].includes(f.type),
     ),
   ),
 );
 
-// One name per language
 const localNames = reactive<Record<string, string>>(
   Object.fromEntries(languages.map((lang: string) => [lang, ""])),
 );
@@ -54,7 +56,6 @@ if (!isNew.value) {
   const { data }: any = await useFetch(`/api/contents/${type}/${id}`);
   watchEffect(() => {
     if (!data.value) return;
-    // Load name per language from local data
     for (const lang of languages) {
       localNames[lang] = data.value.localNames?.[lang] ?? data.value.name ?? "";
       if (data.value.local[lang]) {
@@ -69,7 +70,6 @@ const toast = useToast();
 const isSaving = ref(false);
 
 const save = async () => {
-  // Validate all language names are filled
   const missingLang = languages.find(
     (lang: string) => !localNames[lang]?.trim(),
   );
@@ -89,7 +89,7 @@ const save = async () => {
       const res: any = await $fetch(`/api/contents/${type}/new`, {
         method: "POST",
         body: {
-          name: localNames[languages[0]], // default name from first language
+          name: localNames[languages[0]],
           localNames,
           languages,
           settings: settingsData,

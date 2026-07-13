@@ -35,7 +35,12 @@ export default {
   "Back to the Home": "العودة إلى الصفحة الرئيسية",
   "Go back": "ارجع",
   Home: " الصفحة الرئيسية",
+  News: "الأخبار",
+  "Our News": "أخبارنا",
+  "Our Recipes": "وصفاتنا",
+  "Read More": "اقرأ المزيد",
   "Follow Me": "تابعني",
+  "Contact Us": "تواصل معنا",
   "© All Rights Reserved": "جميع الحقوق محفوظة ©",
   "Powered by": "طور بواسطة",
 };

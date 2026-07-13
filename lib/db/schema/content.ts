@@ -8,6 +8,7 @@ export const content = sqliteTable("content", {
   createdAt: int()
     .notNull()
     .$default(() => Date.now()),
+  position: int().default(0),
   updatedAt: int()
     .notNull()
     .$default(() => Date.now())

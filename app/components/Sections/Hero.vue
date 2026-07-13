@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from "vue";
-import YoutubeVideo from "./YoutubeVideo.vue";
 
 const { data = [] } = defineProps<{ data: any }>();
 
@@ -89,13 +88,15 @@ const t = useT();
               {{ t("A day in my life") }}
             </button>
 
-            <UModal v-model:open="isModalOpen">
+            <UModal v-model:open="isModalOpen" class="p-4">
               <template #content>
                 <ClientOnly>
-                  <YoutubeVideo
-                    :videoId="data?.youtubeLink"
+                  <LazyUIYoutubeEmbed
                     v-if="data?.youtubeLink"
                     v-once
+                    :url="data?.youtubeLink"
+                    title="A day in my life"
+                    class="h-70! rounded-xl"
                   />
                 </ClientOnly>
               </template>

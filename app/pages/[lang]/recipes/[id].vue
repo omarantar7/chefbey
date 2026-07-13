@@ -43,7 +43,6 @@ useHead({
 
 <template>
   <div class="min-h-screen bg-white text-gray-900 pt-16">
-    <!-- Title + Description -->
     <div
       v-gsap.from="{ opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' }"
       class="max-w-3xl mx-auto text-center pt-16 pb-8 px-4"
@@ -61,7 +60,6 @@ useHead({
       </p>
     </div>
 
-    <!-- Hero Image -->
     <div
       v-gsap.from="{ opacity: 0, scale: 0.97, duration: 1, ease: 'power2.out' }"
       class="max-w-6xl mx-auto px-4 mb-10"
@@ -74,7 +72,6 @@ useHead({
       />
     </div>
 
-    <!-- Stats Row -->
     <div
       v-gsap.from="{
         opacity: 0,
@@ -125,19 +122,6 @@ useHead({
           <div
             class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
           >
-            <!-- <svg
-              class="w-5 h-5 text-primary"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"
-              />
-            </svg> -->
             <svg
               width="14"
               height="20"
@@ -172,15 +156,6 @@ useHead({
           <div
             class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center"
           >
-            <!-- <svg
-              class="w-5 h-5 text-primary"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M11 21H5a2 2 0 01-2-2V5a2 2 0 012-2h6v18zm2 0V3h6a2 2 0 012 2v14a2 2 0 01-2 2h-6z"
-              />
-            </svg> -->
             <svg
               width="16"
               height="21"
@@ -210,10 +185,8 @@ useHead({
       </div>
     </div>
 
-    <!-- Ingredients + Instructions -->
     <div class="max-w-6xl mx-auto px-4 pb-24">
       <div class="grid md:grid-cols-2 gap-12">
-        <!-- Ingredients — slide in from left -->
         <div
           v-if="recipe.ingredients?.length"
           v-gsap.from="{
@@ -258,7 +231,6 @@ useHead({
           </ul>
         </div>
 
-        <!-- Cooking Instructions — slide in from right -->
         <div
           v-if="recipe.instructions?.length"
           v-gsap.from="{

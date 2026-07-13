@@ -3,14 +3,15 @@ import { eq, and } from "drizzle-orm";
 import { seo } from "~~/lib/db/schema/seo";
 import db from "~~/lib/db";
 
-const CONTENT_TYPE = "contents:recipes";
-
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");
+  const type = getRouterParam(event, "type");
+  const CONTENT_TYPE = "contents:" + type;
 
   // GET
   if (event.method === "GET") {
-    if (!id || id === "new") return { settings: null, localNames: {}, local: {} };
+    if (!id || id === "new")
+      return { settings: null, localNames: {}, local: {} };
 
     const [contentRow] = await db
       .select()
@@ -31,7 +32,9 @@ export default defineEventHandler(async (event) => {
       name: contentRow.name,
       settings: contentRow.attrs,
       localNames: Object.fromEntries(locales.map((l) => [l.language, l.title])),
-      local: Object.fromEntries(locales.map((l) => [l.language, { ...l.attrs }])),
+      local: Object.fromEntries(
+        locales.map((l) => [l.language, { ...l.attrs }]),
+      ),
     };
   }
 
@@ -50,7 +53,11 @@ export default defineEventHandler(async (event) => {
 
     const [inserted] = await db
       .insert(content)
-      .values({ name: body.name, type: CONTENT_TYPE, attrs: body.settings ?? null })
+      .values({
+        name: body.name,
+        type: CONTENT_TYPE,
+        attrs: body.settings ?? null,
+      })
       .returning();
 
     for (const lang of body.languages) {

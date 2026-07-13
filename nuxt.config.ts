@@ -32,7 +32,6 @@ export default defineNuxtConfig({
     baseURL: env.BASE_URL,
     head: {
       link: [
-        // Removed duplicate font, kept only the combined one
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
         {

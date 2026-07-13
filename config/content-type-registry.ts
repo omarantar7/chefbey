@@ -2,6 +2,32 @@
 import type { ContentTypeDefinition, ContentsTypeDefinition } from "@/config/index";
 
 const contentTypeRegistry: Record<string, any> = {
+  "content:contactUs": {
+    "name": "contactUs",
+    "type": "content:contactUs",
+    "fields": {
+      "title": {
+        "type": "string",
+        "label": "Hero Title"
+      },
+      "description": {
+        "type": "text",
+        "label": "Hero Description"
+      },
+      "bgHeroImage": {
+        "type": "image",
+        "label": "Background Hero Image"
+      },
+      "subTitle": {
+        "type": "string",
+        "label": "Title 2"
+      },
+      "subDescription": {
+        "type": "text",
+        "label": "Description 2"
+      }
+    }
+  },
   "content:home": {
     "name": "Home",
     "type": "content:home",
@@ -39,7 +65,7 @@ const contentTypeRegistry: Record<string, any> = {
         "label": "Dishes Label"
       },
       "youtubeLink": {
-        "type": "string",
+        "type": "statstring",
         "label": "Youtube Video Id"
       },
       "heroImages": {
@@ -129,6 +155,42 @@ const contentTypeRegistry: Record<string, any> = {
       "contactImage": {
         "type": "image",
         "label": "Contact Us Image"
+      }
+    }
+  },
+  "content:news": {
+    "name": "news",
+    "type": "content:news",
+    "fields": {
+      "title": {
+        "type": "string",
+        "label": "Hero Title"
+      },
+      "description": {
+        "type": "text",
+        "label": "Hero Description"
+      },
+      "bgHeroImage": {
+        "type": "image",
+        "label": "Background Hero Image"
+      }
+    }
+  },
+  "content:recipes": {
+    "name": "recipes",
+    "type": "content:recipes",
+    "fields": {
+      "title": {
+        "type": "string",
+        "label": "Hero Title"
+      },
+      "description": {
+        "type": "text",
+        "label": "Hero Description"
+      },
+      "bgHeroImage": {
+        "type": "image",
+        "label": "Background Hero Image"
       }
     }
   }

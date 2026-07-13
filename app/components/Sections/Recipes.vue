@@ -17,16 +17,16 @@ const { data: recipes }: any = await useFetch("/api/page/contents/recipes", {
   params: { lang: route?.params?.lang },
 });
 
-const t = useT();
 </script>
 
 <template>
   <section
-    class="relative h-fit bg-cover bg-top"
+    class="relative h-fit bg-cover bg-top pb-10"
     :style="{ backgroundImage: `url(${recipesData?.recipesBg})` }"
     id="Recipes"
   >
     <div class="absolute inset-0 bg-black/40 z-0 backdrop-blur-[3px]" />
+
     <!-- top -->
     <div
       class="relative z-10 flex items-center justify-center w-full h-72 md:py-12 bg-cover bg-top"
@@ -44,61 +44,36 @@ const t = useT();
       </Title>
     </div>
 
-    <div class="relative z-10 block container mx-auto">
+    <div class="relative z-10 container mx-auto px-4 pt-44 pb-8">
       <Swiper
         :modules="modules"
-        :slides-per-view="'auto'"
+        :slides-per-view="1"
+        :slides-per-group="1"
         :space-between="24"
-        :pagination="{ clickable: true }"
+        :pagination="{ el: '.recipes-pagination', clickable: true }"
         :centered-slides="false"
         :breakpoints="{
-          0: { slidesPerView: 'auto' },
-          1280: { slidesPerView: 5 },
+          640: { slidesPerView: 2, slidesPerGroup: 2 },
+          1024: { slidesPerView: 3, slidesPerGroup: 3 },
+          1440: { slidesPerView: 4, slidesPerGroup: 4 },
         }"
-        class="awards-swiper"
+        class="recipes-swiper"
       >
         <SwiperSlide
           v-for="slide in recipes"
           :key="slide.id"
-          class="w-auto! max-w-55.5 h-auto! flex items-stretch"
+          class="h-auto! flex items-stretch"
         >
-          <!-- card -->
-          <div
-            class="rounded-xl bg-white py-5 px-4 w-55.5 flex flex-col h-full"
-          >
-            <div class="flex flex-col items-center justify-between flex-1">
-              <img
-                :src="slide?.settings?.cardImage ?? slide?.settings?.image"
-                alt=""
-                class="size-41 object-cover rounded-full -mt-28 shadow-[0_9px_76px_0_rgba(0,0,0,0.65)] backdrop-blur-[330px]"
-              />
-              <!-- Use h2 inside slides/loops, add tooltip for truncated text -->
-              <h2
-                class="text-lg font-semibold text-black mb-1 w-full text-center pt-6 line-clamp-1"
-                :title="slide?.name"
-              >
-                {{ slide?.name }}
-              </h2>
-              <p class="text-[#7E848A] w-full text-center line-clamp-5">
-                {{ slide?.local?.description }}
-              </p>
-              <hr class="h-0.5 bg-[#DCDFE2] w-full my-3" />
-              <p class="text-[#576471] font-semibold w-full text-center">
-                {{ slide?.local?.calories }}
-              </p>
-              <NuxtLink :to="`/${route?.params?.lang}/recipes/${slide?.id}`">
-                <button
-                  class="bg-gradient-primary border-none px-5.5 py-3 rounded-full font-semibold tracking-[0.3px] shadow-[0_6px_14px_rgba(14,165,183,0.25)] transition-all duration-200 ease-in-out cursor-pointer mt-3"
-                >
-                  {{ t("Ingredients") }}
-                </button>
-              </NuxtLink>
-            </div>
-          </div>
+          <LazyCard :data="slide" :isNews="false" />
         </SwiperSlide>
       </Swiper>
+
+      <div
+        v-if="recipes?.length > 1"
+        class="recipes-pagination flex justify-center gap-0.5 mt-10"
+      ></div>
     </div>
-    <!-- bottom -->
+
     <div
       class="absolute z-10 bottom-0 w-full h-20 bg-linear-to-t from-white to-transparent"
     ></div>
@@ -106,35 +81,25 @@ const t = useT();
 </template>
 
 <style scoped>
-.awards-swiper {
-  padding-top: 14rem;
-  padding-bottom: 7rem;
+@reference "~/assets/css/tailwind.css";
+
+.recipes-swiper {
   width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  max-width: 81%;
-  display: flex;
+}
+
+.recipes-swiper :deep(.swiper-wrapper) {
   align-items: stretch;
 }
 
-.awards-swiper :deep(.swiper-pagination) {
-  bottom: 0;
-}
-
-.awards-swiper :deep(.swiper-wrapper) {
-  align-items: stretch;
-}
-
-.awards-swiper :deep(.swiper-slide) {
+.recipes-swiper :deep(.swiper-slide) {
   height: auto;
 }
 
-.awards-swiper :deep(.swiper-pagination-bullet) {
-  background-color: #667583;
-  opacity: 0.5;
+.recipes-pagination :deep(.swiper-pagination-bullet) {
+  @apply bg-primary/30 opacity-100;
 }
 
-.awards-swiper :deep(.swiper-pagination-bullet-active) {
-  opacity: 1;
+.recipes-pagination :deep(.swiper-pagination-bullet-active) {
+  @apply bg-primary opacity-100;
 }
 </style>

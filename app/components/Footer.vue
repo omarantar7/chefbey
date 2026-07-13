@@ -17,10 +17,14 @@ const currentLang: any = computed(() => {
 });
 
 const links = computed(() => [
-  { label: t("Services"), to: `/${currentLang.value.code}/#Services` },
-  { label: t("Awards"), to: `/${currentLang.value.code}/#Awards` },
-  { label: t("Recipes"), to: `/${currentLang.value.code}/#Recipes` },
-  { label: t("Contact me"), to: `/${currentLang.value.code}/#contactus` },
+  // { label: t("Services"), to: `/${currentLang.value.code}/#Services` },
+  // { label: t("Awards"), to: `/${currentLang.value.code}/#Awards` },
+  // { label: t("Recipes"), to: `/${currentLang.value.code}/#Recipes` },
+  // { label: t("Contact me"), to: `/${currentLang.value.code}/#contactus` },
+  { label: t("Home"), to: `/${currentLang.value.code}` },
+  { label: t("News"), to: `/${currentLang.value.code}/news` },
+  { label: t("Recipes"), to: `/${currentLang.value.code}/recipes` },
+  { label: t("Contact me"), to: `/${currentLang.value.code}/contactUs` },
 ]);
 </script>
 
@@ -47,7 +51,7 @@ const links = computed(() => [
           <p
             class="text-lg font-semibold text-gray-900 mb-4 text-center sm:text-left"
           >
-            {{ t("Home") }}
+            {{ t("Pages") }}
           </p>
           <div class="grid grid-cols-2 gap-y-3 gap-x-10 lg:gap-x-16">
             <NuxtLink

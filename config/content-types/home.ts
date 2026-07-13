@@ -13,7 +13,7 @@ const definition: ContentTypeDefinition = {
     experienceLabel: { type: FieldType.String, label: "Experience Label" },
     dishesNumber: { type: FieldType.String, label: "Dishes Number" },
     dishesLabel: { type: FieldType.String, label: "Dishes Label" },
-    youtubeLink: { type: FieldType.String, label: "Youtube Video Id" },
+    youtubeLink: { type: FieldType.StatString, label: "Youtube Video Id" },
     heroImages: { type: FieldType.Gallery, label: "Hero Images" },
     servicesTitle: { type: FieldType.String, label: "Services Title" },
     servicesDescr: { type: FieldType.String, label: "Services Description" },

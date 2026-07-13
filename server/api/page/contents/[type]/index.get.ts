@@ -1,6 +1,6 @@
 import db from "~~/lib/db";
 import { content, contentLocal } from "~~/lib/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, asc } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
   const type = getRouterParam(event, "type")!;
@@ -9,7 +9,8 @@ export default defineEventHandler(async (event) => {
   const rows = await db
     .select()
     .from(content)
-    .where(eq(content.type, `contents:${type}`));
+    .where(eq(content.type, `contents:${type}`))
+    .orderBy(asc(content.position));
 
   const result = await Promise.all(
     rows.map(async (row) => {

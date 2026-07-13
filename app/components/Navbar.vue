@@ -4,7 +4,6 @@ import whiteLogo from "@/assets/images/logo2.webp";
 import Button from "./UI/Button.vue";
 
 const route = useRoute();
-const router = useRouter();
 
 const isOpen = ref(false);
 
@@ -35,27 +34,22 @@ watchEffect(() => {
 const t = useT();
 
 const links = computed(() => [
-  { label: t("Services"), to: `/${currentLang.value.code}/#Services` },
-  { label: t("Awards"), to: `/${currentLang.value.code}/#Awards` },
-  { label: t("Recipes"), to: `/${currentLang.value.code}/#Recipes` },
+  // { label: t("Services"), to: `/${currentLang.value.code}/#Services` },
+  // { label: t("Awards"), to: `/${currentLang.value.code}/#Awards` },
+  { label: t("Recipes"), to: `/${currentLang.value.code}/recipes` },
+  { label: t("News"), to: `/${currentLang.value.code}/news` },
 ]);
 
 const isScrolled = ref(false);
 
 const specificCase = computed(() => {
-  if (route.path.includes("recipes")) {
+  if (Object.keys(route.params).length > 1) {
     return true;
   } else {
     return false;
   }
 });
 const showColoredLogo = computed(() => isScrolled.value || specificCase.value);
-
-const goToContact = () => {
-  console.log("clicked");
-
-  router.push({ path: `/${route.params.lang}`, hash: "#contactus" });
-};
 
 onMounted(() => {
   const handleScroll = () => {
@@ -90,11 +84,12 @@ onMounted(() => {
           v-for="(link, index) in links"
           :key="`${link.to}-${index}`"
           :to="link.to"
-          class="relative inline-block px-2 py-1 group"
+          class="relative inline-block font-medium px-2 py-1 group"
         >
           <span>{{ link.label }}</span>
           <span
             class="absolute left-0 bottom-0 h-0.5 bg-primary/50 w-0 transition-all duration-300 ease-out group-hover:w-full"
+            :class="{ 'w-full h-1': route.fullPath === link.to }"
           />
         </NuxtLink>
 
@@ -124,7 +119,7 @@ onMounted(() => {
         <NuxtLink
           class="bg-gradient-primary text-white flex items-center justify-center py-2.5 px-6 rounded-full transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
           :aria-label="t('Go to contact section')"
-          :to="`/${route.params?.lang}/#contactus`"
+          :to="`/${route.params?.lang}/ContactUs`"
         >
           {{ t("Contact me") }}
         </NuxtLink>
@@ -201,7 +196,7 @@ onMounted(() => {
           </div>
 
           <NuxtLink
-            :to="`/${route.params?.lang}/#contactus`"
+            :to="`/${route.params?.lang}/ContactUs`"
             :aria-label="t('Contact me - go to contact section')"
             class="bg-gradient-primary mt-1 flex items-center justify-center py-2 px-6 rounded-full transition-all duration-300 text-sm text-white hover:opacity-90 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
             @click="isOpen = false"

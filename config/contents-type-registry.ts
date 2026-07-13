@@ -2,6 +2,32 @@
 import type { ContentTypeDefinition, ContentsTypeDefinition } from "@/config/index";
 
 const contentsTypeRegistry: Record<string, any> = {
+  "contents:news": {
+    "name": "news",
+    "type": "contents:news",
+    "fields": {
+      "description": {
+        "type": "text",
+        "label": "Description"
+      },
+      "image": {
+        "type": "image",
+        "label": "Image"
+      },
+      "isVideo": {
+        "type": "boolean",
+        "label": "Is Video"
+      },
+      "youtubeUrl": {
+        "type": "statstring",
+        "label": "Youtube Video Url Id"
+      },
+      "date": {
+        "type": "string",
+        "label": "News Date"
+      }
+    }
+  },
   "contents:recipes": {
     "name": "Recipes",
     "type": "contents:recipes",

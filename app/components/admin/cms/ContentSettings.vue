@@ -37,6 +37,29 @@ const handleChange = (
           @update:modelValue="handleChange(key as string, $event, modelValue)"
         />
       </UFormField>
+
+      <UFormField :label="field.label" v-else-if="field.type === 'statstring'">
+        <UInput
+          :modelValue="modelValue[key]"
+          :placeholder="field.label"
+          class="w-full"
+          @update:modelValue="handleChange(key as string, $event, modelValue)"
+        />
+      </UFormField>
+      <UFormField :label="field.label" v-else-if="field.type === 'boolean'">
+        <USwitch
+          :modelValue="modelValue[key]"
+          @update:modelValue="handleChange(key as string, $event, modelValue)"
+        />
+      </UFormField>
+      <UFormField :label="field.label" v-else-if="field.type === 'date'">
+        <UInput
+          :modelValue="modelValue[key]"
+          type="date"
+          class="w-full"
+          @update:modelValue="handleChange(key as string, $event, modelValue)"
+        />
+      </UFormField>
     </div>
   </div>
 </template>
