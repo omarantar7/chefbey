@@ -7,7 +7,12 @@ export default defineEventHandler(async () => {
     .split(",")
     .map((l) => l.trim());
 
-  const staticUrls = languages.flatMap((lang) => [{ loc: `/${lang}` }]);
+  const staticUrls = languages.flatMap((lang) => [
+    { loc: `/${lang}` },
+    { loc: `/${lang}/ContactUs` },
+    { loc: `/${lang}/news` },
+    { loc: `/${lang}/recipes` },
+  ]);
 
   try {
     const rows = await db
