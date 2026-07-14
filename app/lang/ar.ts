@@ -36,6 +36,7 @@ export default {
   "Go back": "ارجع",
   Home: " الصفحة الرئيسية",
   News: "الأخبار",
+  "Latest News": "آخر الأخبار",
   "Our News": "أخبارنا",
   "Our Recipes": "وصفاتنا",
   "Read More": "اقرأ المزيد",

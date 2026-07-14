@@ -36,6 +36,7 @@ export default {
   "Go back": "Geri dön",
   Home: "Ana Sayfa",
   News: "Haberler",
+  "Latest News": "En Son Haberler",
   "Our News": "Haberlerimiz",
   "Our Recipes": "Tariflerimiz",
   "Read More": "Daha Fazla Oku",
