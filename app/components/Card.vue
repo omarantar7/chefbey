@@ -59,8 +59,9 @@ const t = useT();
 
       <div
         v-if="!isNews && calories"
-        class="absolute top-3 right-3 bg-white/80 text-black text-sm font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-[0px_4px_8px_0px_rgba(0,0,0,0.25)]"
-      >
+        class="absolute bg-white/80 text-black text-sm font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-[0px_4px_8px_0px_rgba(0,0,0,0.25)]"
+        :class="route.params.lang==='ar' ? 'top-3 left-3' : 'top-3 right-3'"
+          >
         {{ calories }}
         <svg
           width="12"

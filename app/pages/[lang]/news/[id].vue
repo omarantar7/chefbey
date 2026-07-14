@@ -115,8 +115,9 @@ useHead({
 
       <span
         v-if="news.date"
-        class="absolute top-6 right-6 bg-white/90 backdrop-blur-sm text-black text-sm font-semibold px-4 py-2 rounded-full shadow-[0px_4px_8px_0px_rgba(0,0,0,0.25)]"
-      >
+        class="absolute bg-white/90 backdrop-blur-sm text-black text-sm font-semibold px-4 py-2 rounded-full shadow-[0px_4px_8px_0px_rgba(0,0,0,0.25)]"
+        :class="route.params.lang==='ar'?'top-6 left-6':'top-6 right-6'"
+        >
         {{ news.date }}
       </span>
     </div>

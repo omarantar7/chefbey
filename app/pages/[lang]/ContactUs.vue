@@ -42,7 +42,7 @@ useHead({
   <div v-gsap.from="{ opacity: 0, y: 60, duration: 1, ease: 'power3.out' }">
     <LazyCommonHero :data="contactUs" btnContent="Send Message" />
     <section
-      class="relative z-20 bg-white -mt-30 w-[95%] md:max-w-6xl py-9 px-8 md:px-28 mx-auto rounded-[16px] shadow-[0px_19px_52.4px_4px_rgba(0,0,0,0.25)] mb-16"
+      class="relative z-20 bg-white -mt-23 md:-mt-30 w-[95%] md:max-w-6xl py-9 px-8 md:px-28 mx-auto rounded-[16px] shadow-[0px_19px_52.4px_4px_rgba(0,0,0,0.25)] mb-16"
     >
       <div
         class="flex flex-col gap-1 text-black justify-center items-center max-w-2xl text-center mx-auto"
