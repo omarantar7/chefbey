@@ -110,7 +110,7 @@ useHead({
         v-else-if="news.image"
         :src="news.image"
         :alt="news.title"
-        class="w-full h-full object-cover rounded-[26px]"
+        class="w-full h-full object-cover object-top rounded-[26px]"
       />
 
       <span
