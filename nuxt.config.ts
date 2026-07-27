@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "v-gsap-nuxt",
     "@nuxtjs/sitemap",
+  
   ],
   site: {
     url: env.BETTER_AUTH_URL,
