@@ -21,7 +21,7 @@ const banner = computed(() => {
     experienceLabel: local.value?.experienceLabel,
     dishesNumber: local.value?.dishesNumber,
     dishesLabel: local.value?.dishesLabel,
-    youtubeLink: local.value?.youtubeLink,
+    youtubeLink: settings.value?.youtubeLink,
     heroImages: settings.value?.heroImages,
   };
 });
