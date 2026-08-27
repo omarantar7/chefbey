@@ -15,7 +15,7 @@ const allFields = computed(() => contentTypeRegistry[`content:${type}`].fields);
 const settingsFields = computed(() =>
   Object.fromEntries(
     Object.entries(allFields.value).filter(([, f]: any) =>
-      ["image", "gallery"].includes(f.type),
+      ["image", "gallery", "statstring", "boolean", "date"].includes(f.type),
     ),
   ),
 );
@@ -23,7 +23,8 @@ const settingsFields = computed(() =>
 const localFields = computed(() =>
   Object.fromEntries(
     Object.entries(allFields.value).filter(
-      ([, f]: any) => !["image", "gallery"].includes(f.type),
+      ([, f]: any) =>
+        !["image", "gallery", "statstring", "boolean", "date"].includes(f.type),
     ),
   ),
 );
