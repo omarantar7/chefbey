@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "v-gsap-nuxt",
     "@nuxtjs/sitemap",
-  
   ],
   site: {
     url: env.BETTER_AUTH_URL,
@@ -34,7 +33,11 @@ export default defineNuxtConfig({
     head: {
       link: [
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
-        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+        {
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "",
+        },
         {
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Allura&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap",
@@ -73,6 +76,7 @@ export default defineNuxtConfig({
       baseUrl: env.BASE_URL,
       recieverEmail: env.RECIEVED_Email,
       gaId: env.NUXT_PUBLIC_GA_ID ?? "",
+      recaptchaSitetKey: env.RECAPTCHA_SITE_KEY,
     },
     db_file_name: env.NUXT_DB_FILE_NAME,
   },

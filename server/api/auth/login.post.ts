@@ -2,10 +2,21 @@ import { compare } from "bcrypt";
 import db from "~~/lib/db";
 import { session } from "~~/lib/db/schema";
 import { randomBytes } from "crypto";
+import env from "~~/lib/env";
+import { RECAPTCHA_ACTIONS, verifyRecaptcha } from "~~/server/utils/recaptcha";
+
+interface RecaptchaVerifyResponse {
+  success: boolean;
+  score?: number;
+  action?: string;
+  challenge_ts?: string;
+  hostname?: string;
+  "error-codes"?: string[];
+}
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { email, password } = body;
+  const { email, password, recaptchaToken } = body;
 
   if (!email || !password) {
     throw createError({
@@ -15,6 +26,9 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    // Verify reCAPTCHA before touching the DB at all
+    await verifyRecaptcha(recaptchaToken, RECAPTCHA_ACTIONS.ADMIN_LOGIN);
+
     // Find user
     const foundUser = await db.query.user.findFirst({
       where: (users, { eq }) => eq(users.email, email),
@@ -38,7 +52,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Generate session ID and token
-    const sessionId = randomBytes(16).toString("hex"); // Generate unique session ID
+    const sessionId = randomBytes(16).toString("hex");
     const token = randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
@@ -46,7 +60,7 @@ export default defineEventHandler(async (event) => {
     const [newSession] = await db
       .insert(session)
       .values({
-        id: sessionId, // Add the id field
+        id: sessionId,
         userId: foundUser.id,
         token,
         expiresAt,
@@ -59,7 +73,6 @@ export default defineEventHandler(async (event) => {
     setCookie(event, "session_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      // secure: false,
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",

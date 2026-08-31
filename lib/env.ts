@@ -14,9 +14,11 @@ const envSchema = z.object({
   RECIEVED_Email: z.string(),
   NUXT_DB_FILE_NAME: z.string().default("local.db"),
   CONTENT_LANGUAGES: z
-    .string()
-    .default("en")
-    .transform((val) => val.split(",").map((l) => l.trim())),
+  .string()
+  .default("en")
+  .transform((val) => val.split(",").map((l) => l.trim())),
+  RECAPTCHA_SECRET_KEY: z.string(),
+  RECAPTCHA_SITE_KEY: z.string(),
 });
 
 export type envSchema = z.infer<typeof envSchema>;

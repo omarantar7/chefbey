@@ -37,10 +37,14 @@ export const useAuth = () => {
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (
+    email: string,
+    password: string,
+    recaptchaToken: string,
+  ) => {
     const response = await $fetch("/api/auth/login", {
       method: "POST",
-      body: { email, password },
+      body: { email, password, recaptchaToken },
     });
 
     user.value = response.user;

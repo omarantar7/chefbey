@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { z } from "zod";
+
 definePageMeta({
   layout: "admin",
   middleware: "guest",
 });
 
 const { login, isAuthenticated } = useAuth();
+const { execute: executeRecaptcha, init: initRecaptcha } = useRecaptcha();
 const router = useRouter();
 
 const email = ref("");
@@ -17,22 +20,48 @@ const errors = reactive({
   password: "",
 });
 
-const validateEmail = (val: string) => {
-  if (!val) return "Email is required.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return "Enter a valid email.";
-  return "";
-};
+const emailSchema = z
+  .string()
+  .min(1, "Email is required.")
+  .email("Enter a valid email.");
 
-const validatePassword = (val: string) => {
-  if (!val) return "Password is required.";
-  if (val.length < 6) return "Password must be at least 6 characters.";
-  return "";
+const passwordSchema = z.string().min(1, "Password is required.");
+
+const loginSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+const fieldSchemas = {
+  email: emailSchema,
+  password: passwordSchema,
+} as const;
+
+const validateField = (field: "email" | "password") => {
+  const schema = fieldSchemas[field];
+  const result: any = schema.safeParse(
+    field === "email" ? email.value : password.value,
+  );
+  errors[field] = result.success ? "" : result?.error?.issues[0]?.message;
 };
 
 const validateAll = () => {
-  errors.email = validateEmail(email.value);
-  errors.password = validatePassword(password.value);
-  return !errors.email && !errors.password;
+  const result = loginSchema.safeParse({
+    email: email.value,
+    password: password.value,
+  });
+
+  errors.email = "";
+  errors.password = "";
+
+  if (!result.success) {
+    for (const issue of result.error.issues) {
+      const field = issue.path[0] as "email" | "password";
+      if (!errors[field]) errors[field] = issue.message;
+    }
+    return false;
+  }
+  return true;
 };
 
 const handleLogin = async () => {
@@ -41,7 +70,9 @@ const handleLogin = async () => {
 
   isLoading.value = true;
   try {
-    await login(email.value, password.value);
+    const recaptchaToken = await executeRecaptcha("admin_login");
+
+    await login(email.value, password.value, recaptchaToken);
     await router.push("/admin");
   } catch (err: any) {
     error.value =
@@ -50,84 +81,106 @@ const handleLogin = async () => {
     isLoading.value = false;
   }
 };
+
+onMounted(() => {
+  initRecaptcha().catch((err) => {
+    console.error("reCAPTCHA init failed:", err);
+  });
+});
 </script>
 
 <template>
   <ClientOnly>
-    <div
-      class="min-h-screen flex items-center justify-center bg-cover bg-center"
-    >
-      <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
-          Admin Login
-        </h1>
+    <div class="min-h-screen flex items-center justify-center px-6">
+      <div
+        class="w-full max-w-95 bg-white rounded-xl shadow-lg border border-gray-100 p-8"
+      >
+        <h1 class="text-xl font-medium text-gray-900 mb-1">Admin sign in</h1>
+        <p class="text-sm text-gray-500 mb-8">
+          Enter your credentials to continue.
+        </p>
 
-        <form @submit.prevent="handleLogin" class="space-y-6">
+        <form @submit.prevent="handleLogin" class="space-y-4">
           <div>
-            <label
-              for="email"
-              class="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label for="email" class="block text-sm text-gray-700 mb-1.5">
               Email
             </label>
             <input
               id="email"
               v-model="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="you@chefbey.org"
               autocomplete="email"
-              @blur="errors.email = validateEmail(email)"
+              @blur="validateField('email')"
               :class="[
-                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-black outline-none transition',
+                'w-full px-3.5 py-2.5 bg-white border rounded-md text-gray-900 text-[15px] outline-none transition placeholder:text-gray-400',
                 errors.email
-                  ? 'border-red-400 focus:ring-red-200'
-                  : 'border-gray-300 focus:ring-primary',
+                  ? 'border-red-400 focus:ring-2 focus:ring-red-100'
+                  : 'border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10',
               ]"
             />
-            <p v-if="errors.email" class="text-red-500 text-xs mt-1">
+            <p v-if="errors.email" class="text-red-600 text-xs mt-1.5">
               {{ errors.email }}
             </p>
           </div>
 
           <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label for="password" class="block text-sm text-gray-700 mb-1.5">
               Password
             </label>
             <input
               id="password"
               v-model="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="••••••••"
               autocomplete="current-password"
-              @blur="errors.password = validatePassword(password)"
+              @blur="validateField('password')"
               :class="[
-                'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-black outline-none transition',
+                'w-full px-3.5 py-2.5 bg-white border rounded-md text-gray-900 text-[15px] outline-none transition placeholder:text-gray-400',
                 errors.password
-                  ? 'border-red-400 focus:ring-red-200'
-                  : 'border-gray-300 focus:ring-primary',
+                  ? 'border-red-400 focus:ring-2 focus:ring-red-100'
+                  : 'border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10',
               ]"
             />
-            <p v-if="errors.password" class="text-red-500 text-xs mt-1">
+            <p v-if="errors.password" class="text-red-600 text-xs mt-1.5">
               {{ errors.password }}
             </p>
           </div>
 
-          <div
+          <p
             v-if="error"
-            class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm"
+            class="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3.5 py-2.5"
           >
             {{ error }}
-          </div>
+          </p>
 
           <button
             type="submit"
             :disabled="isLoading"
-            class="w-full bg-primary text-white py-3 rounded-lg font-semibold focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+            class="w-full bg-primary text-white text-[15px] py-2.5 rounded-md font-medium hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transition flex items-center justify-center gap-2"
           >
-            {{ isLoading ? "Logging in..." : "Login" }}
+            <svg
+              v-if="isLoading"
+              class="animate-spin h-4 w-4 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              />
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            <span>{{ isLoading ? "Signing in…" : "Sign in" }}</span>
           </button>
         </form>
       </div>

@@ -3,5 +3,6 @@ export const useDataset = () => {
 
   return {
     contentLanguages: config.public.contentLanguages,
+    recaptchaSecretKey: config.public.recaptchaSitetKey,
   };
 };

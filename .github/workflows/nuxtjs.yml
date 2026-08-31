@@ -47,6 +47,8 @@ jobs:
             RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             RECIEVED_Email=${{ secrets.RECIEVED_Email }}
             NUXT_PUBLIC_GA_ID=${{ secrets.NUXT_PUBLIC_GA_ID }}
+            RECAPTCHA_SITE_KEY=${{ vars.RECAPTCHA_SITE_KEY }}
+            RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
           cache-from: type=registry,ref=ghcr.io/${{ env.IMAGE_NAME }}:cache
           cache-to: type=registry,ref=ghcr.io/${{ env.IMAGE_NAME }}:cache,mode=max
 

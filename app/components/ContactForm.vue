@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { execute: executeRecaptcha, init: initRecaptcha } = useRecaptcha();
+
 const formData = ref({
   firstName: "",
   lastName: "",
@@ -31,13 +33,13 @@ const errors = computed(() => ({
           !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email)
         ? t("Enter a valid email")
         : "",
-//   phoneNumber:
-//     touched.value.phoneNumber && !formData.value.phoneNumber.trim()
-//       ? t("Phone number is required")
-//       : touched.value.phoneNumber &&
-//           !/^\+?[\d\s\-().]{7,}$/.test(formData.value.phoneNumber)
-//         ? t("Enter a valid phone number")
-//         : "",
+  //   phoneNumber:
+  //     touched.value.phoneNumber && !formData.value.phoneNumber.trim()
+  //       ? t("Phone number is required")
+  //       : touched.value.phoneNumber &&
+  //           !/^\+?[\d\s\-().]{7,}$/.test(formData.value.phoneNumber)
+  //         ? t("Enter a valid phone number")
+  //         : "",
 }));
 
 const isFormValid = computed(
@@ -63,6 +65,8 @@ const handleSubmit = async () => {
 
   isLoading.value = true;
   try {
+    const recaptchaToken = await executeRecaptcha("contact_form");
+
     await $fetch("/api/contact", {
       method: "POST",
       body: {
@@ -71,6 +75,7 @@ const handleSubmit = async () => {
         email: formData.value.email,
         phoneNumber: formData.value.phoneNumber,
         message: formData.value.message,
+        recaptchaToken,
       },
     });
 
@@ -102,6 +107,11 @@ const handleSubmit = async () => {
     isLoading.value = false;
   }
 };
+onMounted(() => {
+  initRecaptcha().catch((err) => {
+    console.error("reCAPTCHA init failed:", err);
+  });
+});
 </script>
 
 <template>
@@ -237,6 +247,8 @@ const handleSubmit = async () => {
           class="w-full px-4 py-3 border text-black bg-[#F8F8F8] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
         ></textarea>
       </div>
+
+      <Recaptcha />
 
       <!-- Submit Button -->
       <UButton
