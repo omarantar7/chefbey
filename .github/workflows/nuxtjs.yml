@@ -68,8 +68,12 @@ jobs:
           script: |
             cd ${{ secrets.PATH }}
             git pull origin master
+            docker network create web >/dev/null 2>&1 || true
+            # nginx won't start without every certificate it's configured for, which would take
+            # both sites down — stop here (old containers keep running) if dental-clinic's is missing
+            docker compose run --rm --no-deps --entrypoint sh certbot -c 'test -f /etc/letsencrypt/live/dental-clinic.cc/fullchain.pem' || { echo "dental-clinic.cc certificate is missing - see docs/shared-droplet.md"; exit 1; }
             echo ${{ secrets.GH_TOKEN }} | docker login ghcr.io -u omarantar7 --password-stdin
             docker compose pull app
             docker compose up -d --no-build
             docker image prune -f
-            docker exec chefbey_nginx nginx -s reload
+            docker exec chefbey_nginx nginx -t && docker exec chefbey_nginx nginx -s reload

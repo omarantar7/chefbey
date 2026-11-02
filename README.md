@@ -171,12 +171,14 @@ Languages are configured via the `CONTENT_LANGUAGES` environment variable. The d
 
 The app is deployed on a DigitalOcean Ubuntu droplet using Docker Compose. Deployments are fully automated via GitHub Actions on every push to `master`.
 
+The droplet also hosts **dental-clinic.cc** (separate repo, separate compose project in `/opt/dental-clinic`). This repo's nginx and certbot serve both domains, connected to the dental-clinic app through the shared Docker network `web`. See [docs/shared-droplet.md](docs/shared-droplet.md) for the full setup, go-live runbook and troubleshooting.
+
 ### Services
 
 ```
 chefbey          → Nuxt app (port 3000, internal only)
-chefbey_nginx    → nginx reverse proxy (ports 80, 443)
-chefbey_certbot  → Let's Encrypt SSL renewal
+chefbey_nginx    → nginx reverse proxy for chefbey.org AND dental-clinic.cc (ports 80, 443)
+chefbey_certbot  → Let's Encrypt SSL renewal (both domains)
 ```
 
 ### Volumes
