@@ -53,5 +53,8 @@ COPY --from=builder /app/node_modules/@libsql /app/.output/server/node_modules/@
 
 RUN mkdir -p .output/public/uploads
 
+ENV NODE_ENV=production
+
 EXPOSE 3000
-CMD ["bun", ".output/server/index.mjs"]
+# --smol: trade a bit of CPU (more frequent GC) for a much smaller heap on a 1GB droplet
+CMD ["bun", "--smol", ".output/server/index.mjs"]

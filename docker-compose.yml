@@ -1,14 +1,23 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   app:
     image: ghcr.io/omarantar7/chefbey:latest
     container_name: chefbey
-    ports:
-      - "3000:3000"
+    # internal only — nginx reaches it over the compose network
+    expose:
+      - "3000"
     env_file:
       - .env
     volumes:
       - chefbey_db:/app/data
       - chefbey_uploads:/app/.output/public/uploads
+    mem_limit: 512m
+    logging: *default-logging
     restart: unless-stopped
 
   nginx:
@@ -23,6 +32,8 @@ services:
       - certbot_certs:/etc/letsencrypt
     depends_on:
       - app
+    mem_limit: 64m
+    logging: *default-logging
     restart: unless-stopped
 
   certbot:
@@ -32,6 +43,8 @@ services:
       - certbot_www:/var/www/certbot
       - certbot_certs:/etc/letsencrypt
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --quiet; sleep 12h & wait $${!}; done;'"
+    mem_limit: 128m
+    logging: *default-logging
 
 
 volumes:
